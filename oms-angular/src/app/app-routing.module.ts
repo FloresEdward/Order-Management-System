@@ -17,11 +17,11 @@ const routes: Routes = [
       {
         path: '',
         loadChildren:
-          () => import('./material-component/material.module').then(m => m.MaterialComponentsModule),  
+          () => import('./material-component/material.module').then(m => m.MaterialComponentsModule),  // lazy
       },
       {
         path: 'dashboard',
-        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule), // lazy
       }
     ]
   },
