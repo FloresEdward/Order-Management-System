@@ -1,16 +1,18 @@
 <div class="main-container">
     <mat-toolbar color="primary" class="topbar telative">
         <div class="navbar-header">
-            <button mat-icon-button (click)="snav.toggle()" value="sidebarclosed" style="vertical-align: bottom;">
-                <mat-icon>menu</mat-icon>
-            </button><b>
-                <span style="vertical-align: middle;">
-                    <mat-icon>storefront</mat-icon>
+            <div class="navbar-brand">
+                <button mat-icon-button (click)="snav.toggle()" value="sidebarclosed" style="vertical-align: bottom;">
+                    <mat-icon>menu</mat-icon>
+                </button><b>
+                    <span style="vertical-align: middle;"> 
+                        <mat-icon>storefront</mat-icon>
+                    </span>
+                </b>
+                <span fxShow="false" fxShow.gt-xs>
+                    Order Management System
                 </span>
-            </b>
-            <span fxShow="false" fxShow.gt-xs>
-                Order Management System
-            </span>
+            </div>
         </div>
         <span fxFlex></span>
         <app-header></app-header>

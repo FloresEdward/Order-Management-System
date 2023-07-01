@@ -15,7 +15,7 @@ mat-sidenav {
 }
 #snav{
     box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
-    .mat-list-item {
+    mat-list-item {
         height: auto;
         &:hover{
             background: none;
@@ -28,6 +28,10 @@ mat-sidenav {
                 background: none;
                 > a{
                   color:$themecolor;
+                }
+                
+                mat-icon {
+                    color:$themecolor;
                 }
             }
         }
@@ -55,7 +59,8 @@ mat-sidenav {
                 height: 16px;
             }
         }
-        &.selected > .mat-list-item-content > a{
+        
+        &.selected .mat-list-item-content a{
             background: $themecolor-alt;
             border-radius: $radius;
             color:$white;
@@ -71,7 +76,7 @@ mat-sidenav {
         }
         &.selected .sub-item .mat-list-item-content a.selected{
             background: transparent;
-            color:$inverse;
+            color:$themecolor;
             font-weight: 500;               
         }
     }
