@@ -4,11 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
-import { CategoryComponent } from './category/category.component';
-import { ProductComponent } from './product/product.component';
+// import { CategoryComponent } from './category/category.component';
+// import { ProductComponent } from './product/product.component';
 // import { OrderComponent } from './order/order.component';
-import { OrderStatusComponent } from './order-status/order-status.component';
-import { UsersComponent } from './users/users.component';
+// import { OrderStatusComponent } from './order-status/order-status.component';
+// import { UsersComponent } from './users/users.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,11 +24,11 @@ import { HomeComponent } from './home/home.component';
   declarations: [
     AppComponent,
     // DashboardComponent,
-    CategoryComponent,
-    ProductComponent,
+    // CategoryComponent,
+    // ProductComponent,
     // OrderComponent,
-    OrderStatusComponent,
-    UsersComponent,
+    // OrderStatusComponent,
+    // UsersComponent,
     FullComponent,
     AppHeaderComponent,
     AppSidebarComponent,
