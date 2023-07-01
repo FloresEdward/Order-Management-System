@@ -3,7 +3,7 @@
         <a class="" appAccordionToggle [routerLink]="['/cafe/', item.state]"
             *ngIf="item.type === 'link' && (item.role === '' || item.role === userRole)">
             <mat-icon>{{ item.icon }}</mat-icon>
-            <span>{{ item.icon }}</span>
+            <span>{{ item.name }}</span>
         </a>
     </mat-list-item>
 </mat-nav-list>
