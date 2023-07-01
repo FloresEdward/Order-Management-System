@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 import { CategoryComponent } from './category/category.component';
 import { ProductComponent } from './product/product.component';
-import { OrderComponent } from './order/order.component';
+// import { OrderComponent } from './order/order.component';
 import { OrderStatusComponent } from './order-status/order-status.component';
 import { UsersComponent } from './users/users.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,7 +26,7 @@ import { HomeComponent } from './home/home.component';
     // DashboardComponent,
     CategoryComponent,
     ProductComponent,
-    OrderComponent,
+    // OrderComponent,
     OrderStatusComponent,
     UsersComponent,
     FullComponent,

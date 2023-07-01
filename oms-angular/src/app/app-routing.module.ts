@@ -22,7 +22,24 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule), // lazy
-      }
+      },
+      {
+        path: 'category',
+        loadChildren: () => import('./category/category.module').then(m => m.CategoryModule), // lazy
+      },
+      {
+        path: 'product',
+        loadChildren: () => import('./product/product.module').then(m => m.ProductModule), // lazy
+      },
+      {
+        path: 'order',
+        loadChildren: () => import('./order/order.module').then(m => m.OrderModule), // lazy
+      },
+      {
+        path: 'order/status',
+        loadChildren: () => import('./order-status/order-status.module').then(m => m.OrderStatusModule), // lazy
+      },
+      
     ]
   },
   { path: '**', component: HomeComponent}
