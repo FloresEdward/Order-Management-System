@@ -51,7 +51,7 @@ import { AddCategoryDialogComponent } from './category/dialogs/add-category-dial
     ReactiveFormsModule,
     MaterialModule,
     SharedModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

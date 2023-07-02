@@ -32,7 +32,7 @@ const MENUITEMS = [
     },
     {
         state: 'order',
-        name: 'Order',
+        name: 'Create Order',
         type: 'link',
         icon: 'local_mall',
         role: '',
