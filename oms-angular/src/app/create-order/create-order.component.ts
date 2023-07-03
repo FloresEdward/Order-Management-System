@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-order-status',
-  templateUrl: './order-status.component.html',
-  styleUrls: ['./order-status.component.scss']
+  templateUrl: './create-order.component.html',
+  styleUrls: ['./create-order.component.scss']
 })
-export class OrderStatusComponent implements OnInit{
+export class CreateOrderComponent implements OnInit{
   // standard = 'standard';
   displayedColumns: string[] = ['name', 'category', 'price', 'quantity', 'total', 'edit'];
   dataSource: any = [];

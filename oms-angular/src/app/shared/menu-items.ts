@@ -31,17 +31,17 @@ const MENUITEMS = [
         role: '',
     },
     {
-        state: 'order',
+        state: "create-order",
         name: 'Create Order',
         type: 'link',
-        icon: 'local_mall',
+        icon: 'rate_review',
         role: '',
     },
     {
-        state: "order-status",
-        name: 'Manage Orders',
+        state: 'order',
+        name: 'Manage Order',
         type: 'link',
-        icon: 'rate_review',
+        icon: 'local_mall',
         role: '',
     },
     {
