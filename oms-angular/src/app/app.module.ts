@@ -18,7 +18,7 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './shared/auth-guard.service';
 import { AuthStateService } from './shared/auth-state.service';
 import { HttpClientModule } from '@angular/common/http';
-
+import { ErrorComponent } from './error/error.component';
 
 
 @NgModule({
@@ -29,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppSidebarComponent,
     LoginComponent,
     HomeComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
