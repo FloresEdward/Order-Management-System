@@ -9,7 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialRoutes } from './material.routing';
 import { MaterialModule } from '../shared/material-module';
-import { ViewBillProductsComponent } from './dialog/view-bill-products/view-bill-products.component';
+import { ManageOrderProductsComponent } from './dialog/manage-order-products/manage-order-products.component';
 
 @NgModule({
   imports: [
@@ -24,7 +24,7 @@ import { ViewBillProductsComponent } from './dialog/view-bill-products/view-bill
   ],
   providers: [],
   declarations: [
-    ViewBillProductsComponent
+    ManageOrderProductsComponent
   ]
 })
 export class MaterialComponentsModule {}
