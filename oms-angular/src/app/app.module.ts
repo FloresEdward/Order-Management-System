@@ -11,13 +11,13 @@ import { AppHeaderComponent } from './layouts/full/header/header.component';
 import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
 import { MaterialModule } from './shared/material-module';
 import { SharedModule } from './shared/shared.module';
-import { LoginComponent } from './landing/login.component';
-import { HomeComponent } from './home/home.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './shared/auth-guard.service';
 import { AuthStateService } from './shared/auth-state.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FullPagesModule } from './full-pages/full-pages.module';
+import { ContentPagesModule } from './content-pages/content-pages.module';
 
 
 
@@ -26,11 +26,11 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     FullComponent,
     AppHeaderComponent,
-    AppSidebarComponent,
-    LoginComponent,
-    HomeComponent,
+    AppSidebarComponent
   ],
   imports: [
+    FullPagesModule,
+    ContentPagesModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
