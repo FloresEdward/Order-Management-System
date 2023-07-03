@@ -38,7 +38,7 @@ const MENUITEMS = [
         role: '',
     },
     {
-        state: 'order',
+        state: 'manage-order',
         name: 'Manage Order',
         type: 'link',
         icon: 'local_mall',

@@ -32,8 +32,8 @@ const routes: Routes = [
         loadChildren: () => import('./product/product.module').then(m => m.ProductModule), // lazy
       },
       {
-        path: 'order',
-        loadChildren: () => import('./order/order.module').then(m => m.OrderModule), // lazy
+        path: 'manage-order',
+        loadChildren: () => import('./manage-order/manage-order.module').then(m => m.ManageOrderModule), // lazy
       },
       {
         path: 'create-order',

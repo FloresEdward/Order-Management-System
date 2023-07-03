@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { OrderComponent } from './order.component';
-import { OrderRoutes } from './order.routing';
+import { ManageOrderComponent } from './manage-order.component';
+import { ManageOrderRoutes } from './manage-order.routing';
 import { MaterialModule } from '../shared/material-module';
 
 @NgModule({
@@ -11,8 +11,8 @@ import { MaterialModule } from '../shared/material-module';
     CommonModule,
     MaterialModule,
     FlexLayoutModule,
-    RouterModule.forChild(OrderRoutes)
+    RouterModule.forChild(ManageOrderRoutes)
   ],
-  declarations: [OrderComponent]
+  declarations: [ManageOrderComponent]
 })
-export class OrderModule { }
+export class ManageOrderModule { }
