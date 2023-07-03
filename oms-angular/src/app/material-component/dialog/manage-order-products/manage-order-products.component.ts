@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-manage-order-products',
@@ -12,9 +12,13 @@ export class ManageOrderProductsComponent implements OnInit {
   dataSource: any;
   data: any;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public dialogData:any, public dialogRef: MatDialogRef<ManageOrderProductsComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public dialogData:any, 
+  public dialogRef: MatDialogRef<ManageOrderProductsComponent>) { }
 
   ngOnInit() {
+    this.data = this.dialogData.data;
+    this.dataSource = JSON.parse(this.dialogData.data.productDetail);
+    console.log(this.dialogData.data);
   }
 }
 
