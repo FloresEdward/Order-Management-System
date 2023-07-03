@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { UserDialogComponent } from './user-dialog/user-dialog.component';
 
 @Component({
   selector: 'app-users',
@@ -17,5 +19,39 @@ export class UsersComponent {
     { user: 'User8', role: 'Role Manager (could have)', module: 'm_Role' },
     { user: 'User9', role: 'Teller (create order only)', module: 'c_Order' },
   ];
+
+  constructor(private dialog: MatDialog) {}
+
+  manageRole() {
+    // Open the UserDialogComponent as a MatDialog
+    const dialogRef = this.dialog.open(UserDialogComponent, {
+      width: '400px',
+      data: { user: '', role: '', module: '' } // Optional initial data for the form fields
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // Handle the result after the dialog is closed, if needed
+      console.log('The dialog was closed', result);
+    });
+  }
+
+  editUser(user: any) {
+    // Open the UserDialogComponent as a MatDialog with the selected user data
+    const dialogRef = this.dialog.open(UserDialogComponent, {
+      width: '400px',
+      data: user
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // Handle the result after the dialog is closed, if needed
+      console.log('The dialog was closed', result);
+    });
+  }
+
+  deleteUser(user: any) {
+    // Implement the logic to delete the user
+    console.log('Deleting user:', user);
+  }
+
 
 }
