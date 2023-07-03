@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BestSellerComponent } from './best-seller.component';
+import { BestSellerComponent } from './login.component';
 
 describe('BestSellerComponent', () => {
   let component: BestSellerComponent;

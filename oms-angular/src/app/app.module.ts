@@ -17,7 +17,7 @@ import { AppHeaderComponent } from './layouts/full/header/header.component';
 import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
 import { MaterialModule } from './shared/material-module';
 import { SharedModule } from './shared/shared.module';
-import { BestSellerComponent } from './best-seller/best-seller.component';
+import { BestSellerComponent } from './landing/login.component';
 import { HomeComponent } from './home/home.component';
 import { MatDialogModule } from '@angular/material/dialog';
 
