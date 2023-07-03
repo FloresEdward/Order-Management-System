@@ -20,9 +20,6 @@ import { SharedModule } from './shared/shared.module';
 import { BestSellerComponent } from './best-seller/best-seller.component';
 import { HomeComponent } from './home/home.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormField } from '@angular/material/form-field';
-import { CategoryComponent } from './category/category.component';
-import { AddCategoryDialogComponent } from './category/dialogs/add-category-dialog/add-category-dialog.component';
 
 
 
