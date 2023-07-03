@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +9,7 @@ import { Component } from '@angular/core';
 })
 export class AppHeaderComponent {
 
-  constructor() {
+  constructor(private authService: AuthService,private route: Router) {
   }
 
   changePassword() {
@@ -16,7 +18,7 @@ export class AppHeaderComponent {
   }
 
   logout() {
-    // Add your logout logic here
-    console.log("Logout");
+    this.authService.logout();
+    this.route.navigateByUrl('/');
   }
 }
