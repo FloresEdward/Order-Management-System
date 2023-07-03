@@ -2,16 +2,17 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { FullComponent } from './layouts/full/full.component';
+import { AuthGuard } from './shared/auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   {
-    path: 'cafe',
+    path: 'app',
     component: FullComponent,
     children: [
       {
         path: '',
-        redirectTo: '/cafe/dashboard',
+        redirectTo: '/app/dashboard',
         pathMatch: 'full',
       },
       {
@@ -44,7 +45,8 @@ const routes: Routes = [
         loadChildren: () => import('./users/users.module').then(m => m.UsersModule), // lazy
       },
 
-    ]
+    ],
+    canActivate: [AuthGuard],
   },
   { path: '**', component: HomeComponent }
 ];
