@@ -4,7 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { FullComponent } from './layouts/full/full.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent},
+  { path: '', component: HomeComponent },
   {
     path: 'cafe',
     component: FullComponent,
@@ -43,10 +43,10 @@ const routes: Routes = [
         path: 'users',
         loadChildren: () => import('./users/users.module').then(m => m.UsersModule), // lazy
       },
-      
+
     ]
   },
-  { path: '**', component: HomeComponent}
+  { path: '**', component: HomeComponent }
 ];
 
 @NgModule({
