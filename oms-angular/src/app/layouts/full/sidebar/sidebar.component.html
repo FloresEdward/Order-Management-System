@@ -2,7 +2,7 @@
     <mat-list-item appAccordionLink *ngFor="let item of menuItems.getMenuItem()" [routerLinkActive]="['selected']" group="{{ item.state }}">
 
     <div class="mat-list-item-content">
-      <a appAccordionToggle [routerLink]="['/cafe/', item.state]"
+      <a appAccordionToggle [routerLink]="['/app/', item.state]"
          *ngIf="item.type === 'link' && (item.role === '' || item.role === userRole)">
         <mat-icon>{{ item.icon }}</mat-icon>
         <span>{{ item.name }}</span>
