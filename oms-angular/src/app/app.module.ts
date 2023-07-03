@@ -3,12 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-// import { DashboardComponent } from './dashboard/dashboard.component';
-// import { CategoryComponent } from './category/category.component';
-// import { ProductComponent } from './product/product.component';
-// import { OrderComponent } from './order/order.component';
-// import { OrderStatusComponent } from './order-status/order-status.component';
-// import { UsersComponent } from './users/users.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,24 +14,21 @@ import { SharedModule } from './shared/shared.module';
 import { BestSellerComponent } from './landing/login.component';
 import { HomeComponent } from './home/home.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './shared/auth-guard.service';
+import { AuthStateService } from './shared/auth-state.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    // DashboardComponent,
-    // CategoryComponent,
-    // ProductComponent,
-    // OrderComponent,
-    // OrderStatusComponent,
-    // UsersComponent,
     FullComponent,
     AppHeaderComponent,
     AppSidebarComponent,
     BestSellerComponent,
     HomeComponent,
-    // BestSellerComponent
   ],
   imports: [
     BrowserModule,
@@ -49,8 +40,13 @@ import { MatDialogModule } from '@angular/material/dialog';
     MaterialModule,
     SharedModule,
     MatDialogModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    AuthGuard,
+    AuthStateService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

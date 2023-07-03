@@ -6,9 +6,11 @@
   <mat-form-field>
     <input matInput placeholder="Role" [(ngModel)]="data.role" name="role">
   </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Module" [(ngModel)]="data.module" name="module">
-  </mat-form-field>
+
+  <div *ngFor="let module of data.module">
+    <mat-checkbox [(ngModel)]="module.checked" name="module">{{ module }}</mat-checkbox>
+  </div>
+
   <button mat-raised-button color="primary" (click)="saveUser()">Save</button>
   <button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>
 </form>
