@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, AfterViewInit } from '@angular/core';
 
 @Component({
@@ -9,7 +10,5 @@ export class DashboardComponent implements AfterViewInit {
   ngAfterViewInit() { }
 
   cardTitle: string = 'Dashboard'; //title for card
-  constructor() { 
 
-  }
 }

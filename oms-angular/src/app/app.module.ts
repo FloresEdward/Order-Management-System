@@ -14,11 +14,11 @@ import { SharedModule } from './shared/shared.module';
 import { LoginComponent } from './landing/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ErrorComponent } from './error/error.component';
 import { AuthenticationService } from './services/authentication.service';
 import { SignupComponent } from './landing/signup/signup.component';
-// import { CardTitleComponent } from './card-title/card-title.component';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 
 @NgModule({
@@ -46,7 +46,8 @@ import { SignupComponent } from './landing/signup/signup.component';
     HttpClientModule,
   ],
   providers: [
-    AuthenticationService
+    AuthenticationService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

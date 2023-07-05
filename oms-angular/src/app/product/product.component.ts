@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddProductDialogComponent } from './dialogs/add-product-dialog/add-product-dialog.component';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-product',
@@ -21,7 +22,7 @@ export class ProductComponent {
     
   dialogRef: MatDialogRef<AddProductDialogComponent> | undefined;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private http: HttpClient) {}
 
 
   addProduct(): void {
@@ -42,5 +43,17 @@ export class ProductComponent {
       // Handle the result here (e.g., perform an action based on the result)
       console.log(result);
     });
+  }
+
+  fetchData(): void {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    this.http.get('localhost:4200/api/v1/demo-controller',{headers: headers}).subscribe(
+      (response) => {
+        console.log('Data:', response);
+      },
+      (error) => {
+        console.log('Error fetching data:', error);
+      }
+    );
   }
 }

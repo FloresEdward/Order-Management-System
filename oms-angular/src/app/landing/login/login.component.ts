@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,11 @@ export class LoginComponent {
   private returnUrl: string;
 
 
-  constructor(private authenticationService: AuthenticationService, private http: HttpClient, private route: ActivatedRoute, private router: Router) {
+  constructor(private authenticationService: AuthenticationService,
+     private http: HttpClient,
+      private route: ActivatedRoute,
+       private router: Router,
+       ) {
     this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/app/dashboard";
   }
 
@@ -31,8 +36,8 @@ export class LoginComponent {
     };
     this.authenticationService.authenticate(credentials).subscribe(
       (response) => {
-        console.log(response)
         this.router.navigateByUrl(this.returnUrl);
+        console.log('Token from service:', this.authenticationService.getTokenFromService());
       },
       (error) => {
         console.log(error)

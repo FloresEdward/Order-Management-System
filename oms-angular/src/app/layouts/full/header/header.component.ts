@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { TokenService } from 'src/app/services/token.service';
 //import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class AppHeaderComponent {
 
   // constructor(private authService: AuthService,private route: Router) {
   // }
-  constructor(private route: Router) {
+  constructor(private route: Router, private tokenService: TokenService) {
   }
 
   changePassword() {
@@ -21,6 +22,7 @@ export class AppHeaderComponent {
 
   logout() {
     // this.authService.logout();
+    this.tokenService.removeToken();
     this.route.navigateByUrl('/');
   }
 }
