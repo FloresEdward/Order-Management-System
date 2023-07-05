@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+//import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +9,9 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AppHeaderComponent {
 
-  constructor(private authService: AuthService,private route: Router) {
+  // constructor(private authService: AuthService,private route: Router) {
+  // }
+  constructor(private route: Router) {
   }
 
   changePassword() {
@@ -18,7 +20,7 @@ export class AppHeaderComponent {
   }
 
   logout() {
-    this.authService.logout();
+    // this.authService.logout();
     this.route.navigateByUrl('/');
   }
 }
