@@ -18,14 +18,14 @@ const MENUITEMS = [
     },
     {
         state: 'category',
-        name: 'Category',
+        name: 'Manage Category',
         type: 'link',
         icon: 'category',
         role: '',
     },
     {
         state: 'product',
-        name: 'Product',
+        name: 'Manage Menu',
         type: 'link',
         icon: 'fastfood',
         role: '',

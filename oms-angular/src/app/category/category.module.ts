@@ -8,6 +8,7 @@ import { MaterialModule } from '../shared/material-module';
 import { AddCategoryDialogComponent } from './dialogs/add-category-dialog/add-category-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { MatFormField } from '@angular/material/form-field';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { MatFormField } from '@angular/material/form-field';
     FlexLayoutModule,
     RouterModule.forChild(CategoryRoutes),
     FormsModule,
+    SharedModule
   ],
   declarations: [CategoryComponent, AddCategoryDialogComponent],
 })

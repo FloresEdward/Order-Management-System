@@ -2,7 +2,7 @@ import { AfterViewInit, OnInit, Component } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Route, Router } from '@angular/router';
-import { ManageOrderProductsComponent } from '../material-component/dialog/manage-order-products/manage-order-products.component';
+import { ManageOrderProductsComponent } from '../../material-component/dialog/manage-order-products/manage-order-products.component';
 
 @Component({
   selector: 'app-order',
@@ -11,6 +11,8 @@ import { ManageOrderProductsComponent } from '../material-component/dialog/manag
 })
 export class ManageOrderComponent implements OnInit {
   
+  cardTitle: string = 'Manage Order'; // title for card
+
   displayedColumns: string[] = ['name', 'email', 'contactNumber', 'paymentMethod', 'total', 'view'];
   // dataSource: any[] = [];
   dataSource!: MatTableDataSource<any>;

@@ -8,6 +8,7 @@ import { Component, AfterViewInit } from '@angular/core';
 export class DashboardComponent implements AfterViewInit {
   ngAfterViewInit() { }
 
+  cardTitle: string = 'Dashboard'; //title for card
   constructor() { 
 
   }

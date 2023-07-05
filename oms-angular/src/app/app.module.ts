@@ -18,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ErrorComponent } from './error/error.component';
 import { AuthenticationService } from './services/authentication.service';
 import { SignupComponent } from './landing/signup/signup.component';
+// import { CardTitleComponent } from './card-title/card-title.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { SignupComponent } from './landing/signup/signup.component';
     HomeComponent,
     ErrorComponent,
     SignupComponent,
+    // CardTitleComponent,
   ],
   imports: [
     BrowserModule,

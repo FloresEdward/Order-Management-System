@@ -34,11 +34,11 @@ const routes: Routes = [
       },
       {
         path: 'manage-order',
-        loadChildren: () => import('./manage-order/manage-order.module').then(m => m.ManageOrderModule), // lazy
+        loadChildren: () => import('./order/manage-order/manage-order.module').then(m => m.ManageOrderModule), // lazy
       },
       {
         path: 'create-order',
-        loadChildren: () => import('./create-order/create-order.module').then(m => m.CreateOrderModule), // lazy
+        loadChildren: () => import('./order/create-order/create-order.module').then(m => m.CreateOrderModule), // lazy
       },
       {
         path: 'users',

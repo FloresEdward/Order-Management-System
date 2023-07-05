@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { UsersRoutes } from './users.routing';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { FormsModule } from '@angular/forms';
     MaterialModule,
     FlexLayoutModule,
     FormsModule,
-    RouterModule.forChild(UsersRoutes)
+    RouterModule.forChild(UsersRoutes),
+    SharedModule
   ],
   declarations: [UsersComponent, UserDialogComponent]
 })

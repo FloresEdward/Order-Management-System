@@ -8,6 +8,9 @@ import { UserDialogComponent } from './user-dialog/user-dialog.component';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent {
+
+  cardTitle: string = 'Manage Category'; //title for card
+
   users = [
     { user: 'John Doe', role: 'Admin', module: [ 'm_Category', 'm_Product', 'm_Order', 'm_User', 'm_Role' ] },
     { user: 'Jane Smith', role: 'Order Reviewer', module: [ 'm_Order' ] },

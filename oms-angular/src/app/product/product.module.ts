@@ -7,6 +7,7 @@ import { ProductRoutes } from './product.routing';
 import { ProductComponent } from './product.component';
 import { AddProductDialogComponent } from './dialogs/add-product-dialog/add-product-dialog.component';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
     MaterialModule,
     FlexLayoutModule,
     RouterModule.forChild(ProductRoutes),
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
   declarations: [ProductComponent, AddProductDialogComponent]
   

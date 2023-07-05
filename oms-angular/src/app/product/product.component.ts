@@ -8,6 +8,9 @@ import { AddProductDialogComponent } from './dialogs/add-product-dialog/add-prod
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent {
+
+  cardTitle: string = 'Manage Menu'; //title for card
+  
   products: any[] = [
     { name: 'Product 1', category: 'Category 1', price: 10.99, stock: 20 },
     { name: 'Product 2', category: 'Category 2', price: 19.99, stock: 15 },

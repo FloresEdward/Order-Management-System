@@ -8,6 +8,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class CreateOrderComponent implements OnInit{
   // standard = 'standard';
+  cardTitle: string = 'Create Order'; //title for card
+
   displayedColumns: string[] = ['name', 'category', 'price', 'quantity', 'total', 'edit'];
   dataSource: any = [];
   manageOrderForm:any = FormGroup;

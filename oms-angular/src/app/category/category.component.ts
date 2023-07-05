@@ -13,6 +13,9 @@ interface Category {
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent {
+
+  cardTitle: string = 'Manage Category'; //title for card
+
   categories: any[] = [
     { name: 'Category 1' },
     { name: 'Category 2' },
