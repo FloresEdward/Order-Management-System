@@ -1,80 +1,95 @@
-.position-relative {
-	position: relative;
-}
 
-.add-contact {
-	position: absolute;
-    right: 17px;
-    top: 57px;
-}
+.middle-section {
+  display: flex;
+  justify-content: space-between;
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
+  // Adjust width based on container height
+  @media only screen and (max-height: 93.75vh) {
+    width: 80vw;
   }
-  
-  html {
-    box-sizing: border-box;
+  @media only screen and (max-height: 87.5vh) {
+    width: 74vw;
   }
-  
-  *, *:before, *:after {
-    box-sizing: inherit;
+  @media only screen and (max-height: 81.25vh) {
+    width: 68vw;
   }
-  
-  .column {
-    float: left;
-    width: 33.3%;
-    margin-bottom: 16px;
-    padding: 0 8px;
+  @media only screen and (max-height: 70vh) {
+    width: 59vw;
   }
-  
-  .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    margin: 8px;
-  }
-  
-  .about-section {
-    padding: 50px;
-    text-align: center;
-    background-color: #474e5d;
-    color: white;
-  }
-  
-  .container {
-    padding: 0 16px;
-  }
-  
-  .container::after, .row::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-  
-  .title {
-    color: black;
-    text-align: center !important;
-  }
-  
-  .button {
-    border: none;
-    outline: 0;
-    display: inline-block;
-    padding: 8px;
-    color: white;
-    background-color: #2196f3;
-    text-align: center;
-    cursor: pointer;
-    width: 100%;
-    font-weight: bold;
-  }
-  
-  .button:hover {
-    background-color: #555;
-  }
-  
-  @media screen and (max-width: 650px) {
-    .column {
-      width: 100%;
-      display: block;
+
+  .widget {
+    height: 23.44vh;
+    background-color: #fff;
+    border-radius: 5px;
+    margin: 1.56vh;
+    box-shadow: 1.56vh 1.56vh 1.56vh #939393;
+
+    &.left {
+      width: 59.38vw;
+
+      // Adjust width based on container height
+      @media only screen and (max-height: 93.75vh) {
+        width: 52.38vw;
+      }
+      @media only screen and (max-height: 87.5vh) {
+        width: 45.38vw;
+      }
+      @media only screen and (max-height: 81.25vh) {
+        width: 38.38vw;
+      }
+      @media only screen and (max-height: 70vh) {
+        width: 31.38vw;
+      }
+    }
+
+    &.right {
+      width: 29.69vw;
     }
   }
+}
+
+.bottom-section {
+  display: flex;
+  justify-content: space-between;
+
+  .widget {
+    height: 55.63vh;
+    background-color: #fff;
+    border-radius: 5px;
+    margin: 1.56vh;
+    box-shadow: 1.56vh 1.56vh 1.56vh #939393;
+
+    &.left {
+      width: 39.06vw;
+
+      // Adjust width based on container height
+      @media only screen and (max-height: 70vh) {
+        width: 33.13vw;
+      }
+    }
+
+    &.right {
+      width: 39.06vw;
+
+      // Adjust width based on container height
+      @media only screen and (max-height: 93.75vh) {
+        width: 33.13vw;
+      }
+      @media only screen and (max-height: 87.5vh) {
+        width: 27.5vw;
+      }
+      @media only screen and (max-height: 81.25vh) {
+        width: 21.88vw;
+      }
+      @media only screen and (max-height: 70vh) {
+        width: 21.88vw;
+      }
+    }
+  }
+}
+
+// Adjust chart size based on container size
+.chart-container {
+  width: 100%;
+  height: 100%;
+}

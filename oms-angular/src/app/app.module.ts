@@ -21,6 +21,7 @@ import { SignupComponent } from './landing/signup/signup.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +32,6 @@ import { AuthInterceptor } from './services/auth.interceptor';
     HomeComponent,
     ErrorComponent,
     SignupComponent,
-    // CardTitleComponent,
   ],
   imports: [
     BrowserModule,
