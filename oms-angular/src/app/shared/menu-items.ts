@@ -46,7 +46,7 @@ const MENUITEMS = [
     },
     {
         state: 'users',
-        name: 'Manage Users',
+        name: 'Manage Accounts',
         type: 'link',
         icon: 'group',
         role: '',

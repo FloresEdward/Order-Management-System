@@ -10,42 +10,41 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class UsersComponent implements OnInit{
 
-  cardTitle: string = 'Manage Users';
+  cardTitle: string = 'Manage Accounts';
   dataSource!: MatTableDataSource<any>;
 
   tableData() {
+    const roles = [
+      { role: 'Admin', description: 'All Access' },
+      { role: 'Category Manager', description: 'Access to Category Module, and create order' },
+      { role: 'Menu Manager', description: 'Access to Menu Module, and create order' },
+      { role: 'Order Manager', description: 'Access to Order Module, view order archive, create and update' },
+      { role: 'Account Manager', description: 'Access to User Management' },
+      { role: 'Teller', description: 'Create order only' },
+      { role: 'Rider', description: 'Update order status only' },
+    ];
+  
     const users = [
-        { user: 'John Doe', role: 'Admin', module: [ 'm_Category', 'm_Product', 'm_Order', 'm_User', 'm_Role' ] },
-        { user: 'Jane Smith', role: 'Order Reviewer', module: [ 'm_Order' ] },
-        { user: 'User3', role: 'Order Manager', module: [ 'm_Order' ] },
-        { user: 'User4', role: 'Rider', module: [ 'm_OrderStatus' ] },
-        { user: 'User5', role: 'Category Manager', module: [ 'm_Category' ] },
-        { user: 'User6', role: 'Product Manager', module: [ 'm_Product' ] },
-        { user: 'User7', role: 'Account Manager', module: [ 'm_User' ] },
-        { user: 'User8', role: 'Role Manager (could have)', module: [ 'm_Role' ] },
-        { user: 'User9', role: 'Teller (create order only)', module: [ 'c_Order' ] }
-      ];
-      this.dataSource = new MatTableDataSource(users);
+      { user: 'John Doe', role: roles[0], status: 'active' },
+      { user: 'Jane Smith', role: roles[1], status: 'active' },
+      { user: 'User3', role: roles[2], status: 'active' },
+      { user: 'User4', role: roles[3], status: 'active' },
+      { user: 'User5', role: roles[4], status: 'locked' },
+      { user: 'User6', role: roles[5], status: 'active' },
+      { user: 'User7', role: roles[5], status: 'inactive' },
+      { user: 'User8', role: roles[6], status: 'active' },
+      { user: 'User9', role: roles[6], status: 'locked' },
+    ];
+  
+    this.dataSource = new MatTableDataSource(users);
   }
+  
   
   
 
   constructor(private dialog: MatDialog) {}
   ngOnInit(): void {
     this.tableData();
-  }
-
-  manageRole() {
-    // Open the UserDialogComponent as a MatDialog
-    const dialogRef = this.dialog.open(UserDialogComponent, {
-      width: '400px',
-      data: { user: '', role: '', module: '' } // Optional initial data for the form fields
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // Handle the result after the dialog is closed, if needed
-      console.log('The dialog was closed', result);
-    });
   }
 
   editUser(user: any) {
