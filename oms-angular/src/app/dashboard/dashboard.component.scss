@@ -18,14 +18,14 @@
   }
 
   .widget {
-    height: 23.44vh;
+    height: 35.44vh;
     background-color: #fff;
     border-radius: 5px;
     margin: 1.56vh;
     box-shadow: 1.56vh 1.56vh 1.56vh #939393;
 
     &.left {
-      width: 59.38vw;
+      width: 40.38vw;
 
       // Adjust width based on container height
       @media only screen and (max-height: 93.75vh) {
@@ -43,7 +43,7 @@
     }
 
     &.right {
-      width: 29.69vw;
+      width: 48.69vw;
     }
   }
 }

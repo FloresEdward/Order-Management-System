@@ -6,10 +6,10 @@ import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutes } from './dashboard.routing';
 import { MaterialModule } from '../shared/material-module';
 import { SharedModule } from '../shared/shared.module';
-import { TopMealComponent } from './top-meal/top-meal.component';
-import { OrderStatusComponent } from './order-status/order-status.component';
-import { NoCancelRateComponent } from './no-cancel-rate/no-cancel-rate.component';
-import { CategoryPerformanceComponent } from './category-performance/category-performance.component';
+import { TopMealComponent } from './widgets/top-meal.component';
+import { OrderStatusComponent } from './widgets/order-status.component';
+import { NoCancelRateComponent } from './widgets/no-cancel-rate.component';
+import { CategoryPerformanceComponent } from './widgets/category-performance.component';
 import { FormsModule } from '@angular/forms';
 import { ChartModule } from 'angular-highcharts';
 
