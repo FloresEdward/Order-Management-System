@@ -1,8 +1,10 @@
-import { AfterViewInit, OnInit, Component } from '@angular/core';
+import { AfterViewInit, OnInit, Component, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Route, Router } from '@angular/router';
 import { ManageOrderProductsComponent } from '../../material-component/dialog/manage-order-products/manage-order-products.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-order',
@@ -11,19 +13,19 @@ import { ManageOrderProductsComponent } from '../../material-component/dialog/ma
 })
 export class ManageOrderComponent implements OnInit {
   
-  cardTitle: string = 'Manage Order'; // title for card
+  cardTitle: string = 'Manage Order';
+  selectedValue: string | null = null;
 
-  displayedColumns: string[] = ['name', 'address', 'contactNumber', 'paymentMethod', 'total', 'view'];
-  // dataSource: any[] = [];
+  displayedColumns: string[] = ['name', 'address', 'contactNumber', 'total', 'rider', 'action'];
+  listOfRiders: string[] = [];
   dataSource!: MatTableDataSource<any>;
   responseMessage: any;
-
-  // ngAfterViewInit(): void { }
+  checkButtonDisabled: boolean = false;
   
   constructor(
     private dialog: MatDialog,
-    private router: Router){
-      // this.dataSource = new MatTableDataSource<any>([]);
+    private router: Router,
+    private snackBar: MatSnackBar){
   }
 
   ngOnInit(): void {
@@ -31,15 +33,15 @@ export class ManageOrderComponent implements OnInit {
   }
 
   tableData() {
+    const dropDownList: string[] = ['Edward', 'Emman', 'Troy'];
+  
     const data = [
-      // { name: 'John Doe', email: 'john.doe@example.com', contactNumber: '1234567890', paymentMethod: 'Credit Card', total: '$100' },
-      // { name: 'Jane Smith', email: 'jane.smith@example.com', contactNumber: '9876543210', paymentMethod: 'PayPal', total: '$150' },
-      // { name: 'Joe Smith', email: 'joe.smith@example.com', contactNumber: '9024865210', paymentMethod: 'Libre', total: '$250' },
-      { name: 'John Doe', address: 'Sa tabi-tabi', contactNumber: '1234567890', paymentMethod: 'Credit Card', total: '$100' },
-      { name: 'Jane Smith', address: 'Sa Bahay', contactNumber: '9876543210', paymentMethod: 'PayPal', total: '$150' },
-      { name: 'Joe Smith', address: '123 Street', contactNumber: '9024865210', paymentMethod: 'Libre', total: '$250' },
+      { name: 'John Doe', address: 'Sa tabi-tabi', contactNumber: '1234567890', status: this.listOfRiders, total: '$100', isSelected: false },
+      { name: 'Jane Smith', address: 'Sa Bahay', contactNumber: '9876543210', status: this.listOfRiders, total: '$150', isSelected: false },
+      { name: 'Joe Smith', address: '123 Street', contactNumber: '9024865210',status: this.listOfRiders, total: '$250', isSelected: false },
     ];
     this.dataSource = new MatTableDataSource(data);
+    this.listOfRiders = dropDownList;
   }
 
   applyFilter(event: Event) {
@@ -60,7 +62,11 @@ export class ManageOrderComponent implements OnInit {
   }
 
   handleDeleteAction(values:any) {
-
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
+      data:{
+        message: 'Are you sure want to delete?',
+      }
+    });
   }
 
   downloadReportAction(values:any) {
@@ -70,4 +76,9 @@ export class ManageOrderComponent implements OnInit {
   deleteBill() {
 
   }
+
+  updateCheckButtonDisabled() {
+    this.checkButtonDisabled = false;
+  }
+  
 }
