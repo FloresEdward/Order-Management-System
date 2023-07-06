@@ -3,9 +3,19 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { FullComponent } from './layouts/full/full.component';
 import { ErrorComponent } from './error/error.component';
+import { LoginComponent } from './landing/login/login.component';
+import { SignupComponent } from './landing/signup/signup.component';
+import { ForgotPasswordComponent } from './landing/forgot-password/forgot-password.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  {
+    path: '', component: HomeComponent, children: [
+      { path: 'login', component: LoginComponent },
+      { path: 'signup', component: SignupComponent },
+      { path: 'reset-password', component: ForgotPasswordComponent }
+    ]
+  },
   {
     path: 'app',
     component: FullComponent,

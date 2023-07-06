@@ -1,15 +1,31 @@
 <div class="form-container">
-    <mat-card>
+    <mat-card class="signup">
         <mat-card-content>
             <h2>Signup</h2>
 
-            <mat-form-field>
+
+            <!-- <mat-form-field>
                 <input matInput type="text" placeholder="First name" [(ngModel)]="firstname">
             </mat-form-field>
 
             <mat-form-field>
                 <input matInput type="text" placeholder="Last name" [(ngModel)]="lastname">
-            </mat-form-field>
+            </mat-form-field> -->
+
+            <table class="example-full-width" cellspacing="0">
+                <tr>
+                    <td> 
+                        <mat-form-field class="pad-right">
+                            <input matInput type="text" placeholder="First name" [(ngModel)]="firstname">
+                        </mat-form-field>
+                    </td>
+                    <td> <mat-form-field class="pad-left">
+                            <input matInput type="text" placeholder="Last name" [(ngModel)]="lastname">
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </table>
+
 
             <mat-form-field>
                 <input matInput type="email" placeholder="Email" [(ngModel)]="email">
@@ -24,6 +40,10 @@
             </mat-form-field>
 
             <button mat-raised-button color="primary" (click)="signup()">Signup</button>
+
+            <div class="links">
+                <a href="/login">Already have an account?</a>
+            </div>
 
         </mat-card-content>
     </mat-card>

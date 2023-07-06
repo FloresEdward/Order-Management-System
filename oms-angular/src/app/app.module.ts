@@ -19,6 +19,7 @@ import { ErrorComponent } from './error/error.component';
 import { AuthenticationService } from './services/authentication.service';
 import { SignupComponent } from './landing/signup/signup.component';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { ForgotPasswordComponent } from './landing/forgot-password/forgot-password.component';
 
 
 
@@ -32,6 +33,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
     HomeComponent,
     ErrorComponent,
     SignupComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,19 +1,23 @@
 <div class="form-container">
-    <mat-card>
-      <mat-card-content>
-        <h2>Login</h2>
-  
-        <mat-form-field>
-          <input matInput type="text" placeholder="Email" [(ngModel)]="email">
-        </mat-form-field>
-  
-        <mat-form-field>
-          <input matInput type="password" placeholder="Password" [(ngModel)]="password">
-        </mat-form-field>
-  
-        <button mat-raised-button color="primary" (click)="login()">Login</button>
+  <mat-card>
+    <mat-card-content>
+      <h2>Login</h2>
 
-      </mat-card-content>
-    </mat-card>
-  </div>
-  
+      <mat-form-field>
+        <input matInput type="text" placeholder="Email" [(ngModel)]="email">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="password" placeholder="Password" [(ngModel)]="password">
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="login()">Login</button>
+      
+      <div class="links">
+        <a href="/signup">Don't have an account?</a>
+        <a href="/reset-password">Forgot password?</a>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>
