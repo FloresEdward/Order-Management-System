@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AddCategoryDialogComponent } from './dialogs/add-category-dialog/add-category-dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { CategoryDialogComponent } from './dialogs/category-dialog/category-dialog.component';
 
 
 interface Category {
@@ -13,7 +13,7 @@ interface Category {
   styleUrls: ['./category.component.scss']
 })
 // export class CategoryComponent {
-  export class CategoryComponent implements OnInit {
+export class CategoryComponent implements OnInit {
 
   cardTitle: string = 'Manage Category'; //title for card
 
@@ -23,12 +23,12 @@ interface Category {
     { name: 'Category 3' }
   ];
 
-  
-  dialogRef: MatDialogRef<AddCategoryDialogComponent> | undefined;
 
-  constructor(private dialog: MatDialog) {}
+  dialogRef: MatDialogRef<CategoryDialogComponent> | undefined;
+
+  constructor(private dialog: MatDialog) { }
   ngOnInit(): void {
-    
+
   }
 
   // Function to add a new category
@@ -47,8 +47,8 @@ interface Category {
   }
 
 
-  openAddCategoryDialog(): void {
-    this.dialogRef = this.dialog.open(AddCategoryDialogComponent);
+  openCategoryDialog(action: string): void {
+    this.dialogRef = this.dialog.open(CategoryDialogComponent, { data: action });
     this.dialogRef.afterClosed().subscribe(result => {
       // Handle the result here (e.g., perform an action based on the result)
       console.log(result);

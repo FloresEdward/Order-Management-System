@@ -1,0 +1,16 @@
+<div class="mat-dialog-container">
+    <h2 mat-dialog-title>{{ action }} Category</h2>
+    <mat-dialog-content>
+        <mat-form-field *ngIf="action !== 'Delete'">
+          <input matInput placeholder="Name" [(ngModel)]="categoryName">
+        </mat-form-field>
+        <p *ngIf="action === 'Delete'">Do you want to delete {{ categoryName }}?</p>
+      </mat-dialog-content>
+      
+    <mat-dialog-actions align="end">
+      <button mat-raised-button color="primary" (click)="addCategory()" [hidden]="action !== 'Add'">Add</button>
+      <button mat-raised-button color="primary" (click)="editCategory()" [hidden]="action !== 'Edit'">Edit</button>
+      <button mat-raised-button color="warn" (click)="deleteCategory()" [hidden]="action !== 'Delete'">Delete</button>
+      <button mat-raised-button (click)="closeDialog()">Cancel</button>
+    </mat-dialog-actions>
+  </div>
