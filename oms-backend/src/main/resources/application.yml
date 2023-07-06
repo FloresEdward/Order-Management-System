@@ -6,42 +6,17 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
     properties:
       hibernate:
         format_sql: true
-    database: mysql
-    database-platform: org.hibernate.dialect.MariaDBDialect
+    database-platform: org.hibernate.dialect.MySQLDialect
 
-## Database configuration
-#spring.datasource.url=jdbc:mariadb://localhost:3306/ordermanagementsystem
-#spring.datasource.username=root
-#spring.datasource.password=password
-#
-## Hibernate dialect for MariaDB
-#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MariaDBDialect
-#spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
-#
-## Enable JPA auto-configuration
-#spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-#
-## JPA properties
-#spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
-#spring.jpa.hibernate.ddl-auto=create
-#spring.jpa.show-sql=true
-#spring.jpa.properties.hibernate.format_sql=true
-#
-#
-## JWT configuration
-#jwt.secret=your_jwt_secret_key
-#jwt.expiration=86400000
-#
-## Spring Security configuration
-#spring.security.user.name=admin
-#spring.security.user.password=admin-password
-#spring.security.user.roles=ADMIN
-#
-## Server configuration
-#server.port=8082
-
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
