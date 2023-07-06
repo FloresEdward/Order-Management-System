@@ -20,6 +20,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { SignupComponent } from './landing/signup/signup.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { ForgotPasswordComponent } from './landing/forgot-password/forgot-password.component';
+import { SetNewPasswordComponent } from './landing/set-new-password/set-new-password.component';
 
 
 
@@ -34,6 +35,7 @@ import { ForgotPasswordComponent } from './landing/forgot-password/forgot-passwo
     ErrorComponent,
     SignupComponent,
     ForgotPasswordComponent,
+    SetNewPasswordComponent,
   ],
   imports: [
     BrowserModule,

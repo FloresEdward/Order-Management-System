@@ -6,6 +6,7 @@ import { ErrorComponent } from './error/error.component';
 import { LoginComponent } from './landing/login/login.component';
 import { SignupComponent } from './landing/signup/signup.component';
 import { ForgotPasswordComponent } from './landing/forgot-password/forgot-password.component';
+import { SetNewPasswordComponent } from './landing/set-new-password/set-new-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -13,7 +14,8 @@ const routes: Routes = [
     path: '', component: HomeComponent, children: [
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignupComponent },
-      { path: 'reset-password', component: ForgotPasswordComponent }
+      { path: 'reset-password', component: ForgotPasswordComponent },
+      { path: 'set-new-password', component: SetNewPasswordComponent },
     ]
   },
   {
