@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -9,39 +10,57 @@ import { TokenService } from 'src/app/services/token.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss', '../landing.component.scss'],
 })
-export class LoginComponent {
-  email: string = "";
-  password: string = "";
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
   private returnUrl: string;
 
+  constructor(
+    private formBuilder: FormBuilder,
+    private authenticationService: AuthenticationService,
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/app/dashboard';
 
-  constructor(private authenticationService: AuthenticationService,
-     private http: HttpClient,
-      private route: ActivatedRoute,
-       private router: Router,
-       ) {
-    this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/app/dashboard";
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+  }
 
   public login(): void {
-    console.log(this.email);
-    console.log(this.password);
+    if (this.loginForm.invalid) {
+      this.markFormControlsAsTouched();
+      return;
+    }
 
-    const credentials = {
-      /* construct the authentication request object */
-      email: this.email,
-      password: this.password
-    };
-    this.authenticationService.authenticate(credentials).subscribe(
+    const email = this.loginForm.value.email;
+    const password = this.loginForm.value.password;
+
+    this.authenticationService.authenticate({ email, password }).subscribe(
       (response) => {
         this.router.navigateByUrl(this.returnUrl);
         console.log('Token from service:', this.authenticationService.getTokenFromService());
       },
       (error) => {
-        console.log(error)
+        console.log(error);
       }
     );
+  }
+
+  public isFieldInvalid(field: string): boolean {
+    const control: any = this.loginForm.get(field);
+    return control.invalid && (control.dirty || control.touched);
+  }
+
+  private markFormControlsAsTouched(): void {
+    Object.values(this.loginForm.controls).forEach(control => {
+      control.markAsTouched();
+    });
   }
 }
