@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AddCategoryDialogComponent } from './dialogs/add-category-dialog/add-category-dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
@@ -12,7 +12,8 @@ interface Category {
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class CategoryComponent {
+// export class CategoryComponent {
+  export class CategoryComponent implements OnInit {
 
   cardTitle: string = 'Manage Category'; //title for card
 
@@ -26,6 +27,9 @@ export class CategoryComponent {
   dialogRef: MatDialogRef<AddCategoryDialogComponent> | undefined;
 
   constructor(private dialog: MatDialog) {}
+  ngOnInit(): void {
+    
+  }
 
   // Function to add a new category
   addCategory() {

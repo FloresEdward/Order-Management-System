@@ -13,7 +13,7 @@ export class ManageOrderComponent implements OnInit {
   
   cardTitle: string = 'Manage Order'; // title for card
 
-  displayedColumns: string[] = ['name', 'email', 'contactNumber', 'paymentMethod', 'total', 'view'];
+  displayedColumns: string[] = ['name', 'address', 'contactNumber', 'paymentMethod', 'total', 'view'];
   // dataSource: any[] = [];
   dataSource!: MatTableDataSource<any>;
   responseMessage: any;
@@ -32,9 +32,12 @@ export class ManageOrderComponent implements OnInit {
 
   tableData() {
     const data = [
-      { name: 'John Doe', email: 'john.doe@example.com', contactNumber: '1234567890', paymentMethod: 'Credit Card', total: '$100' },
-      { name: 'Jane Smith', email: 'jane.smith@example.com', contactNumber: '9876543210', paymentMethod: 'PayPal', total: '$150' },
-      { name: 'Joe Smith', email: 'joe.smith@example.com', contactNumber: '9024865210', paymentMethod: 'Libre', total: '$250' },
+      // { name: 'John Doe', email: 'john.doe@example.com', contactNumber: '1234567890', paymentMethod: 'Credit Card', total: '$100' },
+      // { name: 'Jane Smith', email: 'jane.smith@example.com', contactNumber: '9876543210', paymentMethod: 'PayPal', total: '$150' },
+      // { name: 'Joe Smith', email: 'joe.smith@example.com', contactNumber: '9024865210', paymentMethod: 'Libre', total: '$250' },
+      { name: 'John Doe', address: 'Sa tabi-tabi', contactNumber: '1234567890', paymentMethod: 'Credit Card', total: '$100' },
+      { name: 'Jane Smith', address: 'Sa Bahay', contactNumber: '9876543210', paymentMethod: 'PayPal', total: '$150' },
+      { name: 'Joe Smith', address: '123 Street', contactNumber: '9024865210', paymentMethod: 'Libre', total: '$250' },
     ];
     this.dataSource = new MatTableDataSource(data);
   }

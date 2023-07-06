@@ -13,7 +13,6 @@ mat-card {
 }
 mat-form-field {
     width: 100%; /* Adjust the width to your preference */
-    margin-bottom: 10px;
 }
 
 mat-label {
@@ -23,8 +22,4 @@ mat-label {
 mat-card span {
     font-size: 25px;
     display: block;
-}
-
-table {
-    width: 100%;
 }
