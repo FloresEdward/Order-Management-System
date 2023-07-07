@@ -6,11 +6,12 @@ import { RouterModule } from '@angular/router';
 import { OrderHistoryRoutes } from './order-history.routing';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { OrderHistoryComponent } from './order-history.component';
+import { OrderHistoryListComponent } from './order-history-list/order-history-list.component';
 
 
 
 @NgModule({
-  declarations: [OrderHistoryComponent],
+  declarations: [OrderHistoryComponent, OrderHistoryListComponent],
   imports: [
     CommonModule,
     MaterialModule,

@@ -3,7 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { ConfirmationDialogComponent } from '../manage-order/confirmation-dialog/confirmation-dialog.component';
+import { OrderHistoryListComponent } from './order-history-list/order-history-list.component';
 
 @Component({
   selector: 'app-order-history',
@@ -16,7 +16,7 @@ export class OrderHistoryComponent implements OnInit{
 
   selectedValue: string | null = null;
 
-  displayedColumns: string[] = ['id', 'name', 'address', 'contactNumber', 'total', 'rider', 'view'];
+  displayedColumns: string[] = ['id', 'name', 'address', 'contactNumber', 'total', 'rider', 'status', 'view'];
   listOfRiders: string[] = [];
   dataSource!: MatTableDataSource<any>;
   responseMessage: any;
@@ -35,9 +35,9 @@ export class OrderHistoryComponent implements OnInit{
   tableData() {
   
     const data = [
-      { id: 1, name: 'John Doe', address: 'Sa tabi-tabi', contactNumber: '1234567890', rider: "Rider 1", total: '$100'},
-      { id: 2, name: 'Jane Smith', address: 'Sa Bahay', contactNumber: '9876543210', rider: "Rider 2", total: '$150'},
-      { id: 3, name: 'Joe Smith', address: '123 Street', contactNumber: '9024865210', rider: "Rider 3", total: '$250'},
+      { id: 1, name: 'John Doe', address: 'Sa tabi-tabi', contactNumber: '1234567890', rider: "Rider 1", status: 'Delivered', total: '$100'},
+      { id: 2, name: 'Jane Smith', address: 'Sa Bahay', contactNumber: '9876543210', rider: " ", status: 'Canceled', total: '$150'},
+      { id: 3, name: 'Joe Smith', address: '123 Street', contactNumber: '9024865210', rider: "Rider 3", status: 'Delivered', total: '$250'},
     ];
     this.dataSource = new MatTableDataSource(data);
   }
@@ -53,7 +53,7 @@ export class OrderHistoryComponent implements OnInit{
       data:values
     }
     dialogConfig.width = "100%";
-    const dialogRef = this.dialog.open(OrderHistoryComponent, dialogConfig);
+    const dialogRef = this.dialog.open(OrderHistoryListComponent, dialogConfig);
     this.router.events.subscribe(()=>{
       dialogRef.close();
     })

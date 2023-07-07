@@ -9,7 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialRoutes } from './material.routing';
 import { MaterialModule } from '../shared/material-module';
-import { ManageOrderProductsComponent } from './dialog/manage-order-products/manage-order-products.component';
+import { ManageOrderProductsComponent } from '../order/manage-order/manage-order-products/manage-order-products.component';
 
 @NgModule({
   imports: [
