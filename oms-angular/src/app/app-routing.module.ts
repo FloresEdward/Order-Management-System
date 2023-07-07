@@ -53,9 +53,15 @@ const routes: Routes = [
         loadChildren: () => import('./order/create-order/create-order.module').then(m => m.CreateOrderModule), // lazy
       },
       {
+        path: 'order-history',
+        loadChildren: () => import('./order/order-history/order-history.module').then(m => m.OrderHistoryModule)
+      },
+      {
         path: 'users',
         loadChildren: () => import('./users/users.module').then(m => m.UsersModule), // lazy
       },
+      
+      
 
     ],
     // canActivate: [AuthGuard],

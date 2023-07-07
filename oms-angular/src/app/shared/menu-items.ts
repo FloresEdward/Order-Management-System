@@ -51,6 +51,13 @@ const MENUITEMS = [
         icon: 'group',
         role: '',
     },
+    {
+        state: 'order-history',
+        name: 'Order History',
+        type: 'link',
+        icon: 'history',
+        role: '',
+    },
 ]
 
 @Injectable()

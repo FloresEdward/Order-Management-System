@@ -1,19 +1,11 @@
-<!-- <mat-card>
-    <mat-card-title>Manage Order</mat-card-title>
-</mat-card> -->
 <app-card-title [title]="cardTitle"></app-card-title>
 <hr>
 <mat-card>
-    <mat-card-content>
-    <!-- <mat-form-field >  
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" #input>
-    </mat-form-field> -->
+    <mat-card-content>   
     <app-search-bar></app-search-bar>
     </mat-card-content>
 </mat-card>
 <hr>
-
 <div class="responsive_table">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="id">
@@ -35,11 +27,6 @@
             <td mat-cell *matCellDef="let element">{{element.contactNumber}}</td>
         </ng-container>
 
-        <!-- <ng-container matColumnDef="paymentMethod">
-            <th mat-header-cell *matHeaderCellDef>Payment Method</th>
-            <td mat-cell *matCellDef="let element">{{element.paymentMethod}}</td>
-        </ng-container> -->
-
         <ng-container matColumnDef="total">
             <th mat-header-cell *matHeaderCellDef>Total</th>
             <td mat-cell *matCellDef="let element">{{element.total}}</td>
@@ -47,29 +34,12 @@
 
         <ng-container matColumnDef="rider">
             <th mat-header-cell *matHeaderCellDef>Rider</th>
-            <td mat-cell *matCellDef="let element">
-                <mat-select [(value)]="element.rider" (change)="selectedValue = element.rider; updateCheckButtonDisabled()" placeholder="Select Rider">
-                <mat-select-trigger>
-                  {{ element.rider ? element.rider : 'Select Rider' }}
-                </mat-select-trigger>
-                <mat-option *ngFor="let rider of listOfRiders" [value]="rider">
-                  {{ rider }}
-                </mat-option>
-              </mat-select>
-            </td>
+            <td mat-cell *matCellDef="let element">{{element.rider}}</td>
         </ng-container>
-          
 
-        <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef>Action</th>
+        <ng-container matColumnDef="view">
+            <th mat-header-cell *matHeaderCellDef>View</th>
             <td mat-cell *matCellDef="let element" class="action-link">
-                <button mat-icon-button color="primary" matTooltip="Process" [disabled]="checkButtonDisabled">
-                    <mat-icon>check</mat-icon>
-                </button>
-
-                <button mat-icon-button color="primary" matTooltip="Cancel" (click)="handleDeleteAction(element)">
-                    <mat-icon>close</mat-icon>
-                </button>
 
                 <button mat-icon-button color="primary" matTooltip="View" (click)="handleViewAction(element)">
                     <mat-icon>visibility</mat-icon>

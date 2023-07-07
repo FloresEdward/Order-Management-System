@@ -16,7 +16,7 @@ export class ManageOrderComponent implements OnInit {
   cardTitle: string = 'Manage Order';
   selectedValue: string | null = null;
 
-  displayedColumns: string[] = ['name', 'address', 'contactNumber', 'total', 'rider', 'action'];
+  displayedColumns: string[] = ['id', 'name', 'address', 'contactNumber', 'total', 'rider', 'action'];
   listOfRiders: string[] = [];
   dataSource!: MatTableDataSource<any>;
   responseMessage: any;
@@ -36,9 +36,9 @@ export class ManageOrderComponent implements OnInit {
     const dropDownList: string[] = ['Edward', 'Emman', 'Troy'];
   
     const data = [
-      { name: 'John Doe', address: 'Sa tabi-tabi', contactNumber: '1234567890', status: this.listOfRiders, total: '$100', isSelected: false },
-      { name: 'Jane Smith', address: 'Sa Bahay', contactNumber: '9876543210', status: this.listOfRiders, total: '$150', isSelected: false },
-      { name: 'Joe Smith', address: '123 Street', contactNumber: '9024865210',status: this.listOfRiders, total: '$250', isSelected: false },
+      { id: 1, name: 'John Doe', address: 'Sa tabi-tabi', contactNumber: '1234567890', status: this.listOfRiders, total: '$100', isSelected: false },
+      { id: 2, name: 'Jane Smith', address: 'Sa Bahay', contactNumber: '9876543210', status: this.listOfRiders, total: '$150', isSelected: false },
+      { id: 3, name: 'Joe Smith', address: '123 Street', contactNumber: '9024865210',status: this.listOfRiders, total: '$250', isSelected: false },
     ];
     this.dataSource = new MatTableDataSource(data);
     this.listOfRiders = dropDownList;
