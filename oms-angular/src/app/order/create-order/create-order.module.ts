@@ -7,6 +7,7 @@ import { CreateOrderComponent } from './create-order.component';
 import { CreateOrderRoutes } from './create-order.routing';
 import { CardTitleComponent } from 'src/app/card-title/card-title.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
     RouterModule.forChild(CreateOrderRoutes),
     SharedModule
   ],
-  declarations: [CreateOrderComponent],
+  declarations: [CreateOrderComponent, ConfirmationDialogComponent],
 })
 export class CreateOrderModule { }

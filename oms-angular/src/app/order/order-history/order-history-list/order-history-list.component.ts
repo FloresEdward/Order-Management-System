@@ -8,7 +8,7 @@ import { ManageOrderProductsComponent } from '../../manage-order/manage-order-pr
   styleUrls: ['./order-history-list.component.css']
 })
 export class OrderHistoryListComponent implements OnInit{
-  displayedColumns: string[] = ['name', 'category', 'price', 'quantity', 'total'];
+  displayedColumns: string[] = ['product', 'category', 'price', 'quantity', 'rider', 'status', 'total'];
   dataSource: any;
   data: any;
 

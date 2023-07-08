@@ -64,7 +64,7 @@ export class ManageOrderComponent implements OnInit {
   handleDeleteAction(values:any) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
       data:{
-        message: 'Are you sure want to delete?',
+        message: 'Are you sure want to cancel this order?',
       }
     });
   }

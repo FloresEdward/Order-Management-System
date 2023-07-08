@@ -1,5 +1,6 @@
 <mat-toolbar color="primary">
-    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between">
+    <!-- <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between"> -->
+    <mat-toolbar-row>
         <span>View Details</span>
         <span class="spacer"></span>
         <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
@@ -11,11 +12,14 @@
 <mat-dialog-content class="mat-typography">
     <table id="customers">
         <tr>
-            <td><b>Name:</b> {{data?.name}}</td>
-            <td><b>Email:</b>{{data?.email}}</td>
+            <td><b>Id:</b> {{data?.id}}</td>
+            <td><b>Name:</b>{{data?.name}}<b></b></td>
         </tr>
         <tr>
+            <td><b>Email:</b>{{data?.Email}}</td>
             <td><b>Contact Number:</b>{{data?.contactNumber}}</td>
+        </tr>
+        <tr>
             <td><b>Payment Method</b>{{data?.paymentMethod}}</td>
         </tr>
     </table>
@@ -23,9 +27,9 @@
     <div class="responsive_table">
         <br>
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Name</th>
-                <td mat-cell *matCellDef="let element">{{element.name}}</td>
+            <ng-container matColumnDef="product">
+                <th mat-header-cell *matHeaderCellDef>Product</th>
+                <td mat-cell *matCellDef="let element">{{element.product}}</td>
             </ng-container>
 
             <ng-container matColumnDef="category">
@@ -41,6 +45,16 @@
             <ng-container matColumnDef="quantity">
                 <th mat-header-cell *matHeaderCellDef>Quantity</th>
                 <td mat-cell *matCellDef="let element">{{element.quantity}}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="rider">
+                <th mat-header-cell *matHeaderCellDef>Rider</th>
+                <td mat-cell *matCellDef="let element">{{element.rider}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let element">{{element.status}}</td>
             </ng-container>
 
             <ng-container matColumnDef="total">

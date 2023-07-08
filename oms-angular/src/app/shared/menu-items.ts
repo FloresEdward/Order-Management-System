@@ -45,19 +45,20 @@ const MENUITEMS = [
         role: '',
     },
     {
-        state: 'users',
-        name: 'Manage Accounts',
-        type: 'link',
-        icon: 'group',
-        role: '',
-    },
-    {
         state: 'order-history',
         name: 'Order History',
         type: 'link',
         icon: 'history',
         role: '',
     },
+    {
+        state: 'users',
+        name: 'Manage Accounts',
+        type: 'link',
+        icon: 'group',
+        role: '',
+    },
+    
 ]
 
 @Injectable()
