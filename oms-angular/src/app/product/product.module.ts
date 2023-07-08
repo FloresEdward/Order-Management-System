@@ -5,9 +5,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { ProductRoutes } from './product.routing';
 import { ProductComponent } from './product.component';
-import { AddProductDialogComponent } from './dialogs/add-product-dialog/add-product-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { ProductDialogComponent } from './dialogs/product-dialog/product-dialog.component';
 
 
 @NgModule({
@@ -19,7 +19,7 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     SharedModule
   ],
-  declarations: [ProductComponent, AddProductDialogComponent]
+  declarations: [ProductComponent, ProductDialogComponent]
   
 })
 export class ProductModule { }

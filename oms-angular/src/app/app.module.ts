@@ -38,7 +38,6 @@ import { SetNewPasswordComponent } from './landing/set-new-password/set-new-pass
     SignupComponent,
     ForgotPasswordComponent,
     SetNewPasswordComponent,
-    // OrderHistoryComponent,
   ],
   imports: [
     BrowserModule,

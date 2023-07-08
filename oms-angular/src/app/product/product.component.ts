@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { AddProductDialogComponent } from './dialogs/add-product-dialog/add-product-dialog.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ProductDialogComponent } from './dialogs/product-dialog/product-dialog.component';
 
 @Component({
   selector: 'app-product',
@@ -20,7 +20,7 @@ export class ProductComponent {
   ];
 
     
-  dialogRef: MatDialogRef<AddProductDialogComponent> | undefined;
+  dialogRef: MatDialogRef<ProductDialogComponent> | undefined;
 
   constructor(private dialog: MatDialog, private http: HttpClient) {}
 
@@ -37,10 +37,9 @@ export class ProductComponent {
     // Delete product logic here
   }
 
-  openAddProductDialog(): void {
-    this.dialogRef = this.dialog.open(AddProductDialogComponent);
-    this.dialogRef.afterClosed().subscribe(result => {
-      // Handle the result here (e.g., perform an action based on the result)
+  openProductDialog(action: string): void {
+    this.dialogRef = this.dialog.open(ProductDialogComponent, { data: action });
+    this.dialogRef?.afterClosed().subscribe(result => {
       console.log(result);
     });
   }
