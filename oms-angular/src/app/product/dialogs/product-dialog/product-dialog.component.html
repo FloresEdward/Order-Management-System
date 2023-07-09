@@ -3,7 +3,7 @@
 <mat-dialog-content>
   <form>
     <mat-form-field class="form-input full-width" *ngIf="action !== 'Delete'">
-      <input matInput placeholder="Name" [(ngModel)]="productName" />
+      <input matInput placeholder="Name" [(ngModel)]="productName" name="productName"/>
     </mat-form-field>
 
     <mat-form-field class="form-input full-width" *ngIf="action !== 'Delete'">
@@ -11,6 +11,7 @@
         matInput
         placeholder="Description"
         [(ngModel)]="productDescription"
+        name="productDescription"
       ></textarea>
     </mat-form-field>
 
@@ -20,6 +21,7 @@
         type="number"
         placeholder="Price"
         [(ngModel)]="productPrice"
+        name="productPrice"
       />
     </mat-form-field>
 
@@ -29,6 +31,7 @@
         type="number"
         placeholder="Stock"
         [(ngModel)]="productStock"
+        name="productStock"
       />
     </mat-form-field>
   </form>

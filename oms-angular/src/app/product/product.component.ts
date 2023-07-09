@@ -13,10 +13,10 @@ export class ProductComponent {
   cardTitle: string = 'Manage Menu'; //title for card
   
   products: any[] = [
-    { name: 'Product 1', category: 'Category 1', price: 10.99, stock: 20 },
-    { name: 'Product 2', category: 'Category 2', price: 19.99, stock: 15 },
-    { name: 'Product 3', category: 'Category 1', price: 7.99, stock: 8 },
-    { name: 'Product 4', category: 'Category 3', price: 24.99, stock: 12 },
+    { name: 'Product 1', category: 'Category 1', price: 10.99, stock: 20, description: 'This is product 1' },
+    { name: 'Product 2', category: 'Category 2', price: 19.99, stock: 15, description: 'This is product 2' },
+    { name: 'Product 3', category: 'Category 1', price: 7.99, stock: 8, description: 'This is product 3' },
+    { name: 'Product 4', category: 'Category 3', price: 24.99, stock: 12, description: 'This is product 4' },
   ];
 
     
