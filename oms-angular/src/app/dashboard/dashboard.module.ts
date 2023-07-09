@@ -20,7 +20,8 @@ import { ChartModule } from 'angular-highcharts';
     FlexLayoutModule,
     RouterModule.forChild(DashboardRoutes),
     SharedModule, //newly added,
-    ChartModule
+    ChartModule,
+    FormsModule
   ],
   declarations: [DashboardComponent, TopMealComponent, OrderStatusComponent, NoCancelRateComponent, CategoryPerformanceComponent]
 })

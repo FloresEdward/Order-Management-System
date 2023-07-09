@@ -46,6 +46,18 @@
       width: 48.69vw;
     }
   }
+  //date picker
+  mat-form-field {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .chart-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .bottom-section {
@@ -69,11 +81,11 @@
     }
 
     &.right {
-      width: 39.06vw;
+      width: 38.69vw;
 
       // Adjust width based on container height
       @media only screen and (max-height: 93.75vh) {
-        width: 33.13vw;
+        width: 38.13vw;
       }
       @media only screen and (max-height: 87.5vh) {
         width: 27.5vw;
@@ -86,10 +98,4 @@
       }
     }
   }
-}
-
-// Adjust chart size based on container size
-.chart-container {
-  width: 100%;
-  height: 100%;
 }

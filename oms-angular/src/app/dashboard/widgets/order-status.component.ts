@@ -3,7 +3,8 @@ import { Chart } from 'angular-highcharts';
 
 @Component({
   selector: 'widget-order-status',
-  template: '<div></div>',
+  templateUrl: './order-status.component.html',
+  styleUrls: ['./order-status.component.scss']
 })
 export class OrderStatusComponent {
 
