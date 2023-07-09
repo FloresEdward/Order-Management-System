@@ -27,7 +27,7 @@ public class OrderManagementSystem {
 					.lastname("Admin")
 					.email("admin@mail.com")
 					.password("password")
-					.role(ADMIN)
+ 					.role(ADMIN)
 					.build();
 			System.out.println("Admin token: " + service.register(admin).getAccessToken());
 

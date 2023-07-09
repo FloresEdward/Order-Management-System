@@ -50,7 +50,9 @@ export class ProductComponent {
 
   fetchData(): void {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    this.http.get('localhost:4200/api/v1/demo-controller',{headers: headers}).subscribe(
+    // headers.set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4ODkwOTAzOSwiZXhwIjoxNjg4OTk1NDM5fQ.0jTF8bIFiWJymeYG6ChauJZJ3aSgN-AUhDlL5aCeRAM')
+    
+    this.http.get('http://localhost:8080/api/v1/demo-controller',{headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYW5hZ2VyQG1haWwuY29tIiwiaWF0IjoxNjg4OTA5ODg3LCJleHAiOjE2ODg5OTYyODd9.1BcreB6OZTzJwyv8k00NKmQ9pF5ddUyidKCGI4lph-w'}}).subscribe(
       (response) => {
         console.log('Data:', response);
       },

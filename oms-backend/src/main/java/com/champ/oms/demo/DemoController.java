@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1/demo-controller")
@@ -14,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoController {
 
   @GetMapping
-  public ResponseEntity<String> sayHello() {
-    return ResponseEntity.ok("Hello from secured endpoint");
+  public ResponseEntity<?> sayHello() {
+    return ResponseEntity.ok(new HashMap<String, String>(){{
+      put("message", "Hello from secured endpoint");
+    }});
   }
 
 }
