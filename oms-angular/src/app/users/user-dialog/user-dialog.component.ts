@@ -27,8 +27,10 @@ export class UserDialogComponent {
 
   saveUser(): void {
     // Perform any necessary save operations or data validation here
-    this.dialogRef.close(this.data);
+    const modifiedData = Object.assign({}, this.data);
+    this.dialogRef.close(modifiedData);
   }
+  
 
   closeDialog(): void {
     this.dialogRef.close();

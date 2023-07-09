@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmationDialogComponent } from '../order/manage-order/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-users',
@@ -48,21 +49,43 @@ export class UsersComponent implements OnInit{
   }
 
   editUser(user: any) {
+    // Create a copy of the original user data
+    const originalUser = Object.assign({}, user);
+  
     // Open the UserDialogComponent as a MatDialog with the selected user data
     const dialogRef = this.dialog.open(UserDialogComponent, {
       width: '400px',
       data: user
     });
-
+  
     dialogRef.afterClosed().subscribe(result => {
-      // Handle the result after the dialog is closed, if needed
-      console.log('The dialog was closed', result);
+      if (result) {
+        // User clicked the "Save" button, apply the changes
+        user.user = result.user;
+        user.role = result.role;
+        user.status = result.status;
+      } else {
+        // User closed the dialog or clicked the "Cancel" button, revert back to the original data
+        user.user = originalUser.user;
+        user.role = originalUser.role;
+        user.status = originalUser.status;
+      }
     });
   }
+  
+  
 
   deleteUser(user: any) {
     // Implement the logic to delete the user
     console.log('Deleting user:', user);
+  }
+
+  handleDeleteAction(values:any) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
+      data:{
+        message: 'Are you sure want to delete this account?',
+      }
+    });
   }
 
   applyFilter(event: Event) {

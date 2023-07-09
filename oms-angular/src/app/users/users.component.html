@@ -1,27 +1,19 @@
 <div class="container">
-  <!-- <mat-card>
-    <mat-card-title>Manage Users</mat-card-title>
-  </mat-card> -->
   <app-card-title [title]="cardTitle"></app-card-title>
   <hr>
   <div class="card">
     <mat-card>
       <mat-card-content>
-        <!-- <div class="search-bar">
-          <label>Search</label>&nbsp;
-          <input type="text" />
-        </div> -->
-        <input matInput (keyup)="applyFilter($event)" #input>
+        <div class="search-bar">
+          <mat-form-field class="search-input">
+            <input matInput (keyup)="applyFilter($event)" #input type="text" placeholder="Search...">
+          </mat-form-field>
+        </div>
       </mat-card-content>
-      <!-- <button type="button" class="button" (click)="manageRole()"><mat-icon>add_circle</mat-icon> Manage Role</button> -->
     </mat-card>
   </div>
   <div class="card">
     <mat-card>
-      <mat-card-header>
-        <mat-card-title></mat-card-title>
-        <!-- add title if needed -->
-      </mat-card-header>
       <mat-card-content>
         <table mat-table [dataSource]="dataSource">
           <ng-container matColumnDef="user">
@@ -50,7 +42,7 @@
               <button mat-icon-button color="primary" (click)="editUser(user)" [disabled]="user.role.role === 'Admin'">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button color="warn" (click)="deleteUser(user)" [disabled]="user.role.role === 'Admin'">
+              <button mat-icon-button color="warn" (click)="handleDeleteAction(user)" [disabled]="user.role.role === 'Admin'">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>
