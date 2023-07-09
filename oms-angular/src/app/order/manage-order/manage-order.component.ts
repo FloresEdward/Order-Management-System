@@ -4,7 +4,8 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Route, Router } from '@angular/router';
 import { ManageOrderProductsComponent } from './manage-order-products/manage-order-products.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-order',
@@ -25,7 +26,7 @@ export class ManageOrderComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private snackBar: MatSnackBar){
+    private snackBar: SnackbarService){
   }
 
   ngOnInit(): void {

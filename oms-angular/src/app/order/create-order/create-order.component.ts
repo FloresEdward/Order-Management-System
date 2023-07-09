@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { GlobalConstants } from 'src/app/shared/global-constants';
 
 @Component({
   selector: 'app-order-status',
@@ -34,7 +36,8 @@ export class CreateOrderComponent implements OnInit{
   responseMessage: any;
 
   constructor(private formBuilder: FormBuilder,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private snackbarService: SnackbarService) {
 
   }
 
@@ -75,7 +78,7 @@ export class CreateOrderComponent implements OnInit{
   }
 
   add() {
-
+    this.snackbarService.openSnackBar(GlobalConstants.productAdded, "success");
   }
 
   handleDeleteAction() {
