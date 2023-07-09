@@ -37,8 +37,12 @@ export class ProductComponent {
     // Delete product logic here
   }
 
-  openProductDialog(action: string): void {
-    this.dialogRef = this.dialog.open(ProductDialogComponent, { data: action });
+  openProductDialog(action: string, product: any): void {
+    let dialogData = {
+      action: action,
+      product: product
+    }
+    this.dialogRef = this.dialog.open(ProductDialogComponent, { data: dialogData });
     this.dialogRef?.afterClosed().subscribe(result => {
       console.log(result);
     });

@@ -12,8 +12,9 @@ export class CategoryDialogComponent {
   categoryName: string = "";
 
   constructor(public dialogRef: MatDialogRef<CategoryDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: string) {
-                this.action = data;
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+                this.action = data.action;
+                this.categoryName = data.category ? data.category.name : '';
               }
 
   closeDialog(): void {

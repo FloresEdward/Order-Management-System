@@ -47,8 +47,13 @@ export class CategoryComponent implements OnInit {
   }
 
 
-  openCategoryDialog(action: string): void {
-    this.dialogRef = this.dialog.open(CategoryDialogComponent, { data: action });
+  openCategoryDialog(action: string, category: any): void {
+    let dialogData = {
+      action: action,
+      category: category
+    }
+
+    this.dialogRef = this.dialog.open(CategoryDialogComponent, { data: dialogData });
     this.dialogRef.afterClosed().subscribe(result => {
       // Handle the result here (e.g., perform an action based on the result)
       console.log(result);

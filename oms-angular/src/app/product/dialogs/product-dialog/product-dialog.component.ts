@@ -16,8 +16,12 @@ export class ProductDialogComponent {
   productStock: number | undefined;
 
   constructor(public dialogRef: MatDialogRef<ProductDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: string) {
-                this.action = data;
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+                this.action = data.action;
+                this.productName = data.product ? data.product.name : '';
+                this.productDescription = data.product ? data.product.description : '';
+                this.productPrice = data.product ? data.product.price : '';
+                this.productStock = data.product ? data.product.stock : '';
               }
 
   addProduct(): void {
