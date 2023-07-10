@@ -66,10 +66,11 @@ export class SignupComponent {
 
     const userDetails = {
       /* construct the authentication request object */
-      email: this.email,
-      password: this.password,
-      firstname: this.firstname,
-      lastame: this.lastname
+      email: this.signupForm.value.email,
+      password: this.signupForm.value.password,
+      firstname: this.signupForm.value.firstname,
+      lastname: this.signupForm.value.lastname,
+      role: 'ADMIN'
       // Add default Role to this object before insert to database
     };
     // check if email is unique
