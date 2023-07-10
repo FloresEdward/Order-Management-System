@@ -4,7 +4,7 @@ import com.champ.oms.config.JwtService;
 import com.champ.oms.token.Token;
 import com.champ.oms.token.TokenRepository;
 import com.champ.oms.token.TokenType;
-import com.champ.oms.user.User;
+import com.champ.oms.document.User;
 import com.champ.oms.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;

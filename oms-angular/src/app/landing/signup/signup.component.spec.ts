@@ -103,29 +103,6 @@ describe('SignupComponent', () => {
 
     expect(result).toEqual({ mismatch: true });
   });
-
-  // it('should call authenticationService.register and navigate to returnUrl when calling signup', () => {
-  //   const userDetails = {
-  //     email: 'test@example.com',
-  //     password: 'password',
-  //     firstname: 'John',
-  //     lastname: 'Doe',
-  //   };
-  //   const returnUrl = '/dashboard';
-  //   spyOn(authenticationService, 'register').and.returnValue({
-  //     subscribe: (success: any) => {
-  //       success();
-  //     },
-  //   });
-  //   spyOn(router, 'navigateByUrl');
-
-  //   component.returnUrl = returnUrl;
-  //   component.signupForm.setValue(userDetails);
-  //   component.signup();
-
-  //   expect(authenticationService.register).toHaveBeenCalledWith(userDetails);
-  //   expect(router.navigateByUrl).toHaveBeenCalledWith(returnUrl);
-  // });
 });
 
 class RouterStub {

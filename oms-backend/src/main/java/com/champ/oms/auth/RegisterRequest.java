@@ -1,6 +1,6 @@
 package com.champ.oms.auth;
 
-import com.champ.oms.user.Role;
+import com.champ.oms.document.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

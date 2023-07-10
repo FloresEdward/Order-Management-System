@@ -1,5 +1,6 @@
-package com.champ.oms.user;
+package com.champ.oms.document;
 
+import com.champ.oms.user.Permission;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

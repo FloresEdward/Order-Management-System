@@ -1,6 +1,6 @@
 package com.champ.oms.token;
 
-import com.champ.oms.user.User;
+import com.champ.oms.document.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,8 +1,9 @@
-package com.champ.oms.user;
+package com.champ.oms.document;
 
 import com.champ.oms.token.Token;
 import java.util.Collection;
 import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection="_user")
+@Document(collection="user")
 //@Table(name = "_user")
 public class User implements UserDetails {
 
