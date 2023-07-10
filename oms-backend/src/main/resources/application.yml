@@ -1,17 +1,12 @@
 spring:
-  datasource:
-    url: jdbc:mariadb://localhost:3306/ordermanagementsystem
-    username: root
-    password: password
-    driver-class-name: org.mariadb.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-    database-platform: org.hibernate.dialect.MySQLDialect
+  data:
+    mongodb:
+      authentication-database: admin
+      username: user
+      password: password
+      database: omsDB
+      port: 3307
+      host: localhost
 
 application:
   security:

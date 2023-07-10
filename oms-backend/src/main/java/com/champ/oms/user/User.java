@@ -1,19 +1,14 @@
 package com.champ.oms.user;
 
 import com.champ.oms.token.Token;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import java.util.Collection;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -21,22 +16,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "_user")
+@Document(collection="_user")
+//@Table(name = "_user")
 public class User implements UserDetails {
 
   @Id
-  @GeneratedValue
-  private Integer id;
+//  @GeneratedValue
+  private String id;
   private String firstname;
   private String lastname;
   private String email;
   private String password;
 
-  @Enumerated(EnumType.STRING)
+//  @Enumerated(EnumType.STRING)
   private Role role;
 
-  @OneToMany(mappedBy = "user")
+//  @OneToMany(mappedBy = "user")
   private List<Token> tokens;
 
   @Override

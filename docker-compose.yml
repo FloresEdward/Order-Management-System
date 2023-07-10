@@ -1,15 +1,30 @@
+# version: '3'
+# volumes:
+#   data:
+# services:
+#   db:
+#     image: mariadb
+#     environment:
+#       MYSQL_ROOT_PASSWORD: password
+#       MYSQL_DATABASE: ordermanagementsystem
+#       MYSQL_USER: root
+#       MYSQL_PASSWORD: password
+#     volumes:
+#       - data:/var/lib/mysql
+#     ports:
+#       - "3306:3306"
+
 version: '3'
-volumes:
-  data:
 services:
-  db:
-    image: mariadb
+  omsMongoDB:
+    image: mongo:latest
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: ordermanagementsystem
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password
-    volumes:
-      - data:/var/lib/mysql
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: omsDB
     ports:
-      - "3306:3306"
+      - "3307:27017"
+    volumes:
+      - mongoDB_data_container:/data/db
+volumes:
+  mongoDB_data_container:
