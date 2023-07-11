@@ -13,7 +13,8 @@ import { TokenService } from 'src/app/services/token.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   private returnUrl: string;
-
+  public authenticationError: boolean = false;
+  
   constructor(
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
@@ -51,6 +52,7 @@ export class LoginComponent implements OnInit {
       },
       (error) => {
         console.log(error);
+        this.authenticationError = true;
       }
     );
   }
