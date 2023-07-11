@@ -15,10 +15,12 @@ export class ProductDialogComponent implements OnInit {
   action: string = "";
 
   productName: string | undefined;
-  productCategory: string | undefined;
+  productCategory: any | undefined;
   productDescription: string | undefined;
   productPrice: number | undefined;
   productStock: number | undefined;
+
+  selectedCategory: any;
 
   categories: any[] = [];
 
@@ -35,6 +37,8 @@ export class ProductDialogComponent implements OnInit {
     this.productDescription = data.product ? data.product.description : '';
     this.productPrice = data.product ? data.product.price : '';
     this.productStock = data.product ? data.product.stock : '';
+
+
   }
   ngOnInit(): void {
     this.getCategories();
@@ -45,6 +49,7 @@ export class ProductDialogComponent implements OnInit {
     this.http.get<any[]>(baseUrl + '/').subscribe(
       (response) => {
         this.categories = response;
+        this.selectedCategory = this.categories.find(category => category.name === this.productCategory.name);
       },
       (error) => {
         console.log('Error:', error);
@@ -79,7 +84,24 @@ export class ProductDialogComponent implements OnInit {
   }
 
   editProduct(): void {
-    console.log('Product is succesfully editted');
+    const productDetails = {
+      name: this.productName,
+      description: this.productDescription,
+      category: this.productCategory,
+      price: this.productPrice,
+      stock: this.productStock
+    }
+
+    this.productService.editProduct(productDetails).subscribe(
+      (response) => {
+        console.log(response)
+        this.dialogRef.close({ success: true });
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
+
     this.dialogRef.close();
   }
 

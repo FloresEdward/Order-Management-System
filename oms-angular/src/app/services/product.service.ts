@@ -15,4 +15,10 @@ export class ProductService {
 
     return this.http.post(url, addProductRequest);
   }
+
+  public editProduct(editProductRequest: any) : Observable<any> {
+    const url = `${this.baseUrl}/`;
+
+    return this.http.put(url, editProductRequest);
+  }
 }

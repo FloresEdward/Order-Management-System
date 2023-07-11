@@ -74,11 +74,12 @@
                     <mat-label>Price</mat-label>
                     <input matInput [value]="manageOrderForm.get('price').value" formControlName="price" required readonly>
                 </mat-form-field>
-
+                
                 <mat-form-field fxFlex>
                     <mat-label>Quantity</mat-label>
-                    <input matInput formControlName="quantity" (keyup)="calculateTotal()" #input>
+                    <input matInput formControlName="quantity">
                 </mat-form-field>
+                
 
                 <mat-form-field fxFlex>
                     <mat-label>Total</mat-label>

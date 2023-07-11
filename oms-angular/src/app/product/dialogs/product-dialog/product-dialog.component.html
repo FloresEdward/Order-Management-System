@@ -6,12 +6,19 @@
       <input matInput placeholder="Name" [(ngModel)]="productName" name="productName"/>
     </mat-form-field>
 
-    <mat-form-field class="form-input full-width" *ngIf="action !== 'Delete'">
+    <mat-form-field class="form-input full-width" *ngIf="action === 'Add'">
       <mat-label>Category</mat-label>
-      <mat-select [(ngModel)]="productCategory" name="selectedCategory">
+      <mat-select [(ngModel)]="productCategory" name="productCategory">
         <mat-option *ngFor="let category of categories" [value]="category">{{ category.name }}</mat-option>
       </mat-select>
     </mat-form-field>    
+
+    <mat-form-field class="form-input full-width" *ngIf="action === 'Edit'">
+      <mat-label>Category edit</mat-label>
+      <mat-select [(ngModel)]="selectedCategory" name="selectedCategory">
+        <mat-option *ngFor="let category of categories" [value]="category">{{ category.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>  
 
     <mat-form-field class="form-input full-width" *ngIf="action !== 'Delete'">
       <textarea

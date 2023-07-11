@@ -37,6 +37,7 @@ export class ProductComponent implements OnInit{
       action: action,
       product: product
     }
+
     this.dialogRef = this.dialog.open(ProductDialogComponent, { data: dialogData });
     this.dialogRef?.afterClosed().subscribe(result => {
       console.log(result);

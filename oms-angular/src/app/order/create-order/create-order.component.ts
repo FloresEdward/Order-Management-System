@@ -14,27 +14,28 @@ import { CustomerService } from 'src/app/services/customer.service';
   templateUrl: './create-order.component.html',
   styleUrls: ['./create-order.component.scss']
 })
-export class CreateOrderComponent implements OnInit{
+export class CreateOrderComponent implements OnInit {
 
-  cardTitle: string = 'Create Order'; 
+  cardTitle: string = 'Create Order';
 
   displayedColumns: string[] = ['name', 'category', 'price', 'quantity', 'total', 'edit'];
   dataSource: any = [];
-  manageOrderForm:any = FormGroup;
-  categories: any = [{name: 'Dessert'}, {name: 'Drinks' }, {name: 'Rice Meals'}];
+  manageOrderForm: any = FormGroup;
+  categories: any = [{ name: 'Dessert' }, { name: 'Drinks' }, { name: 'Rice Meals' }];
   products: any = [{
-            "id": "menu1",
-            "name": "Pizza",
-            "price": 10.99
-        },
-        {
-            "id": "menu2",
-            "name": "Burger",
-            "price": 8.99
-        }];
+    "id": "menu1",
+    "name": "Pizza",
+    "price": 10.99
+  },
+  {
+    "id": "menu2",
+    "name": "Burger",
+    "price": 8.99
+  }];
   price: any;
   totalAmount: number = 0;
   responseMessage: any;
+  quantity: any = null;
 
 
 
@@ -46,38 +47,39 @@ export class CreateOrderComponent implements OnInit{
     private router: Router,
     private httpClient: HttpClient,
     private route: ActivatedRoute) {
-      this.manageOrderForm = this.formBuilder.group({
-        name: ['', Validators.required],
-        email: ['', Validators.required],
-        contactNumber: ['', Validators.required],
-        address: ['', Validators.required],
-        paymentMethod: ['', Validators.required],
-        price: [null],
-        total: ['']
-      });
-      
+    this.manageOrderForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', Validators.required],
+      contactNumber: ['', Validators.required],
+      address: ['', Validators.required],
+      paymentMethod: ['', Validators.required],
+      price: [null],
+      total: ['']
+    });
+
   }
 
   ngOnInit(): void {
     this.getCategories();
-  }
-  
-  calculateTotal() {
-    const quantity = +this.manageOrderForm.get('quantity').value;
-    const price = +this.manageOrderForm.get('price').value;
-    const total = quantity * price;
-    this.manageOrderForm.patchValue({
-      total: total.toFixed(2),
+
+    this.manageOrderForm.get('quantity').valueChanges.subscribe(() => {
+      this.calculateTotal();
     });
-    this.totalAmount = total;
   }
-  
+
+  calculateTotal() {
+    const price = this.manageOrderForm.get('price').value;
+    const quantity = this.manageOrderForm.get('quantity').value;
+    const total = price * quantity;
+    this.manageOrderForm.get('total').setValue(total);
+  }
+
 
   update() {
 
   }
 
-  getCategories(){
+  getCategories() {
 
   }
 
@@ -95,16 +97,16 @@ export class CreateOrderComponent implements OnInit{
       this.calculateTotal();
     }
   }
-  
-  
-  
+
+
+
 
   setQuantity() {
     var temp = this.manageOrderForm.controls['quantity'].value;
 
-    if(temp > 0) {
+    if (temp > 0) {
       this.manageOrderForm.controls['total'].setValue(this.manageOrderForm.controls['quantity'].value * this.manageOrderForm.controls['price'].value);
-    } else if(temp != '') {
+    } else if (temp != '') {
       this.manageOrderForm.controls['quantity'].setValue('1');
       this.manageOrderForm.controls['total'].setValue(this.manageOrderForm.controls['quantity'].value * this.manageOrderForm.controls['price'].value);
     }
@@ -156,8 +158,8 @@ export class CreateOrderComponent implements OnInit{
   }
 
   handleDeleteAction() {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
-      data:{
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
         message: 'Are you sure want to delete?',
       }
     });
