@@ -30,6 +30,7 @@ public class OrderManagementSystem {
 //					.lastname("Admin")
 //					.email("admin@mail.com")
 //					.password("password")
+//					.status("active")
 // 					.role(ADMIN)
 //					.build();
 //			System.out.println("Admin token: " + service.register(admin).getAccessToken());
@@ -39,17 +40,10 @@ public class OrderManagementSystem {
 //					.lastname("Admin")
 //					.email("manager@mail.com")
 //					.password("password")
+//			  		.status("inactive")
 //					.role(MANAGER)
 //					.build();
 //			System.out.println("Manager token: " + service.register(manager).getAccessToken());
-
-//			var customer = CustomerBean.builder()
-//					.name("edward")
-//					.email("leader@mail.com")
-//					.contactNumber("911")
-//					.address(new String[] {"asd", "asd"})
-//					.build();
-//			customerService.saveCustomer(customer);
 
 
 		};
