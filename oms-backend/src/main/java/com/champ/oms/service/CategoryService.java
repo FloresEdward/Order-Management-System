@@ -18,7 +18,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     public void saveCategory (CategoryBean categoryBean) {
-        var category = Category.builder()
+        Category category = Category.builder()
                 .id(new ObjectId().toString())
                 .name(categoryBean.getName())
                 .status("active")
@@ -39,6 +39,17 @@ public class CategoryService {
                 .orElseThrow(() -> new CategoryNotFoundException("Category not found with ID: " + categoryId));
 
         category.setStatus("inactive");
+        categoryRepository.save(category);
+    }
+
+    public void editCategory(CategoryBean categoryBean) {
+        String categoryId = categoryBean.getId();
+        System.out.println(categoryBean.getName());
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new CategoryNotFoundException("Category not found with ID: " + categoryId));
+
+        category.setName(categoryBean.getName());
+
         categoryRepository.save(category);
     }
 }

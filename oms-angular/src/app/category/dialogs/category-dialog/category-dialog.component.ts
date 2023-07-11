@@ -51,7 +51,22 @@ export class CategoryDialogComponent {
   }
 
   editCategory() {
+    const categoryDetails = {
+      id: this.categoryId,
+      name: this.categoryName
+    }
 
+    this.categoryService.editCategory(categoryDetails).subscribe(
+      (response) => {
+        console.log(response)
+        this.dialogRef.close({ success: true });
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
+
+    this.closeDialog();
   }
 
   deleteCategory() {

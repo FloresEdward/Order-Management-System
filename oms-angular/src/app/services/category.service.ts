@@ -28,6 +28,12 @@ export class CategoryService {
     return this.http.post(url, addCategoryRequest);
   }
 
+  public editCategory(editCategoryRequest: any) : Observable<any> {
+    const url = `${this.baseUrl}/`;
+
+    return this.http.put(url, editCategoryRequest);
+  }
+
   public deleteCategory(deleteCategoryRequest :any) {
     console.log('dekete')
     const url = `${this.baseUrl}/delete/${deleteCategoryRequest.id}`;

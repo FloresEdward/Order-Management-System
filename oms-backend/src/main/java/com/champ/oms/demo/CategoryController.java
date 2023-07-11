@@ -34,13 +34,22 @@ public class CategoryController {
     }
 
     @PostMapping("/delete/{id}")
-    public ResponseEntity<?> deleteOrder(@PathVariable String id) {
+    public ResponseEntity<?> deleteCategory(@PathVariable String id) {
         try {
             service.updateCategoryStatus(id);
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
 
+    @PutMapping("/")
+    public ResponseEntity<?> updateCategoryName(@RequestBody CategoryBean category) {
+        try {
+            service.editCategory(category);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
