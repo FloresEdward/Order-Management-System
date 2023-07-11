@@ -21,4 +21,10 @@ export class ProductService {
 
     return this.http.put(url, editProductRequest);
   }
+
+  public deleteProduct(deleteProductRequest: any) : Observable<any> {
+    const url = `${this.baseUrl}/delete/${deleteProductRequest.id}`;
+
+    return this.http.post(url, deleteProductRequest);
+  }
 }

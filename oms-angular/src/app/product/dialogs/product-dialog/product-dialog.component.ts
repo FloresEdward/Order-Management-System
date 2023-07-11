@@ -14,6 +14,7 @@ export class ProductDialogComponent implements OnInit {
   dialogTitle: string = "";
   action: string = "";
 
+  productId: string | undefined;
   productName: string | undefined;
   productCategory: any | undefined;
   productDescription: string | undefined;
@@ -32,6 +33,7 @@ export class ProductDialogComponent implements OnInit {
     private route: ActivatedRoute,
     ) {
     this.action = data.action;
+    this.productId = data.product ? data.product.id : '';
     this.productName = data.product ? data.product.name : '';
     this.productCategory = data.product ? data.product.category : '';
     this.productDescription = data.product ? data.product.description : '';
@@ -85,6 +87,7 @@ export class ProductDialogComponent implements OnInit {
 
   editProduct(): void {
     const productDetails = {
+      id: this.productId,
       name: this.productName,
       description: this.productDescription,
       category: this.productCategory,
@@ -106,6 +109,20 @@ export class ProductDialogComponent implements OnInit {
   }
 
   deleteProduct(): void {
+    const productDetails = {
+      id: this.productId,
+    }
+
+    this.productService.deleteProduct(productDetails).subscribe(
+      (response) => {
+        console.log(response)
+        this.dialogRef.close({ success: true });
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
+
     this.dialogRef.close();
   }
 

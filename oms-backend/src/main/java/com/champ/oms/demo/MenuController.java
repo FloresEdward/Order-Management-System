@@ -6,6 +6,8 @@ import com.champ.oms.document.Menu;
 import com.champ.oms.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,5 +31,26 @@ public class MenuController {
             @RequestBody MenuBean menu
     ) {
         service.saveProduct(menu);
+    }
+
+    @PostMapping("/delete/{id}")
+    public ResponseEntity<?> deleteMenu(@PathVariable String id) {
+        try {
+            service.updateMenuItemStatus(id);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+
+    @PutMapping("/")
+    public ResponseEntity<?> updateMenuItem(@RequestBody MenuBean menu) {
+        try {
+            service.editMenuItem(menu);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

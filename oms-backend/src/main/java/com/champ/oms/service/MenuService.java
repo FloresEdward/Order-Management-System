@@ -39,4 +39,34 @@ public class MenuService {
 
         menuRepository.save(menu);
     }
+
+    public void updateMenuItemStatus(String menuId){
+        Menu menu = menuRepository.findById(menuId)
+                .orElseThrow(() -> new MenuNotFoundException("Menu not found with ID: " + menuId));
+
+        menu.setStatus("inactive");
+        menuRepository.save(menu);
+    }
+
+    public void editMenuItem(MenuBean menuBean) {
+        System.out.println(menuBean);
+        String menuId = menuBean.getId();
+        Menu menu = menuRepository.findById(menuId)
+                .orElseThrow(() -> new MenuNotFoundException("Menu not found with ID: " + menuId));
+        System.out.println(menu);
+        menu.setName(menuBean.getName());
+        menu.setPrice(menuBean.getPrice());
+        menu.setDescription(menuBean.getDescription());
+        menu.setStock(menuBean.getStock());
+        menu.setCategory(menuBean.getCategory());
+
+        menuRepository.save(menu);
+    }
+}
+
+class MenuNotFoundException extends RuntimeException {
+
+    public MenuNotFoundException(String message) {
+        super(message);
+    }
 }
