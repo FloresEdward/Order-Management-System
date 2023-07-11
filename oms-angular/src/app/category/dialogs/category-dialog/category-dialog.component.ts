@@ -13,6 +13,7 @@ export class CategoryDialogComponent {
   dialogTitle: string = "";
   action: string = "";
   categoryName: string = "";
+  categoryId: string = ""
 
   constructor(
               public dialogRef: MatDialogRef<CategoryDialogComponent>,
@@ -24,14 +25,14 @@ export class CategoryDialogComponent {
               ) {
                 this.action = data.action;
                 this.categoryName = data.category ? data.category.name : '';
+                this.categoryId = data.category ? data.category.id : '';
               }
 
   closeDialog(): void {
-    this.dialogRef.close();
+    this.dialogRef.close({ success: false });
   }
 
   addCategory() {
-    console.log("Added category");
     const categoryDetails = {
       name: this.categoryName
     }
@@ -39,18 +40,35 @@ export class CategoryDialogComponent {
     this.categoryService.addCategory(categoryDetails).subscribe(
       (response) => {
         console.log(response)
+        this.dialogRef.close({ success: true });
       },
       (error) => {
         console.log(error)
       }
     );
+
+    this.closeDialog();
   }
 
   editCategory() {
-    console.log("Editted category");
+
   }
 
   deleteCategory() {
-    console.log("Deleted category");
+    const categoryDetails = {
+      id: this.categoryId
+    }
+
+    this.categoryService.deleteCategory(categoryDetails).subscribe(
+      (response) => {
+        console.log(response)
+        this.dialogRef.close({ success: true });
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
+
+    this.closeDialog();
   }
 }

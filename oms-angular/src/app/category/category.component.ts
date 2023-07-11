@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CategoryDialogComponent } from './dialogs/category-dialog/category-dialog.component';
+import { HttpClient } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 interface Category {
@@ -15,37 +17,29 @@ interface Category {
 // export class CategoryComponent {
 export class CategoryComponent implements OnInit {
 
-  cardTitle: string = 'Manage Category'; //title for card
-
-  categories: any[] = [
-    { name: 'Category 1' },
-    { name: 'Category 2' },
-    { name: 'Category 3' }
-  ];
-
-
+  private baseUrl = 'http://localhost:8080/api/v1/management/category';
+  cardTitle: string = 'Manage Category';
+  categories: any[] = [];
   dialogRef: MatDialogRef<CategoryDialogComponent> | undefined;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, 
+              private router: Router, 
+              private http: HttpClient, 
+              private route: ActivatedRoute) { }
   ngOnInit(): void {
-
+    this.getCategories();
   }
 
-  // Function to add a new category
-  addCategory() {
-    // Add your logic here to handle adding a category
+  getCategories(): void {
+    this.http.get<any[]>(this.baseUrl + '/').subscribe(
+      (response) => {
+        this.categories = response;
+      },
+      (error) => {
+        console.log('Error:', error);
+      }
+    );
   }
-
-  // Function to edit a category
-  editCategory(category: any) {
-    // Add your logic here to handle editing a category
-  }
-
-  // Function to delete a category
-  deleteCategory(category: any) {
-    // Add your logic here to handle deleting a category
-  }
-
 
   openCategoryDialog(action: string, category: any): void {
     let dialogData = {
@@ -55,7 +49,6 @@ export class CategoryComponent implements OnInit {
 
     this.dialogRef = this.dialog.open(CategoryDialogComponent, { data: dialogData });
     this.dialogRef.afterClosed().subscribe(result => {
-      // Handle the result here (e.g., perform an action based on the result)
       console.log(result);
     });
   }

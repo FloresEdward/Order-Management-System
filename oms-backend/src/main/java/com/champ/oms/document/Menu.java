@@ -1,5 +1,6 @@
 package com.champ.oms.document;
 
+import com.champ.oms.bean.CategoryBean;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +20,7 @@ public class Menu {
     @Id
     private String id;
     private String name;
-    private String categoryId;
+    private Category category;
     private float price;
     private boolean isAvailable;
     private long stock;

@@ -8,6 +8,8 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CategoryService {
@@ -19,7 +21,32 @@ public class CategoryService {
         var category = Category.builder()
                 .id(new ObjectId().toString())
                 .name(categoryBean.getName())
+                .status("active")
                 .build();
         categoryRepository.save(category);
     }
+
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
+    }
+
+    public List<Category> getAllActiveCategories() {
+        return categoryRepository.findByStatus("active");
+    }
+
+    public void updateCategoryStatus(String categoryId) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new CategoryNotFoundException("Category not found with ID: " + categoryId));
+
+        category.setStatus("inactive");
+        categoryRepository.save(category);
+    }
 }
+
+class CategoryNotFoundException extends RuntimeException {
+
+    public CategoryNotFoundException(String message) {
+        super(message);
+    }
+}
+
