@@ -15,7 +15,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     MaterialModule,
     FlexLayoutModule,
     RouterModule.forChild(CreateOrderRoutes),
-    SharedModule
+    SharedModule,
   ],
   declarations: [CreateOrderComponent, ConfirmationDialogComponent],
 })

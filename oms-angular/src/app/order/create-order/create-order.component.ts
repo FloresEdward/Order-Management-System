@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
+import { OrderService } from 'src/app/services/order.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { CustomerService } from 'src/app/services/customer.service';
 
 @Component({
   selector: 'app-order-status',
@@ -15,35 +19,59 @@ export class CreateOrderComponent implements OnInit{
   cardTitle: string = 'Create Order'; 
 
   displayedColumns: string[] = ['name', 'category', 'price', 'quantity', 'total', 'edit'];
-  dataSource: any = [
-    { name: 'Product 1', category: 'Category 1', price: 100, quantity: 1, total: 100 },
-    { name: 'Product 2', category: 'Category 2', price: 200, quantity: 2, total: 400 },
-    { name: 'Product 3', category: 'Category 3', price: 300, quantity: 3, total: 900 }
-  ];
-
-  categories: any = [
-    {name: 'Dessert',},
-    {name: 'Launch',},
-    {name: 'Basta',},
-  ]; 
-  products: any = [{name: 'Product 1'},{name: 'Product 2'},{name: 'Product 3'}];
-  price: any = [
-    {price: 100}, 
-    {price: 200}, 
-    {price: 300}
-  ];
+  dataSource: any = [];
+  manageOrderForm:any = FormGroup;
+  categories: any = [{name: 'Dessert'}, {name: 'Drinks' }, {name: 'Rice Meals'}];
+  products: any = [{
+            "id": "menu1",
+            "name": "Pizza",
+            "price": 10.99
+        },
+        {
+            "id": "menu2",
+            "name": "Burger",
+            "price": 8.99
+        }];
+  price: any;
   totalAmount: number = 0;
   responseMessage: any;
 
+
+
   constructor(private formBuilder: FormBuilder,
     private dialog: MatDialog,
-    private snackbarService: SnackbarService) {
-
+    private snackbarService: SnackbarService,
+    private orderService: OrderService,
+    private customerService: CustomerService,
+    private router: Router,
+    private httpClient: HttpClient,
+    private route: ActivatedRoute) {
+      this.manageOrderForm = this.formBuilder.group({
+        name: ['', Validators.required],
+        email: ['', Validators.required],
+        contactNumber: ['', Validators.required],
+        address: ['', Validators.required],
+        paymentMethod: ['', Validators.required],
+        price: [null],
+        total: ['']
+      });
+      
   }
 
   ngOnInit(): void {
     this.getCategories();
   }
+  
+  calculateTotal() {
+    const quantity = +this.manageOrderForm.get('quantity').value;
+    const price = +this.manageOrderForm.get('price').value;
+    const total = quantity * price;
+    this.manageOrderForm.patchValue({
+      total: total.toFixed(2),
+    });
+    this.totalAmount = total;
+  }
+  
 
   update() {
 
@@ -62,11 +90,24 @@ export class CreateOrderComponent implements OnInit{
   }
 
   getProductDetails(value: any) {
-
+    if (value && value.price) {
+      this.manageOrderForm.get('price').setValue(value.price);
+      this.calculateTotal();
+    }
   }
+  
+  
+  
 
   setQuantity() {
+    var temp = this.manageOrderForm.controls['quantity'].value;
 
+    if(temp > 0) {
+      this.manageOrderForm.controls['total'].setValue(this.manageOrderForm.controls['quantity'].value * this.manageOrderForm.controls['price'].value);
+    } else if(temp != '') {
+      this.manageOrderForm.controls['quantity'].setValue('1');
+      this.manageOrderForm.controls['total'].setValue(this.manageOrderForm.controls['quantity'].value * this.manageOrderForm.controls['price'].value);
+    }
   }
 
   validateProductAdd() {
@@ -78,7 +119,40 @@ export class CreateOrderComponent implements OnInit{
   }
 
   add() {
-    this.snackbarService.openSnackBar(GlobalConstants.productAdded, "success");
+    if (this.manageOrderForm.invalid) {
+      return;
+    }
+
+    const customerDetails = this.manageOrderForm.value;
+
+    this.customerService.addCustomer(customerDetails).subscribe(
+      (response) => {
+        console.log(response);
+        const orderDetails = {
+          customerId: response.id,
+          creatorId: 'creator1',
+          courierId: 'courier1',
+          deliveryAddressId: 'address1',
+          orderItems: [],
+          quantity: '',
+          status: 'pending',
+          createdAt: new Date(),
+          fulfilledDate: null
+        };
+
+        this.orderService.addOrder(orderDetails).subscribe(
+          (response) => {
+            console.log(response);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   handleDeleteAction() {
