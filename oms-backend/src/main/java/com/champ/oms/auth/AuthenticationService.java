@@ -1,6 +1,7 @@
 package com.champ.oms.auth;
 
 import com.champ.oms.config.JwtService;
+import com.champ.oms.document.Role;
 import com.champ.oms.token.Token;
 import com.champ.oms.token.TokenRepository;
 import com.champ.oms.token.TokenType;
@@ -35,7 +36,8 @@ public class AuthenticationService {
             .lastname(request.getLastname())
             .email(request.getEmail())
             .password(passwordEncoder.encode(request.getPassword()))
-            .role(request.getRole())
+            .status("active")
+            .role(Role.ADMIN)
             .build();
     var savedUser = repository.save(user);
     var jwtToken = jwtService.generateToken(user);

@@ -68,6 +68,28 @@ public class SecurityConfiguration {
         .requestMatchers(PUT, "/api/v1/management/**").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
         .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
 
+//                .requestMatchers("/api/v1/management/category/**").hasAnyRole(CATEGORY.name(), ADMIN.name(), MANAGER.name())
+//                .requestMatchers(GET, "/api/v1/management/category/**").hasAnyAuthority(CATEGORY_READ.name())
+//                .requestMatchers(POST, "/api/v1/management/category/**").hasAnyAuthority(CATEGORY_CREATE.name())
+//                .requestMatchers(PUT, "/api/v1/management/category/**").hasAnyAuthority(CATEGORY_UPDATE.name())
+//                .requestMatchers(DELETE, "/api/v1/management/category/**").hasAnyAuthority(CATEGORY_DELETE.name())
+//
+//                .requestMatchers("/api/v1/management/menu/**").hasAnyRole(MENU.name())
+//                .requestMatchers(GET, "/api/v1/management/menu/**").hasAnyAuthority(MENU_READ.name())
+//                .requestMatchers(POST, "/api/v1/management/menu/**").hasAnyAuthority(MENU_CREATE.name())
+//                .requestMatchers(PUT, "/api/v1/management/menu/**").hasAnyAuthority(MENU_UPDATE.name())
+//                .requestMatchers(DELETE, "/api/v1/management/menu/**").hasAnyAuthority(MENU_DELETE.name())
+//
+//                .requestMatchers("/api/v1/management/order/**").hasAnyRole(ORDER.name(), TELLER.name(), RIDER.name(), MENU.name(), CATEGORY.name())
+//                .requestMatchers(GET,"/api/v1/management/order/**").hasAnyAuthority(ORDER_READ.name())
+//                .requestMatchers(POST,"/api/v1/management/order/**").hasAnyAuthority(ORDER_CREATE.name())
+//                .requestMatchers(PUT,"/api/v1/management/order/**").hasAnyAuthority(ORDER_UPDATE.name())
+//                .requestMatchers(DELETE,"/api/v1/management/order/**").hasAnyAuthority(ORDER_DELETE.name())
+//
+//                .requestMatchers("/api/v1/management/user/**").hasAnyRole(ACCOUNT.name())
+//                .requestMatchers(GET,"/api/v1/management/user/**").hasAnyAuthority(ACCOUNT_READ.name())
+//                .requestMatchers(PUT,"/api/v1/management/user/**").hasAnyAuthority(ACCOUNT_UPDATE.name())
+//                .requestMatchers(DELETE,"/api/v1/management/user/**").hasAnyAuthority(ACCOUNT_DELETE.name())
 
        /* .requestMatchers("/api/v1/admin/**").hasRole(ADMIN.name())
 

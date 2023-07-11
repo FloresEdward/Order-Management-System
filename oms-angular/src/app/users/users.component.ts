@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogComponent } from '../order/manage-order/confirmation-dialog/confirmation-dialog.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-users',
@@ -14,36 +15,40 @@ export class UsersComponent implements OnInit{
   cardTitle: string = 'Manage Accounts';
   dataSource!: MatTableDataSource<any>;
 
+  userArray: any[] = [];
+
+  constructor(private dialog: MatDialog, private http: HttpClient) {
+    this.getAllUser();
+  }
+
+  getAllUser() {
+    this.http.get("http://localhost:8080/api/v1/management/user/getAll")
+    .subscribe((resultData: any) => {
+      console.log(resultData);
+      this.userArray = resultData;
+      this.tableData();
+    });
+  }
+
   tableData() {
     const roles = [
-      { role: 'Admin', description: 'All Access' },
-      { role: 'Category Manager', description: 'Access to Category Module, and create order' },
-      { role: 'Menu Manager', description: 'Access to Menu Module, and create order' },
-      { role: 'Order Manager', description: 'Access to Order Module, view order archive, create and update' },
-      { role: 'Account Manager', description: 'Access to User Management' },
-      { role: 'Teller', description: 'Create order only' },
-      { role: 'Rider', description: 'Update order status only' },
+      { role: 'ADMIN', description: 'All Access' },
+      { role: 'CATEGORY', description: 'Access to Category Module, and create order' },
+      { role: 'MENU', description: 'Access to Menu Module, and create order' },
+      { role: 'ORDER', description: 'Access to Order Module, view order archive, create and update' },
+      { role: 'ACCOUNT', description: 'Access to User Management' },
+      { role: 'TELLER', description: 'Create order only' },
+      { role: 'RIDER', description: 'Update order status only' },
     ];
   
-    const users = [
-      { user: 'John Doe', role: roles[0], status: 'active' },
-      { user: 'Jane Smith', role: roles[1], status: 'active' },
-      { user: 'User3', role: roles[2], status: 'active' },
-      { user: 'User4', role: roles[3], status: 'active' },
-      { user: 'User5', role: roles[4], status: 'locked' },
-      { user: 'User6', role: roles[5], status: 'active' },
-      { user: 'User7', role: roles[5], status: 'inactive' },
-      { user: 'User8', role: roles[6], status: 'active' },
-      { user: 'User9', role: roles[6], status: 'locked' },
-    ];
-  
-    this.dataSource = new MatTableDataSource(users);
+    this.dataSource = new MatTableDataSource(this.userArray);
   }
   
   
   
 
-  constructor(private dialog: MatDialog) {}
+  
+  
   ngOnInit(): void {
     this.tableData();
   }
