@@ -13,16 +13,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import static com.champ.oms.user.Permission.ADMIN_CREATE;
-import static com.champ.oms.user.Permission.ADMIN_DELETE;
-import static com.champ.oms.user.Permission.ADMIN_READ;
-import static com.champ.oms.user.Permission.ADMIN_UPDATE;
-import static com.champ.oms.user.Permission.MANAGER_CREATE;
-import static com.champ.oms.user.Permission.MANAGER_DELETE;
-import static com.champ.oms.user.Permission.MANAGER_READ;
-import static com.champ.oms.user.Permission.MANAGER_UPDATE;
-import static com.champ.oms.document.Role.ADMIN;
-import static com.champ.oms.document.Role.MANAGER;
+import static com.champ.oms.user.Permission.*;
+import static com.champ.oms.document.Role.*;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -58,41 +50,37 @@ public class SecurityConfiguration {
                 "/swagger-ui.html"
         )
           .permitAll()
+                // CATEGORY MANAGER
+                .requestMatchers("/api/v1/management/category/**").hasAnyRole(CATEGORY.name(), ADMIN.name())
+                .requestMatchers(GET, "/api/v1/management/category/**").hasAnyAuthority(CATEGORY_READ.name())
+                .requestMatchers(POST, "/api/v1/management/category/**").hasAnyAuthority(CATEGORY_CREATE.name())
+                .requestMatchers(PUT, "/api/v1/management/category/**").hasAnyAuthority(CATEGORY_UPDATE.name())
+                .requestMatchers(DELETE, "/api/v1/management/category/**").hasAnyAuthority(CATEGORY_DELETE.name())
+                // MENU MANAGER
+                .requestMatchers("/api/v1/management/menu/**").hasAnyRole(MENU.name(), ADMIN.name())
+                .requestMatchers(GET, "/api/v1/management/menu/**").hasAnyAuthority(MENU_READ.name())
+                .requestMatchers(POST, "/api/v1/management/menu/**").hasAnyAuthority(MENU_CREATE.name())
+                .requestMatchers(PUT, "/api/v1/management/menu/**").hasAnyAuthority(MENU_UPDATE.name())
+                .requestMatchers(DELETE, "/api/v1/management/menu/**").hasAnyAuthority(MENU_DELETE.name())
+                // ORDER MANAGER
+                .requestMatchers("/api/v1/management/order/**").hasAnyRole(ORDER.name(), TELLER.name(), RIDER.name(), MENU.name(), CATEGORY.name(), ADMIN.name())
+                .requestMatchers(GET,"/api/v1/management/order/**").hasAnyAuthority(ORDER_READ.name())
+                .requestMatchers(POST,"/api/v1/management/order/**").hasAnyAuthority(ORDER_CREATE.name())
+                .requestMatchers(PUT,"/api/v1/management/order/**").hasAnyAuthority(ORDER_UPDATE.name())
+                .requestMatchers(DELETE,"/api/v1/management/order/**").hasAnyAuthority(ORDER_DELETE.name())
+                // ACCOUNT MANAGER
+                .requestMatchers("/api/v1/management/user/**").hasAnyRole(ACCOUNT.name(), ADMIN.name())
+                .requestMatchers(GET,"/api/v1/management/user/**").hasAnyAuthority(ACCOUNT_READ.name())
+                .requestMatchers(PUT,"/api/v1/management/user/**").hasAnyAuthority(ACCOUNT_UPDATE.name())
+                .requestMatchers(DELETE,"/api/v1/management/user/**").hasAnyAuthority(ACCOUNT_DELETE.name())
 
-
-        .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())
-
-
-        .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
-        .requestMatchers(POST, "/api/v1/management/**").hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
-        .requestMatchers(PUT, "/api/v1/management/**").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
-        .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
-
-//                .requestMatchers("/api/v1/management/category/**").hasAnyRole(CATEGORY.name(), ADMIN.name(), MANAGER.name())
-//                .requestMatchers(GET, "/api/v1/management/category/**").hasAnyAuthority(CATEGORY_READ.name())
-//                .requestMatchers(POST, "/api/v1/management/category/**").hasAnyAuthority(CATEGORY_CREATE.name())
-//                .requestMatchers(PUT, "/api/v1/management/category/**").hasAnyAuthority(CATEGORY_UPDATE.name())
-//                .requestMatchers(DELETE, "/api/v1/management/category/**").hasAnyAuthority(CATEGORY_DELETE.name())
-//
-//                .requestMatchers("/api/v1/management/menu/**").hasAnyRole(MENU.name())
-//                .requestMatchers(GET, "/api/v1/management/menu/**").hasAnyAuthority(MENU_READ.name())
-//                .requestMatchers(POST, "/api/v1/management/menu/**").hasAnyAuthority(MENU_CREATE.name())
-//                .requestMatchers(PUT, "/api/v1/management/menu/**").hasAnyAuthority(MENU_UPDATE.name())
-//                .requestMatchers(DELETE, "/api/v1/management/menu/**").hasAnyAuthority(MENU_DELETE.name())
-//
-//                .requestMatchers("/api/v1/management/order/**").hasAnyRole(ORDER.name(), TELLER.name(), RIDER.name(), MENU.name(), CATEGORY.name())
-//                .requestMatchers(GET,"/api/v1/management/order/**").hasAnyAuthority(ORDER_READ.name())
-//                .requestMatchers(POST,"/api/v1/management/order/**").hasAnyAuthority(ORDER_CREATE.name())
-//                .requestMatchers(PUT,"/api/v1/management/order/**").hasAnyAuthority(ORDER_UPDATE.name())
-//                .requestMatchers(DELETE,"/api/v1/management/order/**").hasAnyAuthority(ORDER_DELETE.name())
-//
-//                .requestMatchers("/api/v1/management/user/**").hasAnyRole(ACCOUNT.name())
-//                .requestMatchers(GET,"/api/v1/management/user/**").hasAnyAuthority(ACCOUNT_READ.name())
-//                .requestMatchers(PUT,"/api/v1/management/user/**").hasAnyAuthority(ACCOUNT_UPDATE.name())
-//                .requestMatchers(DELETE,"/api/v1/management/user/**").hasAnyAuthority(ACCOUNT_DELETE.name())
+//            .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())
+//            .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
+//            .requestMatchers(POST, "/api/v1/management/**").hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
+//            .requestMatchers(PUT, "/api/v1/management/**").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
+//            .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
 
        /* .requestMatchers("/api/v1/admin/**").hasRole(ADMIN.name())
-
         .requestMatchers(GET, "/api/v1/admin/**").hasAuthority(ADMIN_READ.name())
         .requestMatchers(POST, "/api/v1/admin/**").hasAuthority(ADMIN_CREATE.name())
         .requestMatchers(PUT, "/api/v1/admin/**").hasAuthority(ADMIN_UPDATE.name())

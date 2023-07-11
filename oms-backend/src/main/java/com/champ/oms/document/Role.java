@@ -23,7 +23,22 @@ public enum Role {
                   Permission.MANAGER_READ,
                   Permission.MANAGER_UPDATE,
                   Permission.MANAGER_DELETE,
-                  Permission.MANAGER_CREATE
+                  Permission.MANAGER_CREATE,
+                  Permission.CATEGORY_READ,
+                  Permission.CATEGORY_UPDATE,
+                  Permission.CATEGORY_DELETE,
+                  Permission.CATEGORY_CREATE,
+                  Permission.MENU_READ,
+                  Permission.MENU_UPDATE,
+                  Permission.MENU_DELETE,
+                  Permission.MENU_CREATE,
+                  Permission.ORDER_READ,
+                  Permission.ORDER_UPDATE,
+                  Permission.ORDER_DELETE,
+                  Permission.ORDER_CREATE,
+                  Permission.ACCOUNT_READ,
+                  Permission.ACCOUNT_UPDATE,
+                  Permission.ACCOUNT_DELETE
           )
   ),
   MANAGER(
@@ -69,21 +84,16 @@ public enum Role {
   ),
   TELLER(
           Set.of(
+                  Permission.ORDER_READ,
                   Permission.ORDER_CREATE
           )
   ),
   RIDER(
           Set.of(
+                  Permission.ORDER_READ,
                   Permission.ORDER_UPDATE
           )
   );
-//  MENU_MANAGER(
-//          Set.of(
-//                  Permission.MENU_MANAGER_RED,
-//          )
-//  )
-
-  ;
 
   @Getter
   private final Set<Permission> permissions;
