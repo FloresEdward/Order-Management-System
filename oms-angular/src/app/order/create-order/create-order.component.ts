@@ -35,7 +35,7 @@ export class CreateOrderComponent implements OnInit {
   price: any;
   totalAmount: number = 0;
   responseMessage: any;
-  quantity: any = null;
+  // quantity: any = null;
 
 
 
@@ -54,25 +54,35 @@ export class CreateOrderComponent implements OnInit {
       address: ['', Validators.required],
       paymentMethod: ['', Validators.required],
       price: [null],
-      total: ['']
+      total: [''],
+      quantity: ['']
     });
 
   }
 
   ngOnInit(): void {
     this.getCategories();
-
-    this.manageOrderForm.get('quantity').valueChanges.subscribe(() => {
-      this.calculateTotal();
-    });
+    
   }
 
-  calculateTotal() {
-    const price = this.manageOrderForm.get('price').value;
-    const quantity = this.manageOrderForm.get('quantity').value;
-    const total = price * quantity;
-    this.manageOrderForm.get('total').setValue(total);
-  }
+  // calculateTotal() {
+   
+  //   const price = this.manageOrderForm.get('price')?.value;
+  //   const quantity = this.manageOrderForm.get('quantity')?.value;
+  //   var temp = this.manageOrderForm.controls['quantity'].value;
+  //   console.log(`Quantity ${temp}`)
+  //   if (price !== null && quantity !== null) {
+  //     let total = price * quantity;
+  //     this.manageOrderForm.get('total').setValue(total);
+      
+  //   } else {
+  //     this.manageOrderForm.get('total').setValue(null);
+  //   }
+
+    
+    
+  // }
+  
 
 
   update() {
@@ -91,19 +101,27 @@ export class CreateOrderComponent implements OnInit {
 
   }
 
+  // getProductDetails(value: any) {
+  //   if (value && value.price) {
+  //     this.manageOrderForm.get('price').setValue(value.price);
+  //     this.calculateTotal();
+  //   }
+  // }
+
   getProductDetails(value: any) {
     if (value && value.price) {
       this.manageOrderForm.get('price').setValue(value.price);
-      this.calculateTotal();
+      // const quantity = this.manageOrderForm.get('quantity').value;
+      // if (quantity !== null) { // Check if quantity is not null
+      //   const total = value.price * quantity;
+      //   this.manageOrderForm.get('total').setValue(total);
+      // }
     }
   }
-
-
-
-
+  
   setQuantity() {
     var temp = this.manageOrderForm.controls['quantity'].value;
-
+    console.log('setQuantity() is called', temp)
     if (temp > 0) {
       this.manageOrderForm.controls['total'].setValue(this.manageOrderForm.controls['quantity'].value * this.manageOrderForm.controls['price'].value);
     } else if (temp != '') {
@@ -121,6 +139,7 @@ export class CreateOrderComponent implements OnInit {
   }
 
   add() {
+    console.log("added to the db")
     if (this.manageOrderForm.invalid) {
       return;
     }
@@ -131,15 +150,6 @@ export class CreateOrderComponent implements OnInit {
       (response) => {
         console.log(response);
         const orderDetails = {
-          customerId: response.id,
-          creatorId: 'creator1',
-          courierId: 'courier1',
-          deliveryAddressId: 'address1',
-          orderItems: [],
-          quantity: '',
-          status: 'pending',
-          createdAt: new Date(),
-          fulfilledDate: null
         };
 
         this.orderService.addOrder(orderDetails).subscribe(

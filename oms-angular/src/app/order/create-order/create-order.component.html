@@ -77,13 +77,13 @@
                 
                 <mat-form-field fxFlex>
                     <mat-label>Quantity</mat-label>
-                    <input matInput formControlName="quantity">
+                    <input matInput formControlName="quantity" (input)="setQuantity()">
+                    <!-- <input matInput formControlName="quantity"> -->
                 </mat-form-field>
                 
-
                 <mat-form-field fxFlex>
                     <mat-label>Total</mat-label>
-                    <input matInput formControlName="total" required readonly>
+                    <input matInput formControlName="total" [value]="manageOrderForm.get('total').value" required readonly>
                 </mat-form-field>
 
             </div>
