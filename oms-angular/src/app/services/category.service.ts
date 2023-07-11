@@ -10,18 +10,6 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
-  // getCategories(): any {
-  //   const url = `${this.baseUrl}/`;
-  //   this.http.get<any[]>(url).subscribe(
-  //     (response) => {
-  //       return response;
-  //     },
-  //     (error) => {
-  //       console.log('Error:', error);
-  //     }
-  //   );
-  // }
-
   public addCategory(addCategoryRequest: any) : Observable<any> {
     const url = `${this.baseUrl}/`;
 
@@ -35,7 +23,6 @@ export class CategoryService {
   }
 
   public deleteCategory(deleteCategoryRequest :any) {
-    console.log('dekete')
     const url = `${this.baseUrl}/delete/${deleteCategoryRequest.id}`;
 
     return this.http.post(url, deleteCategoryRequest);

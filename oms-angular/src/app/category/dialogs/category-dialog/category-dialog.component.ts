@@ -16,17 +16,17 @@ export class CategoryDialogComponent {
   categoryId: string = ""
 
   constructor(
-              public dialogRef: MatDialogRef<CategoryDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any,
-              private categoryService: CategoryService,
-              private router: Router,
-              private http: HttpClient,
-              private route: ActivatedRoute,
-              ) {
-                this.action = data.action;
-                this.categoryName = data.category ? data.category.name : '';
-                this.categoryId = data.category ? data.category.id : '';
-              }
+    public dialogRef: MatDialogRef<CategoryDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private categoryService: CategoryService,
+    private router: Router,
+    private http: HttpClient,
+    private route: ActivatedRoute,
+  ) {
+    this.action = data.action;
+    this.categoryName = data.category ? data.category.name : '';
+    this.categoryId = data.category ? data.category.id : '';
+  }
 
   closeDialog(): void {
     this.dialogRef.close({ success: false });

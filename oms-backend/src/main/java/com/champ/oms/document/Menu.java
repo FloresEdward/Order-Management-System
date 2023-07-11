@@ -20,10 +20,11 @@ public class Menu {
     @Id
     private String id;
     private String name;
+    private String description;
     private Category category;
     private float price;
-    private boolean isAvailable;
     private long stock;
+    private String status;
     private String creatorId;
     private String modifierId;
     private Date createdAt;

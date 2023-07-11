@@ -7,6 +7,13 @@
     </mat-form-field>
 
     <mat-form-field class="form-input full-width" *ngIf="action !== 'Delete'">
+      <mat-label>Category</mat-label>
+      <mat-select [(ngModel)]="productCategory" name="selectedCategory">
+        <mat-option *ngFor="let category of categories" [value]="category">{{ category.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>    
+
+    <mat-form-field class="form-input full-width" *ngIf="action !== 'Delete'">
       <textarea
         matInput
         placeholder="Description"
@@ -40,7 +47,7 @@
 
 <mat-dialog-actions class="actions">
   <button mat-raised-button color="primary" (click)="addProduct()" [hidden]="action !== 'Add'">Add</button>
-  <button mat-raised-button color="primary" (click)="editProduct(null)" [hidden]="action !== 'Edit'">Edit</button>
-  <button mat-raised-button color="warn" (click)="deleteProduct(null)" [hidden]="action !== 'Delete'">Delete</button>
+  <button mat-raised-button color="primary" (click)="editProduct()" [hidden]="action !== 'Edit'">Edit</button>
+  <button mat-raised-button color="warn" (click)="deleteProduct()" [hidden]="action !== 'Delete'">Delete</button>
   <button mat-raised-button color="" (click)="cancel()">Cancel</button>
 </mat-dialog-actions>

@@ -1,41 +1,89 @@
-import { Component, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CategoryService } from 'src/app/services/category.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-product-dialog',
   templateUrl: './product-dialog.component.html',
   styleUrls: ['./product-dialog.component.scss']
 })
-export class ProductDialogComponent {
+export class ProductDialogComponent implements OnInit {
   dialogTitle: string = "";
   action: string = "";
 
   productName: string | undefined;
+  productCategory: string | undefined;
   productDescription: string | undefined;
   productPrice: number | undefined;
   productStock: number | undefined;
 
+  categories: any[] = [];
+
   constructor(public dialogRef: MatDialogRef<ProductDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
-                this.action = data.action;
-                this.productName = data.product ? data.product.name : '';
-                this.productDescription = data.product ? data.product.description : '';
-                this.productPrice = data.product ? data.product.price : '';
-                this.productStock = data.product ? data.product.stock : '';
-              }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private productService: ProductService,
+    private router: Router,
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    ) {
+    this.action = data.action;
+    this.productName = data.product ? data.product.name : '';
+    this.productCategory = data.product ? data.product.category : '';
+    this.productDescription = data.product ? data.product.description : '';
+    this.productPrice = data.product ? data.product.price : '';
+    this.productStock = data.product ? data.product.stock : '';
+  }
+  ngOnInit(): void {
+    this.getCategories();
+  }
+
+  getCategories(): void {
+    const baseUrl = 'http://localhost:8080/api/v1/management/category';
+    this.http.get<any[]>(baseUrl + '/').subscribe(
+      (response) => {
+        this.categories = response;
+      },
+      (error) => {
+        console.log('Error:', error);
+      }
+    );
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close({ success: false });
+  }
 
   addProduct(): void {
-    // Perform validation and add product logic here
-    // Close the dialog
+    const productDetails = {
+      name: this.productName,
+      description: this.productDescription,
+      category: this.productCategory,
+      price: this.productPrice,
+      stock: this.productStock
+    }
+
+    this.productService.addProduct(productDetails).subscribe(
+      (response) => {
+        console.log(response)
+        this.dialogRef.close({ success: true });
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
+
     this.dialogRef.close();
   }
 
-  editProduct(product: any): void {
+  editProduct(): void {
     console.log('Product is succesfully editted');
     this.dialogRef.close();
   }
 
-  deleteProduct(product: any): void {
+  deleteProduct(): void {
     this.dialogRef.close();
   }
 

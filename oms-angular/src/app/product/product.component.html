@@ -15,9 +15,6 @@
         <button mat-raised-button color="primary" class="add-button" (click)="openProductDialog('Add', null)">
           <mat-icon>add_circle</mat-icon>Add Product
         </button>
-        <button mat-raised-button color="primary" class="add-button" (click)="fetchData()">
-          <mat-icon>add_circle</mat-icon>Test Fetch
-        </button>
       </div>
     </mat-card-content>
   </mat-card>
@@ -35,7 +32,7 @@
         <!-- Category column -->
         <ng-container matColumnDef="category">
           <th mat-header-cell *matHeaderCellDef>Category</th>
-          <td mat-cell *matCellDef="let product">{{ product.category }}</td>
+          <td mat-cell *matCellDef="let product">{{ product.category.name }}</td>
         </ng-container>
 
         <ng-container matColumnDef="description">
