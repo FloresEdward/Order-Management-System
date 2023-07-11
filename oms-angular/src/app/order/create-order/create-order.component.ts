@@ -18,7 +18,7 @@ export class CreateOrderComponent implements OnInit {
 
   cardTitle: string = 'Create Order';
 
-  displayedColumns: string[] = ['name', 'category', 'price', 'quantity', 'total', 'edit'];
+  displayedColumns: string[] = ['category', 'product', 'price', 'quantity', 'total', 'edit'];
   dataSource: any = [];
   productOrderForm: any = FormGroup;
   customerOrderForm: any = FormGroup;
@@ -49,11 +49,11 @@ export class CreateOrderComponent implements OnInit {
     private httpClient: HttpClient,
     private route: ActivatedRoute) {
       this.productOrderForm = this.formBuilder.group({
-        category: [''],
-        product: [''],
-        price: [null],
+        category: ['', Validators.required],
+        product: ['', Validators.required],
+        price: [null, Validators.required],
         total: [''],
-        quantity: [0]
+        quantity: [0, [Validators.required, Validators.min(1)], Validators.pattern(GlobalConstants.quantityError)]
       });
 
     this.customerOrderForm = this.formBuilder.group({
@@ -73,8 +73,11 @@ export class CreateOrderComponent implements OnInit {
   calculateTotal() {
     const price = this.productOrderForm.get('price').value;
     console.log(price);
-    const quantity = this.productOrderForm.get('quantity').value;
+    let quantity = this.productOrderForm.get('quantity').value;
     console.log(quantity);
+    if(quantity < 1) {
+      quantity = 1;
+    }
     const total = price * quantity;
     this.productOrderForm.get('total').setValue(total);
   }
