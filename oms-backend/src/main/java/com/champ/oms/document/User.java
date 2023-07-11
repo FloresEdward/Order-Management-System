@@ -2,6 +2,7 @@ package com.champ.oms.document;
 
 import com.champ.oms.token.Token;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -29,6 +30,9 @@ public class User implements UserDetails {
   private String email;
   private String password;
 
+  private String status;
+  private Date createdAt;
+  private Date updatedAt;
 //  @Enumerated(EnumType.STRING)
   private Role role;
 

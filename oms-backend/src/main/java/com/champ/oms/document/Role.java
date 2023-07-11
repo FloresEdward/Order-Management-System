@@ -33,7 +33,12 @@ public enum Role {
                   Permission.MANAGER_DELETE,
                   Permission.MANAGER_CREATE
           )
-  )
+  ),
+//  MENU_MANAGER(
+//          Set.of(
+//                  Permission.MENU_MANAGER_RED,
+//          )
+//  )
 
   ;
 
