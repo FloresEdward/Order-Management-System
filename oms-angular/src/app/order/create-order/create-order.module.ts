@@ -8,7 +8,7 @@ import { CreateOrderRoutes } from './create-order.routing';
 import { CardTitleComponent } from 'src/app/card-title/card-title.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
-import { NgForm } from '@angular/forms';
+import { NgForm, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -17,6 +17,7 @@ import { NgForm } from '@angular/forms';
     FlexLayoutModule,
     RouterModule.forChild(CreateOrderRoutes),
     SharedModule,
+    ReactiveFormsModule
   ],
   declarations: [CreateOrderComponent, ConfirmationDialogComponent],
 })

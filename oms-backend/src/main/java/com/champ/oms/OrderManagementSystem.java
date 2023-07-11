@@ -44,7 +44,7 @@ public class OrderManagementSystem {
 //					.role(MANAGER)
 //					.build();
 //			System.out.println("Manager token: " + service.register(manager).getAccessToken());
-
+//
 
 		};
 	}

@@ -20,7 +20,8 @@ export class CreateOrderComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'category', 'price', 'quantity', 'total', 'edit'];
   dataSource: any = [];
-  manageOrderForm: any = FormGroup;
+  productOrderForm: any = FormGroup;
+  customerOrderForm: any = FormGroup;
   categories: any = [{ name: 'Dessert' }, { name: 'Drinks' }, { name: 'Rice Meals' }];
   products: any = [{
     "id": "menu1",
@@ -47,43 +48,36 @@ export class CreateOrderComponent implements OnInit {
     private router: Router,
     private httpClient: HttpClient,
     private route: ActivatedRoute) {
-    this.manageOrderForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', Validators.required],
-      contactNumber: ['', Validators.required],
-      address: ['', Validators.required],
-      paymentMethod: ['', Validators.required],
-      price: [null],
-      total: [''],
-      quantity: ['']
-    });
+      this.productOrderForm = this.formBuilder.group({
+        category: [''],
+        product: [''],
+        price: [null],
+        total: [''],
+        quantity: [0]
+      });
+
+    this.customerOrderForm = this.formBuilder.group({
+      name: [''],
+      email: [''],
+      contactNumber: [''],
+      address: [''],
+      paymentMethod: [''],
+    })
 
   }
 
   ngOnInit(): void {
     this.getCategories();
-    
   }
 
-  // calculateTotal() {
-   
-  //   const price = this.manageOrderForm.get('price')?.value;
-  //   const quantity = this.manageOrderForm.get('quantity')?.value;
-  //   var temp = this.manageOrderForm.controls['quantity'].value;
-  //   console.log(`Quantity ${temp}`)
-  //   if (price !== null && quantity !== null) {
-  //     let total = price * quantity;
-  //     this.manageOrderForm.get('total').setValue(total);
-      
-  //   } else {
-  //     this.manageOrderForm.get('total').setValue(null);
-  //   }
-
-    
-    
-  // }
-  
-
+  calculateTotal() {
+    const price = this.productOrderForm.get('price').value;
+    console.log(price);
+    const quantity = this.productOrderForm.get('quantity').value;
+    console.log(quantity);
+    const total = price * quantity;
+    this.productOrderForm.get('total').setValue(total);
+  }
 
   update() {
 
@@ -101,34 +95,14 @@ export class CreateOrderComponent implements OnInit {
 
   }
 
-  // getProductDetails(value: any) {
-  //   if (value && value.price) {
-  //     this.manageOrderForm.get('price').setValue(value.price);
-  //     this.calculateTotal();
-  //   }
-  // }
 
   getProductDetails(value: any) {
     if (value && value.price) {
-      this.manageOrderForm.get('price').setValue(value.price);
-      // const quantity = this.manageOrderForm.get('quantity').value;
-      // if (quantity !== null) { // Check if quantity is not null
-      //   const total = value.price * quantity;
-      //   this.manageOrderForm.get('total').setValue(total);
-      // }
+      this.productOrderForm.get('price').setValue(value.price);
+
     }
   }
-  
-  setQuantity() {
-    var temp = this.manageOrderForm.controls['quantity'].value;
-    console.log('setQuantity() is called', temp)
-    if (temp > 0) {
-      this.manageOrderForm.controls['total'].setValue(this.manageOrderForm.controls['quantity'].value * this.manageOrderForm.controls['price'].value);
-    } else if (temp != '') {
-      this.manageOrderForm.controls['quantity'].setValue('1');
-      this.manageOrderForm.controls['total'].setValue(this.manageOrderForm.controls['quantity'].value * this.manageOrderForm.controls['price'].value);
-    }
-  }
+
 
   validateProductAdd() {
 
@@ -140,11 +114,11 @@ export class CreateOrderComponent implements OnInit {
 
   add() {
     console.log("added to the db")
-    if (this.manageOrderForm.invalid) {
+    if (this.productOrderForm.invalid) {
       return;
     }
 
-    const customerDetails = this.manageOrderForm.value;
+    const customerDetails = this.productOrderForm.value;
 
     this.customerService.addCustomer(customerDetails).subscribe(
       (response) => {

@@ -5,23 +5,19 @@
 <hr>
 <mat-card>
     <b><span>Customer Details:</span></b>
-    <!-- <form [formGroup]="manageOrderForm" > -->
-        <form>
+    <form [formGroup]="customerOrderForm">
         <div fxFlex fxLayout="column">
             <div fxLayout="row wrap">
-                <!-- <mat-form-field [appearance]="standard" fxFlex> -->
-                <mat-form-field fxFlex>    
+                <mat-form-field fxFlex>
                     <mat-label>Name</mat-label>
                     <input matInput formControlName="name" required>
                 </mat-form-field>
 
-                <!-- <mat-form-field appearance="standard" fxFlex> -->
                 <mat-form-field fxFlex>
                     <mat-label>Email</mat-label>
                     <input matInput formControlName="email" required>
                 </mat-form-field>
 
-                <!-- <mat-form-field appearance="standard" fxFlex> -->
                 <mat-form-field fxFlex>
                     <mat-label>Contact Number</mat-label>
                     <input matInput formControlName="contactNumber" required>
@@ -43,13 +39,14 @@
             </div>
         </div>
     </form>
-  </mat-card>
-  <hr>
+</mat-card>
+
+
+<hr>
 
 <mat-card>
     <b><span>Select Product:</span></b>
-    <!-- <form [formGroup]="manageOrderForm"> -->
-    <form>
+    <form [formGroup]="productOrderForm">
         <div fxFlex fxLayout="column">
             <div fxLayout="row wrap">
                 <mat-form-field fxFlex>
@@ -72,18 +69,19 @@
 
                 <mat-form-field fxFlex>
                     <mat-label>Price</mat-label>
-                    <input matInput [value]="manageOrderForm.get('price').value" formControlName="price" required readonly>
+                    <input matInput [value]="productOrderForm.get('price').value" formControlName="price" required
+                        readonly>
                 </mat-form-field>
-                
+
                 <mat-form-field fxFlex>
                     <mat-label>Quantity</mat-label>
-                    <input matInput formControlName="quantity" (input)="setQuantity()">
-                    <!-- <input matInput formControlName="quantity"> -->
+                    <input matInput formControlName="quantity" (input)="calculateTotal()">
                 </mat-form-field>
-                
+
                 <mat-form-field fxFlex>
                     <mat-label>Total</mat-label>
-                    <input matInput formControlName="total" [value]="manageOrderForm.get('total').value" required readonly>
+                    <input matInput formControlName="total" [value]="productOrderForm.get('total').value" required
+                        readonly>
                 </mat-form-field>
 
             </div>
@@ -91,9 +89,9 @@
     </form>
     <div>
         <button mat-flat-button color="primary" [disabled]="validateProductAdd()" (click)="add()">Add</button>
-            <button mat-flat-button color="primary" class="float-right">
-                <mat-icon>monetization_on</mat-icon> Total Amount: {{totalAmount}}
-            </button>
+        <button mat-flat-button color="primary" class="float-right">
+            <mat-icon>monetization_on</mat-icon> Total Amount: {{totalAmount}}
+        </button>
     </div>
 </mat-card>
 <hr>
