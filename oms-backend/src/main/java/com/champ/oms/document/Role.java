@@ -89,6 +89,8 @@ public enum Role {
   ),
   TELLER(
           Set.of(
+                  Permission.CATEGORY_READ,
+                  Permission.MENU_READ,
                   Permission.ORDER_READ,
                   Permission.ORDER_CREATE
           )

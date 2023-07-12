@@ -8,12 +8,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/management/menu")
+@PreAuthorize("hasAnyRole('CATEGORY', 'ADMIN', 'TELLER', 'MENU', 'ORDER')")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 public class MenuController {
@@ -22,16 +24,19 @@ public class MenuController {
     private final MenuService service;
 
     @GetMapping("/")
+    @PreAuthorize("hasAuthority('menu:read')")
     public List<Menu> getMenuItems() {
         return service.getAllActiveMenuItems();
     }
 
     @GetMapping("/category/{categoryId}")
+    @PreAuthorize("hasAuthority('menu:read')")
     public List<Menu> getMenuItemsByCategory(@PathVariable String categoryId) {
         return service.findActiveMenuItemsByCategoryId(categoryId);
     }
 
     @PostMapping("/")
+    @PreAuthorize("hasAuthority('menu:create')")
     public void addMenuItem(
             @RequestBody MenuBean menu
     ) {
@@ -39,6 +44,7 @@ public class MenuController {
     }
 
     @PostMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('menu:delete')")
     public ResponseEntity<?> deleteMenu(@PathVariable String id) {
         try {
             service.updateMenuItemStatus(id);
@@ -50,6 +56,7 @@ public class MenuController {
 
 
     @PutMapping("/")
+    @PreAuthorize("hasAuthority('menu:update')")
     public ResponseEntity<?> updateMenuItem(@RequestBody MenuBean menu) {
         try {
             service.editMenuItem(menu);

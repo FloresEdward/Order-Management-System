@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/management/category")
+@PreAuthorize("hasAnyRole('CATEGORY', 'ADMIN', 'TELLER', 'MENU', 'ORDER')")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 public class CategoryController {
@@ -22,11 +24,13 @@ public class CategoryController {
     private final CategoryService service;
 
     @GetMapping("/")
+    @PreAuthorize("hasAuthority('category:read')")
     public List<Category> getCategories(){
         return service.getAllActiveCategories();
     }
 
     @PostMapping("/")
+    @PreAuthorize("hasAuthority('category:create')")
     public void addCategory(
             @RequestBody CategoryBean category
     ) {
@@ -34,6 +38,7 @@ public class CategoryController {
     }
 
     @PostMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('category:delete')")
     public ResponseEntity<?> deleteCategory(@PathVariable String id) {
         try {
             service.updateCategoryStatus(id);
@@ -44,6 +49,7 @@ public class CategoryController {
     }
 
     @PutMapping("/")
+    @PreAuthorize("hasAuthority('category:update')")
     public ResponseEntity<?> updateCategoryName(@RequestBody CategoryBean category) {
         try {
             service.editCategory(category);
