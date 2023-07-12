@@ -1,16 +1,27 @@
 <div class="mat-dialog-container">
-    <h2 mat-dialog-title>{{ action }} Category</h2>
+  <h2 mat-dialog-title>{{ action }} Category</h2>
+  <form [formGroup]="categoryForm" (ngSubmit)="handleSubmit(action)">
     <mat-dialog-content>
-        <mat-form-field *ngIf="action !== 'Delete'">
-          <input matInput placeholder="Name" [(ngModel)]="categoryName">
-        </mat-form-field>
-        <p *ngIf="action === 'Delete'">Do you want to delete {{ categoryName }}?</p>
-      </mat-dialog-content>
-      
+      <mat-form-field *ngIf="action !== 'Delete'">
+        <input matInput placeholder="Name" formControlName="name">
+        <mat-error *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+          <span *ngIf="name?.errors?.['required']">Name is required.</span>
+          <span *ngIf="name?.errors?.['pattern']" style="font-size: small;">Name should not contain numbers or symbols.</span>
+        </mat-error>
+      </mat-form-field>
+      <p *ngIf="action === 'Delete'">Do you want to delete {{ categoryName }}?</p>
+    </mat-dialog-content>
+
     <mat-dialog-actions align="end">
-      <button mat-raised-button color="primary" (click)="addCategory()" [hidden]="action !== 'Add'">Add</button>
-      <button mat-raised-button color="primary" (click)="editCategory()" [hidden]="action !== 'Edit'">Edit</button>
-      <button mat-raised-button color="warn" (click)="deleteCategory()" [hidden]="action !== 'Delete'">Delete</button>
-      <button mat-raised-button (click)="closeDialog()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="categoryForm.invalid"
+        [hidden]="action !== 'Add'">Add</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="categoryForm.invalid"
+        [hidden]="action !== 'Edit'">Edit</button>
+      <button mat-raised-button color="warn" type="button" (click)="deleteCategory()" [hidden]="action !== 'Delete'">
+        Delete
+      </button>
+      <button mat-raised-button type="button" (click)="closeDialog()">Cancel</button>
     </mat-dialog-actions>
-  </div>
+  </form>
+</div>
+

@@ -47,6 +47,8 @@ export class CategoryComponent implements OnInit {
       category: category
     }
 
+    console.log(dialogData);
+
     this.dialogRef = this.dialog.open(CategoryDialogComponent, { data: dialogData });
     this.dialogRef.afterClosed().subscribe(result => {
       console.log(result);

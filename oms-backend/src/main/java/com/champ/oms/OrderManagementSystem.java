@@ -26,25 +26,25 @@ public class OrderManagementSystem {
 			CustomerService customerService
 	) {
 		return args -> {
-			var admin = RegisterRequest.builder()
-					.firstname("Admin")
-					.lastname("Admin")
-					.email("admin@mail.com")
-					.password("password")
-					.status("active")
-					.role(ROLE.ADMIN)
-					.build();
-			System.out.println("Admin token: " + service.register(admin).getAccessToken());
-
-			var manager = RegisterRequest.builder()
-					.firstname("Admin")
-					.lastname("Admin")
-					.email("manager@mail.com")
-					.password("password")
-					.status("inactive")
-					.role(MANAGER)
-					.build();
-			System.out.println("Manager token: " + service.register(manager).getAccessToken());
+//			var admin = RegisterRequest.builder()
+//					.firstname("Admin")
+//					.lastname("Admin")
+//					.email("admin@mail.com")
+//					.password("password")
+//					.status("active")
+//					.role(ADMIN)
+//					.build();
+//			System.out.println("Admin token: " + service.register(admin).getAccessToken());
+//
+//			var manager = RegisterRequest.builder()
+//					.firstname("Admin")
+//					.lastname("Admin")
+//					.email("manager@mail.com")
+//					.password("password")
+//					.status("inactive")
+//					.role(MANAGER)
+//					.build();
+//			System.out.println("Manager token: " + service.register(manager).getAccessToken());
 
 
 		};

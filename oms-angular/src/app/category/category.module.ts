@@ -5,7 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CategoryComponent } from './category.component';
 import { CategoryRoutes } from './category.routing';
 import { MaterialModule } from '../shared/material-module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField } from '@angular/material/form-field';
 import { SharedModule } from '../shared/shared.module';
 import { CategoryDialogComponent } from './dialogs/category-dialog/category-dialog.component';
@@ -18,7 +18,8 @@ import { CategoryDialogComponent } from './dialogs/category-dialog/category-dial
     FlexLayoutModule,
     RouterModule.forChild(CategoryRoutes),
     FormsModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ],
   declarations: [CategoryComponent, CategoryDialogComponent],
 })
