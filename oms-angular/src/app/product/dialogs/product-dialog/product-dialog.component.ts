@@ -125,11 +125,11 @@ export class ProductDialogComponent implements OnInit {
     if (this.productForm.valid) {
       const productDetails = {
         id: this.productId,
-        name: this.productName,
-        description: this.productDescription,
-        category: this.productCategory,
-        price: this.productPrice,
-        stock: this.productStock
+        name: this.productForm.get('name')?.value,
+        description: this.productForm.get('description')?.value,
+        category: this.productForm.get('category')?.value,
+        price: this.productForm.get('price')?.value,
+        stock: this.productForm.get('stock')?.value
       }
 
       this.productService.editProduct(productDetails).subscribe(
