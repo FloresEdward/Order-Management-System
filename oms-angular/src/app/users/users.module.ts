@@ -9,6 +9,7 @@ import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { MatTableModule } from '@angular/material/table';
+import { InfoDialogComponent } from './user-dialog/info-dialog.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,6 @@ import { MatTableModule } from '@angular/material/table';
     SharedModule,
     MatTableModule
   ],
-  declarations: [UsersComponent, UserDialogComponent]
+  declarations: [UsersComponent, UserDialogComponent, InfoDialogComponent]
 })
 export class UsersModule { }

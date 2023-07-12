@@ -4,6 +4,7 @@ import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogComponent } from '../order/manage-order/confirmation-dialog/confirmation-dialog.component';
 import { HttpClient } from '@angular/common/http';
+import { InfoDialogComponent } from './user-dialog/info-dialog.component';
 
 @Component({
   selector: 'app-users',
@@ -16,6 +17,16 @@ export class UsersComponent implements OnInit{
   dataSource!: MatTableDataSource<any>;
 
   userArray: any[] = [];
+
+  roles = [
+    { role: 'ADMIN', description: ['Category Management', 'Menu Management', 'Order Management', 'Category Management', 'Account Management'] },
+    { role: 'CATEGORY', description: ['Category Management', 'Menu (Read)', 'Order (Create)'] },
+    { role: 'MENU', description: ['Menu Management', 'Category (Read)', 'Order (Create)'] },
+    { role: 'ORDER', description: ['Order Management', 'Category (Read)', 'Menu (Read)'] },
+    { role: 'ACCOUNT', description: ['Account Management'] },
+    { role: 'TELLER', description: ['Category (Read)', 'Menu (Read)', 'Order (Read)', 'Order (Create)' ] },
+    { role: 'RIDER', description: ['Order (Read)', 'Order (Update)' ] },
+  ];
 
   constructor(private dialog: MatDialog, private http: HttpClient) {
     this.getAllUser();
@@ -31,16 +42,6 @@ export class UsersComponent implements OnInit{
   }
 
   tableData() {
-    const roles = [
-      { role: 'ADMIN', description: 'All Access' },
-      { role: 'CATEGORY', description: 'Access to Category Module, and create order' },
-      { role: 'MENU', description: 'Access to Menu Module, and create order' },
-      { role: 'ORDER', description: 'Access to Order Module, view order archive, create and update' },
-      { role: 'ACCOUNT', description: 'Access to User Management' },
-      { role: 'TELLER', description: 'Create order only' },
-      { role: 'RIDER', description: 'Update order status only' },
-    ];
-  
     this.dataSource = new MatTableDataSource(this.userArray);
   }
   
@@ -91,6 +92,16 @@ export class UsersComponent implements OnInit{
         message: 'Are you sure want to delete this account?',
       }
     });
+  }
+
+  openInfoDialog(role: string) {
+    const selectedRole = this.roles.find(r => r.role === role);
+    if (selectedRole) {
+      const dialogRef = this.dialog.open(InfoDialogComponent, {
+        width: '400px',
+        data: selectedRole
+      });
+    }
   }
 
   applyFilter(event: Event) {
