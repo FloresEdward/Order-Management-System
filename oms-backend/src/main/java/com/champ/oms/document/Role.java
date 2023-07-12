@@ -55,6 +55,7 @@ public enum Role {
                   Permission.CATEGORY_UPDATE,
                   Permission.CATEGORY_DELETE,
                   Permission.CATEGORY_CREATE,
+                  Permission.MENU_READ,
                   Permission.ORDER_CREATE
           )
   ),
@@ -64,6 +65,7 @@ public enum Role {
                   Permission.MENU_UPDATE,
                   Permission.MENU_DELETE,
                   Permission.MENU_CREATE,
+                  Permission.CATEGORY_READ,
                   Permission.ORDER_CREATE
           )
   ),
@@ -72,7 +74,9 @@ public enum Role {
                   Permission.ORDER_READ,
                   Permission.ORDER_UPDATE,
                   Permission.ORDER_DELETE,
-                  Permission.ORDER_CREATE
+                  Permission.ORDER_CREATE,
+                  Permission.CATEGORY_READ,
+                  Permission.MENU_READ
           )
   ),
   ACCOUNT(

@@ -51,13 +51,13 @@ public class SecurityConfiguration {
         )
           .permitAll()
                 // CATEGORY MANAGER
-                .requestMatchers("/api/v1/management/category/**").hasAnyRole(CATEGORY.name(), ADMIN.name())
+                .requestMatchers("/api/v1/management/category/**").hasAnyRole(CATEGORY.name(), ADMIN.name(), TELLER.name(), MENU.name(), ORDER.name())
                 .requestMatchers(GET, "/api/v1/management/category/**").hasAnyAuthority(CATEGORY_READ.name())
                 .requestMatchers(POST, "/api/v1/management/category/**").hasAnyAuthority(CATEGORY_CREATE.name())
                 .requestMatchers(PUT, "/api/v1/management/category/**").hasAnyAuthority(CATEGORY_UPDATE.name())
                 .requestMatchers(DELETE, "/api/v1/management/category/**").hasAnyAuthority(CATEGORY_DELETE.name())
                 // MENU MANAGER
-                .requestMatchers("/api/v1/management/menu/**").hasAnyRole(MENU.name(), ADMIN.name())
+                .requestMatchers("/api/v1/management/menu/**").hasAnyRole(MENU.name(), ADMIN.name(), TELLER.name(), CATEGORY.name(), ORDER.name())
                 .requestMatchers(GET, "/api/v1/management/menu/**").hasAnyAuthority(MENU_READ.name())
                 .requestMatchers(POST, "/api/v1/management/menu/**").hasAnyAuthority(MENU_CREATE.name())
                 .requestMatchers(PUT, "/api/v1/management/menu/**").hasAnyAuthority(MENU_UPDATE.name())
