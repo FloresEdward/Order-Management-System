@@ -9,6 +9,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,6 +43,14 @@ public class OrderService {
                 .fulfilledDate(orderBean.getFulfilledDate())
                 .build();
         orderRepository.save(order);
+    }
+
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
+    public List<Order> getAllActiveOrders() {
+        return orderRepository.findByStatus("active");
     }
 
 }

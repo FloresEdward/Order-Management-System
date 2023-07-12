@@ -147,13 +147,28 @@ export class CreateOrderComponent implements OnInit {
     this.productOrderForm.reset();
   }
 
-  handleDeleteAction() {
+  handleDeleteAction(index: number) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        message: 'Are you sure want to delete?',
+        message: 'Are you sure you want to delete?',
+      },
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.dataSource.data.splice(index, 1);
+        this.dataSource._updateChangeSubscription();
+  
+        this.dataSource = new MatTableDataSource<any>(this.dataSource.data);
+        console.log(`Row Deleted`);
       }
     });
+
+    
   }
+  
+  
+  
 
   submitAction() {
     const orderItems = this.dataSource.data.map((item: any) => ({
@@ -174,7 +189,7 @@ export class CreateOrderComponent implements OnInit {
 
     const orderDetails = {
       orderItems: orderItems, 
-      customerDetails: customerDetails, 
+      customer: customerDetails, 
       courierId: '1',
       addressId: customerDetails.address,
       quantity: orderItems.reduce((quantity, item) => quantity + item.quantity, 0),

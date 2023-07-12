@@ -2,6 +2,7 @@ package com.champ.oms.demo;
 
 import com.champ.oms.bean.OrderBean;
 import com.champ.oms.bean.OrderItemBean;
+import com.champ.oms.document.Order;
 import com.champ.oms.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,4 +28,10 @@ public class OrderController {
     public void createOrder(@RequestBody OrderBean orderBean) {
         orderService.saveOrder(orderBean);
     }
+
+    @GetMapping("/")
+    public List<Order> getOrders() {
+        return orderService.getAllActiveOrders();
+    }
+
 }

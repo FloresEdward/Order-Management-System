@@ -16,7 +16,7 @@ export class OrderHistoryComponent implements OnInit{
 
   selectedValue: string | null = null;
 
-  displayedColumns: string[] = ['id', 'name', 'address', 'contactNumber', 'total', 'rider', 'status', 'view'];
+  displayedColumns: string[] = ['id', 'name', 'address', 'contactNumber', 'total', 'rider', 'state', 'view'];
   listOfRiders: string[] = [];
   dataSource!: MatTableDataSource<any>;
   responseMessage: any;
@@ -35,9 +35,9 @@ export class OrderHistoryComponent implements OnInit{
   tableData() {
   
     const data = [
-      { id: 1, name: 'John Doe', address: 'Sa tabi-tabi', contactNumber: '1234567890', rider: "Rider 1", status: 'Delivered', total: '$100'},
-      { id: 2, name: 'Jane Smith', address: 'Sa Bahay', contactNumber: '9876543210', rider: " ", status: 'Canceled', total: '$150'},
-      { id: 3, name: 'Joe Smith', address: '123 Street', contactNumber: '9024865210', rider: "Rider 3", status: 'Delivered', total: '$250'},
+      { id: 1, name: 'John Doe', address: 'Sa tabi-tabi', contactNumber: '1234567890', rider: "Rider 1", state: 'Delivered', total: '$100'},
+      { id: 2, name: 'Jane Smith', address: 'Sa Bahay', contactNumber: '9876543210', rider: " ", state: 'Canceled', total: '$150'},
+      { id: 3, name: 'Joe Smith', address: '123 Street', contactNumber: '9024865210', rider: "Rider 3", state: 'Delivered', total: '$250'},
     ];
     this.dataSource = new MatTableDataSource(data);
   }
