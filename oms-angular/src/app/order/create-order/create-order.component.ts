@@ -8,6 +8,7 @@ import { OrderService } from 'src/app/services/order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CustomerService } from 'src/app/services/customer.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-order-status',
@@ -19,19 +20,19 @@ export class CreateOrderComponent implements OnInit {
   cardTitle: string = 'Create Order';
 
   displayedColumns: string[] = ['category', 'product', 'price', 'quantity', 'total', 'edit'];
-  dataSource: any = [];
+  dataSource: MatTableDataSource<any>;
   productOrderForm: any = FormGroup;
   customerOrderForm: any = FormGroup;
   categories: any = [{ name: 'Dessert' }, { name: 'Drinks' }, { name: 'Rice Meals' }];
   products: any = [{
     "id": "menu1",
     "name": "Pizza",
-    "price": 10.99
+    "price": 10
   },
   {
     "id": "menu2",
     "name": "Burger",
-    "price": 8.99
+    "price": 8
   }];
   price: any;
   totalAmount: number = 0;
@@ -62,7 +63,9 @@ export class CreateOrderComponent implements OnInit {
       contactNumber: [''],
       address: [''],
       paymentMethod: [''],
-    })
+    });
+
+    this.dataSource = new MatTableDataSource<any>();
 
   }
 
@@ -116,32 +119,26 @@ export class CreateOrderComponent implements OnInit {
   }
 
   add() {
-    console.log("added to the db")
-    if (this.productOrderForm.invalid) {
-      return;
-    }
 
-    const customerDetails = this.productOrderForm.value;
+    const category = this.productOrderForm.get('category').value;
+    const product = this.productOrderForm.get('product').value;
+    const price = this.productOrderForm.get('price').value;
+    const quantity = this.productOrderForm.get('quantity').value;
+    const total = this.productOrderForm.get('total').value;
 
-    this.customerService.addCustomer(customerDetails).subscribe(
-      (response) => {
-        console.log(response);
-        const orderDetails = {
-        };
+    const element = {
+      category: category,
+      product: product,
+      price: price,
+      quantity: quantity,
+      total: total
+    };
 
-        this.orderService.addOrder(orderDetails).subscribe(
-          (response) => {
-            console.log(response);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.dataSource.data.push(element);
+    this.dataSource._updateChangeSubscription();
+
+    // Reset the form
+    this.productOrderForm.reset();
   }
 
   handleDeleteAction() {
@@ -152,8 +149,46 @@ export class CreateOrderComponent implements OnInit {
     });
   }
 
+  // submitAction() {
+  //   console.log("called submitAction()")
+
+  //   const orderItems = this.dataSource.data;
+  //   console.log(`${orderItems}`);
+  //   const orderDetails = {
+  //     orderItems: orderItems,
+  //     quantity: orderItems.length,
+  //   };
+
+  //   this.orderService.addOrder(orderDetails).subscribe(
+  //     (response) => {
+  //       console.log(response);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  // }
+
   submitAction() {
-
+    const orderItems = this.dataSource.data.map((item: any) => ({
+      id: item.product.category,
+      name: item.product.product,
+      price: item.product.price,
+      quantity: item.product.quantity
+    }));
+  
+    const orderDetails = {
+      orderItems: orderItems,
+      // quantity: orderItems.length,
+    };
+  
+    this.orderService.addOrder(orderDetails).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
-
 }
