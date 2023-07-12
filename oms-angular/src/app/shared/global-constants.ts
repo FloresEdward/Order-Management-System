@@ -5,6 +5,7 @@ export class GlobalConstants {
     public static productExistError: string = "Product already exist";
     public static productAdded: string = "Product added successful";
     public static orderAdded: string = "Order Create Success!"
+    public static delete: string = "Bakit mo dinelete mali yan!"
 
     public static nameRegex: string = "[a-zA-Z0-9]*";
     public static emailRegex: string = "[A-Za-z0-9._%-]+@[A-Za-z0-9._%]+\\.[a-z][2,3]";

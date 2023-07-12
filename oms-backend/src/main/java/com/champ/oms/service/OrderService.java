@@ -50,7 +50,7 @@ public class OrderService {
     }
 
     public List<Order> getAllActiveOrders() {
-        return orderRepository.findByStatus("active");
+        return orderRepository.findByStatus("pending");
     }
 
 }

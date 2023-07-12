@@ -29,9 +29,6 @@ export class CreateOrderComponent implements OnInit {
   price: any;
   totalAmount: number = 0;
   responseMessage: any;
-  // quantity: any = null;
-
-
 
   constructor(private formBuilder: FormBuilder,
     private dialog: MatDialog,
@@ -170,11 +167,9 @@ export class CreateOrderComponent implements OnInit {
       }
     });
 
+    this.snackbarService.openSnackBar(GlobalConstants.productAdded, 'success');
   }
   
-  
-  
-
   submitAction() {
     const orderItems = this.dataSource.data.map((item: any) => ({
       category: item.category.name,
@@ -196,8 +191,9 @@ export class CreateOrderComponent implements OnInit {
       orderItems: orderItems, 
       customer: customerDetails, 
       courierId: '1',
+      status: 'pending',
       addressId: customerDetails.address,
-      quantity: orderItems.reduce((quantity, item) => quantity + item.quantity, 0),
+      totalQuantity: orderItems.reduce((totalQuantity, item) => totalQuantity + item.quantity, 0),
       grandTotal: orderItems.reduce((total, item) => total + item.total, 0)
     }
 
@@ -211,6 +207,7 @@ export class CreateOrderComponent implements OnInit {
         this.snackbarService.openSnackBar(GlobalConstants.orderAdded, 'success');
         console.log('Order response: ', orderResponse);
         console.log('Customer response: ', customerResponse);
+        this.dataSource.data = [];
       },
       (error) => {
         this.snackbarService.openSnackBar(GlobalConstants.genericError, 'error');

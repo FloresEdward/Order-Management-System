@@ -1,11 +1,12 @@
 import { AfterViewInit, OnInit, Component, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { Route, Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ManageOrderProductsComponent } from './manage-order-products/manage-order-products.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-order',
@@ -14,40 +15,45 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 })
 export class ManageOrderComponent implements OnInit {
   
+  private baseUrl = 'http://localhost:8080/api/v1/management/order';
   cardTitle: string = 'Manage Order';
-  selectedValue: string | null = null;
 
-  displayedColumns: string[] = ['id', 'name', 'address', 'contactNumber', 'total', 'rider', 'action'];
+  dropDownList: string[] = ['Edward', 'Emman', 'Troy'];
+  displayedColumns: string[] = ['name', 'address', 'contactNumber', 'total', 'rider', 'action'];
   listOfRiders: string[] = [];
-  dataSource!: MatTableDataSource<any>;
+  orders: any[] = [];
   responseMessage: any;
   checkButtonDisabled: boolean = false;
   
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private snackBar: SnackbarService){
+    private snackBar: SnackbarService, 
+    private http: HttpClient, 
+    private route: ActivatedRoute){
   }
 
   ngOnInit(): void {
-    this.tableData();
+    this.getOrders();
   }
 
-  tableData() {
-    const dropDownList: string[] = ['Edward', 'Emman', 'Troy'];
-  
-    const data = [
-      { id: 1, name: 'John Doe', address: 'Sa tabi-tabi', contactNumber: '1234567890', status: this.listOfRiders, total: '$100', isSelected: false },
-      { id: 2, name: 'Jane Smith', address: 'Sa Bahay', contactNumber: '9876543210', status: this.listOfRiders, total: '$150', isSelected: false },
-      { id: 3, name: 'Joe Smith', address: '123 Street', contactNumber: '9024865210',status: this.listOfRiders, total: '$250', isSelected: false },
-    ];
-    this.dataSource = new MatTableDataSource(data);
-    this.listOfRiders = dropDownList;
+  getOrders(): void {
+    console.log('getOrders() is called should display data now.');
+
+    this.http.get<any[]>(this.baseUrl + '/').subscribe(
+      (response) => {
+        this.orders = response;
+        console.log(this.orders);
+      },
+      (error) => {
+        console.log('Error:', error);
+      }
+    );
+
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(event: any) {
+
   }
 
   handleViewAction(values: any) {
@@ -62,24 +68,23 @@ export class ManageOrderComponent implements OnInit {
     })
   }
 
-  handleDeleteAction(values:any) {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
-      data:{
-        message: 'Are you sure want to cancel this order?',
+  handleDeleteAction(index: number) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        message: 'Are you sure you want to cancel this order?',
+      },
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        console.log(`Row Deleted`);
       }
     });
-  }
-
-  downloadReportAction(values:any) {
-
-  }
-
-  deleteBill() {
 
   }
 
   updateCheckButtonDisabled() {
     this.checkButtonDisabled = false;
   }
-  
+
 }
