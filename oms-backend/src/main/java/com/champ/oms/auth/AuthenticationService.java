@@ -20,6 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +43,9 @@ public class AuthenticationService {
             .role(request.getRole() != null ? request.getRole() : Role.TELLER)
             .build();
     var savedUser = repository.save(user);
-    var jwtToken = jwtService.generateToken(user);
+    Map<String, Object> map = new HashMap<>();
+    map.put("role", user.getRole());
+    var jwtToken = jwtService.generateToken(map, user);
     var refreshToken = jwtService.generateRefreshToken(user);
     saveUserToken(savedUser, jwtToken);
     return AuthenticationResponse.builder()
@@ -62,7 +66,9 @@ public class AuthenticationService {
     if (!user.isAccountNonLocked()){
       throw new LockedException("User account is locked");
     }
-    var jwtToken = jwtService.generateToken(user);
+    Map<String, Object> map = new HashMap<>();
+    map.put("role", user.getRole());
+    var jwtToken = jwtService.generateToken(map, user);
     var refreshToken = jwtService.generateRefreshToken(user);
     revokeAllUserTokens(user);
     saveUserToken(user, jwtToken);

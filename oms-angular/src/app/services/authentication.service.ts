@@ -23,7 +23,7 @@ export class AuthenticationService {
     return this.http.post(url, authenticationRequest).pipe(
       tap((response: any) => {
         const token = response.access_token;
-        this.tokenService.saveToken(token);
+        this.tokenService.holdJWT(token);
       })
     );
   }

@@ -1,5 +1,6 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy, AfterViewInit } from '@angular/core';
+import { TokenService } from 'src/app/services/token.service';
 
 
 /** @title Responsive sidenav */
@@ -11,15 +12,22 @@ import { ChangeDetectorRef, Component, OnDestroy, AfterViewInit } from '@angular
 export class FullComponent implements OnDestroy, AfterViewInit {
   mobileQuery: MediaQueryList;
 
+  email: string | null = '';
+  role: string | null = '';
+
   private _mobileQueryListener: () => void;
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,
-    media: MediaMatcher
+    media: MediaMatcher,
+    token: TokenService
   ) {
     this.mobileQuery = media.matchMedia('(min-width: 768px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+
+    this.email = token.getEmailFromToken();
+    this.role = token.getRoleFromToken();
   }
 
   ngOnDestroy(): void {
