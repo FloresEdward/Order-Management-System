@@ -21,6 +21,7 @@ import { SignupComponent } from './landing/signup/signup.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { ForgotPasswordComponent } from './landing/forgot-password/forgot-password.component';
 import { SetNewPasswordComponent } from './landing/set-new-password/set-new-password.component';
+import { AuthGuard } from './shared/auth-guard.service';
 // import { OrderHistoryComponent } from './order/order-history/order-history.component';
 
 
@@ -52,6 +53,7 @@ import { SetNewPasswordComponent } from './landing/set-new-password/set-new-pass
     HttpClientModule,
   ],
   providers: [
+    AuthGuard,
     AuthenticationService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],

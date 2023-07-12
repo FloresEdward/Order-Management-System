@@ -28,6 +28,9 @@ export class TokenService {
 
   removeToken(): void {
     localStorage.removeItem(this.TOKEY_KEY);
+    localStorage.removeItem('CURRENT_USER');
+    localStorage.removeItem('sub');
+    localStorage.removeItem('role');
   }
 
   saveEmailFromToken(sub: string): void {

@@ -7,6 +7,7 @@ import { LoginComponent } from './landing/login/login.component';
 import { SignupComponent } from './landing/signup/signup.component';
 import { ForgotPasswordComponent } from './landing/forgot-password/forgot-password.component';
 import { SetNewPasswordComponent } from './landing/set-new-password/set-new-password.component';
+import { AuthGuard } from './shared/auth-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -64,7 +65,7 @@ const routes: Routes = [
       
 
     ],
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   { path: '**', component: ErrorComponent }
 ];
