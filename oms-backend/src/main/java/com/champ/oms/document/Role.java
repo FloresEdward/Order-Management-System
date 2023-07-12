@@ -76,7 +76,8 @@ public enum Role {
                   Permission.ORDER_DELETE,
                   Permission.ORDER_CREATE,
                   Permission.CATEGORY_READ,
-                  Permission.MENU_READ
+                  Permission.MENU_READ,
+                  Permission.ACCOUNT_READ
           )
   ),
   ACCOUNT(
