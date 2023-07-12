@@ -8,7 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef } from '@angular/materia
 })
 export class ManageOrderProductsComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'category', 'price', 'quantity', 'total'];
+  displayedColumns: string[] = ['category', 'product', 'price', 'quantity', 'total'];
   dataSource: any;
   data: any;
 
@@ -17,7 +17,7 @@ export class ManageOrderProductsComponent implements OnInit {
 
   ngOnInit() {
     this.data = this.dialogData.data;
-    this.dataSource = JSON.parse(this.dialogData.data.productDetail);
+    this.dataSource = this.dialogData.data.productDetail;
     console.log(this.dialogData.data);
   }
 }

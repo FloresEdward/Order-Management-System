@@ -19,13 +19,14 @@ import { forkJoin } from 'rxjs';
 export class CreateOrderComponent implements OnInit {
 
   cardTitle: string = 'Create Order';
-
   displayedColumns: string[] = ['category', 'product', 'price', 'quantity', 'total', 'edit'];
-  dataSource: MatTableDataSource<any>;
-  productOrderForm: any = FormGroup;
-  customerOrderForm: any = FormGroup;
   categories: any[] = [];
   products: any[] = [];
+  dataSource: MatTableDataSource<any>;
+
+  productOrderForm: any = FormGroup;
+  customerOrderForm: any = FormGroup;
+  
   price: any;
   totalAmount: number = 0;
   responseMessage: any;
@@ -74,10 +75,6 @@ export class CreateOrderComponent implements OnInit {
     this.productOrderForm.get('total').setValue(total);
   }
 
-  update() {
-
-  }
-
   isFormValid(): boolean {
     return this.customerOrderForm.valid && this.productOrderForm.valid;
   }
@@ -115,15 +112,6 @@ export class CreateOrderComponent implements OnInit {
       this.productOrderForm.get('price').setValue(value.price);
 
     }
-  }
-
-
-  validateProductAdd() {
-
-  }
-
-  validateSubmit() {
-
   }
 
   add() {

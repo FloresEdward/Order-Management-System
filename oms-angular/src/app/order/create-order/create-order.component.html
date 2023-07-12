@@ -19,14 +19,11 @@
                 <mat-form-field fxFlex>
                     <mat-label>Email</mat-label>
                     <input matInput formControlName="email" required>
-                    <!-- <mat-error *ngIf="customerOrderForm.get('email').hasError('required')">
-                        Email is required.
-                    </mat-error> -->
                 </mat-form-field>
 
                 <mat-form-field fxFlex>
                     <mat-label>Contact Number</mat-label>
-                    <input matInput formControlName="contactNumber" required>
+                    <input matInput formControlName="contactNumber" type="number" required>
                     <mat-error *ngIf="customerOrderForm.get('contactNumber').hasError('required')">
                         Contact Number is required.
                     </mat-error>
@@ -43,9 +40,10 @@
                 <mat-form-field fxFlex>
                     <mat-label>Payment Method</mat-label>
                     <mat-select formControlName="paymentMethod" required>
-                        <mat-option value="Cash On Delivery">COD</mat-option>
-                        <mat-option value="Gcash">Gcash</mat-option>
-                        <mat-option value="Libre">Libre</mat-option>
+                        <mat-option value="Cash On Delivery">Cash on Delivery</mat-option>
+                        <mat-option value="Gcash">GCash</mat-option>
+                        <mat-option value="Paymaya">Paymaya</mat-option>
+                        <mat-option value="Debit">Debit Card</mat-option>
                     </mat-select>
                     <mat-error *ngIf="customerOrderForm.get('paymentMethod').hasError('required')">
                         Please select atleast 1.

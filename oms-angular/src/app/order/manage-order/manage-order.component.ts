@@ -56,10 +56,10 @@ export class ManageOrderComponent implements OnInit {
 
   }
 
-  handleViewAction(values: any) {
+  handleViewAction(order: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      data:values
+      data: order
     }
     dialogConfig.width = "100%";
     const dialogRef = this.dialog.open(ManageOrderProductsComponent, dialogConfig);
