@@ -45,11 +45,6 @@ export class UsersComponent implements OnInit{
     this.dataSource = new MatTableDataSource(this.userArray);
   }
   
-  
-  
-
-  
-  
   ngOnInit(): void {
     this.tableData();
   }
@@ -60,36 +55,49 @@ export class UsersComponent implements OnInit{
   
     // Open the UserDialogComponent as a MatDialog with the selected user data
     const dialogRef = this.dialog.open(UserDialogComponent, {
-      width: '400px',
+      width: '275px',
       data: user
     });
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // User clicked the "Save" button, apply the changes
-        user.user = result.user;
-        user.role = result.role;
-        user.status = result.status;
+        this.http.put("http://localhost:8080/api/v1/management/user/update", result)
+          .subscribe((updatedUser: any) => {
+            // Update the user in the frontend
+            user.firstname = updatedUser.firstname;
+            user.lastname = updatedUser.lastname;
+            user.email = updatedUser.email;
+            // Update any other properties as needed
+          });
       } else {
         // User closed the dialog or clicked the "Cancel" button, revert back to the original data
-        user.user = originalUser.user;
-        user.role = originalUser.role;
-        user.status = originalUser.status;
+        user.firstname = originalUser.firstname;
+        user.lastname = originalUser.lastname;
+        user.email = originalUser.email;
+        // Revert any other properties as needed
       }
     });
   }
-  
-  
 
   deleteUser(user: any) {
-    // Implement the logic to delete the user
-    console.log('Deleting user:', user);
-  }
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        message: 'Are you sure you want to delete this account?',
+      }
+    });
 
-  handleDeleteAction(values:any) {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
-      data:{
-        message: 'Are you sure want to delete this account?',
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Send an HTTP request to delete the user on the backend
+        this.http.delete(`http://localhost:8080/api/v1/management/user/delete/${user.id}`)
+          .subscribe(() => {
+            // Remove the user from the userArray in the frontend
+            const index = this.userArray.findIndex(u => u.id === user.id);
+            if (index !== -1) {
+              this.userArray.splice(index, 1);
+              this.tableData();
+            }
+          });
       }
     });
   }

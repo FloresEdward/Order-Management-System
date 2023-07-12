@@ -1,19 +1,36 @@
-<h2>Edit User</h2>
-<form>
-  <mat-form-field>
-    <input matInput placeholder="User" [(ngModel)]="data.user" name="user">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select placeholder="Role" [(ngModel)]="data.role" name="role">
-      <mat-option *ngFor="let role of roles" [value]="role">{{ role.role }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select placeholder="Status" [(ngModel)]="data.status" name="status">
-      <mat-option *ngFor="let status of statuses" [value]="status">{{ status }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+<h1 mat-dialog-title>Edit User</h1>
+<div mat-dialog-content>
+  <div class="user-info">
+    <div class="info-row">
+      <div class="info-label">Full name:</div>
+      <div class="info-value">{{ data.firstname + ' ' + data.lastname }}</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Email:</div>
+      <div class="info-value">{{ data.email }}</div>
+    </div>
+  </div>
 
-  <button mat-raised-button color="primary" (click)="saveUser()">Save</button>
-  <button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>
-</form>
+  <div class="role-select">
+    <mat-form-field>
+      <mat-label>Role</mat-label>
+      <mat-select [(ngModel)]="data.role">
+        <mat-option *ngFor="let role of roles" [value]="role.role">{{ role.role }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="status-select">
+    <mat-form-field>
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="data.status">
+        <mat-option *ngFor="let status of statuses" [value]="status">{{ status }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+</div>
