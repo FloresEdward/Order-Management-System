@@ -26,6 +26,11 @@ public class MenuController {
         return service.getAllActiveMenuItems();
     }
 
+    @GetMapping("/category/{categoryId}")
+    public List<Menu> getMenuItemsByCategory(@PathVariable String categoryId) {
+        return service.findActiveMenuItemsByCategoryId(categoryId);
+    }
+
     @PostMapping("/")
     public void addMenuItem(
             @RequestBody MenuBean menu

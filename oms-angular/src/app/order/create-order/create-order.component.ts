@@ -24,17 +24,8 @@ export class CreateOrderComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   productOrderForm: any = FormGroup;
   customerOrderForm: any = FormGroup;
-  categories: any = [{ name: 'Dessert' }, { name: 'Drinks' }, { name: 'Rice Meals' }];
-  products: any = [{
-    "id": "menu1",
-    "name": "Pizza",
-    "price": 10
-  },
-  {
-    "id": "menu2",
-    "name": "Burger",
-    "price": 8
-  }];
+  categories: any[] = [];
+  products: any[] = [];
   price: any;
   totalAmount: number = 0;
   responseMessage: any;
@@ -48,7 +39,7 @@ export class CreateOrderComponent implements OnInit {
     private orderService: OrderService,
     private customerService: CustomerService,
     private router: Router,
-    private httpClient: HttpClient,
+    private http: HttpClient,
     private route: ActivatedRoute) {
       this.productOrderForm = this.formBuilder.group({
         category: ['', Validators.required],
@@ -90,16 +81,31 @@ export class CreateOrderComponent implements OnInit {
 
   }
 
-  getCategories() {
-
+  getCategories(): void {
+    const baseUrl = 'http://localhost:8080/api/v1/management/category';
+    this.http.get<any[]>(baseUrl + '/').subscribe(
+      (response) => {
+        this.categories = response;
+      },
+      (error) => {
+        console.log('Error:', error);
+      }
+    );
   }
 
-  getFilteredCategories() {
 
-  }
-
-  getProductsByCategory(value: any) {
-
+  getProductsByCategory(category: any) {
+    const baseUrl = 'http://localhost:8080/api/v1/management/menu/category';
+    console.log(category)
+    this.http.get<any[]>(`${baseUrl}/${category.id}`).subscribe(
+      (response) => {
+        this.products = response;
+        console.log(response)
+      },
+      (error) => {
+        console.log('Error:', error);
+      }
+    );
   }
 
 

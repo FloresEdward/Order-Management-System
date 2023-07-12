@@ -1,7 +1,7 @@
 package com.champ.oms.service;
 
+import com.champ.oms.bean.CategoryBean;
 import com.champ.oms.bean.MenuBean;
-import com.champ.oms.document.Category;
 import com.champ.oms.document.Menu;
 import com.champ.oms.repo.MenuRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +24,10 @@ public class MenuService {
 
     public List<Menu> getAllActiveMenuItems() {
         return menuRepository.findByStatus("active");
+    }
+
+    public List<Menu> findActiveMenuItemsByCategoryId(String categoryId) {
+        return menuRepository.findByCategory_IdAndStatus(categoryId, "active");
     }
 
     public void saveProduct (MenuBean menuBean) {
