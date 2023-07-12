@@ -44,17 +44,17 @@ export class CreateOrderComponent implements OnInit {
       this.productOrderForm = this.formBuilder.group({
         category: ['', Validators.required],
         product: ['', Validators.required],
-        price: [null, Validators.required],
+        price: [null],
         total: [''],
         quantity: [0, [Validators.required, Validators.min(1)]]
       });
 
     this.customerOrderForm = this.formBuilder.group({
-      name: [''],
-      email: [''],
-      contactNumber: [''],
-      address: [''],
-      paymentMethod: [''],
+      name: ['', Validators.required],
+      email: ['', Validators.required, Validators.pattern(GlobalConstants.emailRegex)],
+      contactNumber: ['', Validators.required],
+      address: ['', Validators.required],
+      paymentMethod: ['', Validators.required],
     });
 
     this.dataSource = new MatTableDataSource<any>();
@@ -79,6 +79,10 @@ export class CreateOrderComponent implements OnInit {
 
   update() {
 
+  }
+
+  isFormValid(): boolean {
+    return this.customerOrderForm.valid && this.productOrderForm.valid;
   }
 
   getCategories(): void {
@@ -145,6 +149,8 @@ export class CreateOrderComponent implements OnInit {
     this.dataSource._updateChangeSubscription();
 
     this.productOrderForm.reset();
+
+    this.snackbarService.openSnackBar(GlobalConstants.productAdded, 'success');
   }
 
   handleDeleteAction(index: number) {
@@ -164,7 +170,6 @@ export class CreateOrderComponent implements OnInit {
       }
     });
 
-    
   }
   
   
@@ -203,12 +208,15 @@ export class CreateOrderComponent implements OnInit {
 
     forkJoin([addOrderRequest, addCustomerRequest]).subscribe(
       ([orderResponse, customerResponse]) => {
+        this.snackbarService.openSnackBar(GlobalConstants.orderAdded, 'success');
         console.log('Order response: ', orderResponse);
         console.log('Customer response: ', customerResponse);
       },
       (error) => {
+        this.snackbarService.openSnackBar(GlobalConstants.genericError, 'error');
         console.log('Error', error);
       }
     )
   }
+  
 }

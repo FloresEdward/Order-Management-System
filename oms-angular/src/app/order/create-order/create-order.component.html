@@ -11,21 +11,33 @@
                 <mat-form-field fxFlex>
                     <mat-label>Name</mat-label>
                     <input matInput formControlName="name" required>
+                    <mat-error *ngIf="customerOrderForm.get('name').hasError('required')">
+                        Name is required.
+                    </mat-error>
                 </mat-form-field>
 
                 <mat-form-field fxFlex>
                     <mat-label>Email</mat-label>
                     <input matInput formControlName="email" required>
+                    <mat-error *ngIf="customerOrderForm.get('email').hasError('required')">
+                        Email is required.
+                    </mat-error>
                 </mat-form-field>
 
                 <mat-form-field fxFlex>
                     <mat-label>Contact Number</mat-label>
                     <input matInput formControlName="contactNumber" required>
+                    <mat-error *ngIf="customerOrderForm.get('contactNumber').hasError('required')">
+                        Contact Number is required.
+                    </mat-error>
                 </mat-form-field>
 
                 <mat-form-field fxFlex>
                     <mat-label>Address</mat-label>
                     <input matInput formControlName="address" required>
+                    <mat-error *ngIf="customerOrderForm.get('address').hasError('required')">
+                        Address is required.
+                    </mat-error>
                 </mat-form-field>
 
                 <mat-form-field fxFlex>
@@ -35,6 +47,9 @@
                         <mat-option value="Gcash">Gcash</mat-option>
                         <mat-option value="Libre">Libre</mat-option>
                     </mat-select>
+                    <mat-error *ngIf="customerOrderForm.get('paymentMethod').hasError('required')">
+                        Please select atleast 1.
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -56,6 +71,9 @@
                             {{category.name}}
                         </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="productOrderForm.get('category').hasError('required')">
+                        Please select atleast 1.
+                    </mat-error>
                 </mat-form-field>
 
                 <mat-form-field fxFlex>
@@ -65,12 +83,14 @@
                             {{product.name}}
                         </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="productOrderForm.get('product').hasError('required')">
+                        Please select atleast 1.
+                    </mat-error>
                 </mat-form-field>
 
                 <mat-form-field fxFlex>
                     <mat-label>Price</mat-label>
-                    <input matInput [value]="productOrderForm.get('price').value" formControlName="price" required
-                        readonly>
+                    <input matInput [value]="productOrderForm.get('price').value" formControlName="price" required readonly>
                 </mat-form-field>
 
                 <mat-form-field fxFlex>
@@ -85,15 +105,14 @@
 
                 <mat-form-field fxFlex>
                     <mat-label>Total</mat-label>
-                    <input matInput formControlName="total" [value]="productOrderForm.get('total').value" required
-                        readonly>
+                    <input matInput formControlName="total" [value]="productOrderForm.get('total').value" readonly>
                 </mat-form-field>
 
             </div>
         </div>
     </form>
     <div>
-        <button mat-flat-button color="primary" [disabled]="validateProductAdd()" (click)="add()">Add</button>
+        <button mat-flat-button color="primary" [disabled]="!isFormValid()" (click)="add()">Add</button>
         <button mat-flat-button color="primary" class="float-right" (click)="submitAction()">
             <mat-icon>monetization_on</mat-icon> Confirm Orders
         </button>
