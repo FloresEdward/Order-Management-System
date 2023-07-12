@@ -29,6 +29,18 @@ export class UserDialogComponent {
   ];
 
   statuses = ['active', 'inactive']
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(
+    public dialogRef: MatDialogRef<UserDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  onSave(): void {
+    // Perform any necessary validation or data manipulation before closing the dialog
+    this.dialogRef.close(this.data);
+  }
+
+  onCancel(): void {
+    this.dialogRef.close();
+  }
 
 }

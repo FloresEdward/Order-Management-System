@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogComponent } from '../order/manage-order/confirmation-dialog/confirmation-dialog.component';
@@ -22,13 +22,15 @@ export class UsersComponent implements OnInit{
     { role: 'ADMIN', description: ['Category Management', 'Menu Management', 'Order Management', 'Category Management', 'Account Management'] },
     { role: 'CATEGORY', description: ['Category Management', 'Menu (Read)', 'Order (Create)'] },
     { role: 'MENU', description: ['Menu Management', 'Category (Read)', 'Order (Create)'] },
-    { role: 'ORDER', description: ['Order Management', 'Category (Read)', 'Menu (Read)'] },
+    { role: 'ORDER', description: ['Order Management', 'Category (Read)', 'Menu (Read)', 'Account (Read)'] },
     { role: 'ACCOUNT', description: ['Account Management'] },
     { role: 'TELLER', description: ['Category (Read)', 'Menu (Read)', 'Order (Read)', 'Order (Create)' ] },
     { role: 'RIDER', description: ['Order (Read)', 'Order (Update)' ] },
   ];
 
-  constructor(private dialog: MatDialog, private http: HttpClient) {
+  constructor(private dialog: MatDialog, private http: HttpClient) { }
+
+  ngOnInit(): void {
     this.getAllUser();
   }
 
@@ -45,9 +47,6 @@ export class UsersComponent implements OnInit{
     this.dataSource = new MatTableDataSource(this.userArray);
   }
   
-  ngOnInit(): void {
-    this.tableData();
-  }
 
   editUser(user: any) {
     // Create a copy of the original user data
@@ -61,20 +60,23 @@ export class UsersComponent implements OnInit{
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.http.put("http://localhost:8080/api/v1/management/user/update", result)
+        let bodyData = {
+          "_id": user.id,
+          "firstname": user.firstname,
+          "lastname": user.lastname,
+          "email": user.email,
+          "password": user.password,
+          "role" : user.role,
+          "status" : user.status,
+        };
+        this.http.put(`http://localhost:8080/api/v1/management/user/edit/${user.id}`, bodyData, result)
           .subscribe((updatedUser: any) => {
-            // Update the user in the frontend
-            user.firstname = updatedUser.firstname;
-            user.lastname = updatedUser.lastname;
-            user.email = updatedUser.email;
-            // Update any other properties as needed
+            user.status = updatedUser.status;
+            user.role = updatedUser.role;
           });
       } else {
-        // User closed the dialog or clicked the "Cancel" button, revert back to the original data
-        user.firstname = originalUser.firstname;
-        user.lastname = originalUser.lastname;
-        user.email = originalUser.email;
-        // Revert any other properties as needed
+        user.status = originalUser.status;
+        user.role = originalUser.role;
       }
     });
   }

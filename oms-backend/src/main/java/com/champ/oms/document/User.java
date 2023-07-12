@@ -61,7 +61,7 @@ public class User implements UserDetails {
 
   @Override
   public boolean isAccountNonLocked() {
-    return !this.getStatus().equals("invalid") && !this.getStatus().equals("locked");
+    return !this.getStatus().equals("inactive") && !this.getStatus().equals("locked");
   }
 
   @Override
