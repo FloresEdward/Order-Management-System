@@ -51,7 +51,7 @@ export class CreateOrderComponent implements OnInit {
 
     this.customerOrderForm = this.formBuilder.group({
       name: ['', Validators.required],
-      email: ['', Validators.required, Validators.pattern(GlobalConstants.emailRegex)],
+      email: ['', Validators.required],
       contactNumber: ['', Validators.required],
       address: ['', Validators.required],
       paymentMethod: ['', Validators.required],
