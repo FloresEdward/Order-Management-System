@@ -1,10 +1,13 @@
 package com.champ.oms.demo;
 
 import com.champ.oms.bean.OrderBean;
+import com.champ.oms.bean.OrderItemBean;
 import com.champ.oms.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/management/order")
@@ -16,8 +19,8 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/")
-    public void createOrder(@RequestBody OrderBean orderBean) {
-        orderService.saveOrder(orderBean);
+    public void createOrder(@RequestBody List<OrderItemBean> orderItemBean) {
+        orderService.saveOrder(orderItemBean);
     }
 
 }

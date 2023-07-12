@@ -1,5 +1,6 @@
 package com.champ.oms.document;
 
+import com.champ.oms.bean.OrderItemBean;
 import com.mongodb.lang.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,7 @@ public class Order {
     private String creatorId;
     private String courierId; // ?
     private String deliveryAddressId;
-    private List<Menu> orderItems;
+    private List<OrderItemBean> orderItems;
     private String quantity;
     private String status;
     private Date createdAt;

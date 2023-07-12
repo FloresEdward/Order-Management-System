@@ -54,7 +54,7 @@ export class CreateOrderComponent implements OnInit {
         product: ['', Validators.required],
         price: [null, Validators.required],
         total: [''],
-        quantity: [0, [Validators.required, Validators.min(1)], Validators.pattern(GlobalConstants.quantityError)]
+        quantity: [0, [Validators.required, Validators.min(1)]]
       });
 
     this.customerOrderForm = this.formBuilder.group({
@@ -171,18 +171,16 @@ export class CreateOrderComponent implements OnInit {
 
   submitAction() {
     const orderItems = this.dataSource.data.map((item: any) => ({
-      id: item.product.category,
-      name: item.product.product,
-      price: item.product.price,
-      quantity: item.product.quantity
+      category: item.category.name,
+      product: item.product.name,
+      price: item.price,
+      quantity: item.quantity,
+      total: item.total
     }));
+
+    console.log(orderItems);
   
-    const orderDetails = {
-      orderItems: orderItems,
-      // quantity: orderItems.length,
-    };
-  
-    this.orderService.addOrder(orderDetails).subscribe(
+    this.orderService.addOrder(orderItems).subscribe(
       (response) => {
         console.log(response);
       },
