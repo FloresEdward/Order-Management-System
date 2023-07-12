@@ -21,6 +21,10 @@ export class ProductComponent implements OnInit{
     this.getProducts();
   }
 
+  truncateDescription(description: string, length: number): string {
+    return (description.length > length) ? description.substr(0, length) + '...' : description;
+  }
+
   getProducts(): void {
     this.http.get<any[]>(this.baseUrl + '/').subscribe(
       (response) => {

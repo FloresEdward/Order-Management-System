@@ -31,3 +31,29 @@
 .full-width {
   width: 100%;
 }
+.product-details {
+  margin-top: 16px;
+}
+
+.detail-card {
+  background-color: #f7f7f7;
+  border-radius: 4px;
+  padding: 16px;
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.detail-label {
+  width: 120px;
+  font-weight: bold;
+}
+
+.detail-value {
+  flex-grow: 1;
+  margin-left: 16px;
+}
+

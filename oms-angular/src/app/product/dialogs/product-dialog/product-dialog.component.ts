@@ -35,7 +35,7 @@ export class ProductDialogComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder
-    ) {
+  ) {
     this.action = data.action;
     this.productId = data.product ? data.product.id : '';
     this.productName = data.product ? data.product.name : '';
@@ -61,7 +61,7 @@ export class ProductDialogComponent implements OnInit {
   compareCategories(category1: any, category2: any): boolean {
     return category1 && category2 ? category1.id === category2.id : category1 === category2;
   }
-  
+
 
   getCategories(): void {
     const baseUrl = 'http://localhost:8080/api/v1/management/category';
@@ -80,7 +80,7 @@ export class ProductDialogComponent implements OnInit {
     this.dialogRef.close({ success: false });
   }
 
-  handleSubmit(action: string){
+  handleSubmit(action: string) {
     if (this.productForm.invalid) {
       return;
     }
@@ -98,7 +98,7 @@ export class ProductDialogComponent implements OnInit {
   }
 
   addProduct(): void {
-    if(this.productForm.valid){
+    if (this.productForm.valid) {
       const productDetails = {
         name: this.productForm.get('name')?.value,
         description: this.productForm.get('description')?.value,
@@ -106,7 +106,7 @@ export class ProductDialogComponent implements OnInit {
         price: this.productForm.get('price')?.value,
         stock: this.productForm.get('stock')?.value
       }
-  
+
       this.productService.addProduct(productDetails).subscribe(
         (response) => {
           console.log(response)
@@ -116,13 +116,13 @@ export class ProductDialogComponent implements OnInit {
           console.log(error)
         }
       );
-  
+
       this.dialogRef.close();
     }
   }
 
   editProduct(): void {
-    if(this.productForm.valid){
+    if (this.productForm.valid) {
       const productDetails = {
         id: this.productId,
         name: this.productName,
@@ -131,7 +131,7 @@ export class ProductDialogComponent implements OnInit {
         price: this.productPrice,
         stock: this.productStock
       }
-  
+
       this.productService.editProduct(productDetails).subscribe(
         (response) => {
           console.log(response)
@@ -141,17 +141,17 @@ export class ProductDialogComponent implements OnInit {
           console.log(error)
         }
       );
-  
+
       this.dialogRef.close();
     }
   }
 
   deleteProduct(): void {
-    if(this.productForm.valid){
+    if (this.productForm.valid) {
       const productDetails = {
         id: this.productId,
       }
-  
+
       this.productService.deleteProduct(productDetails).subscribe(
         (response) => {
           console.log(response)
@@ -161,7 +161,7 @@ export class ProductDialogComponent implements OnInit {
           console.log(error)
         }
       );
-  
+
       this.dialogRef.close();
     }
   }
