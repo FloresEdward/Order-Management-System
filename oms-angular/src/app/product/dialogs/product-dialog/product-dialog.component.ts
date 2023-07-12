@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CategoryService } from 'src/app/services/category.service';
@@ -25,12 +26,15 @@ export class ProductDialogComponent implements OnInit {
 
   categories: any[] = [];
 
+  productForm: FormGroup;
+
   constructor(public dialogRef: MatDialogRef<ProductDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private productService: ProductService,
     private router: Router,
     private http: HttpClient,
     private route: ActivatedRoute,
+    private formBuilder: FormBuilder
     ) {
     this.action = data.action;
     this.productId = data.product ? data.product.id : '';
@@ -40,11 +44,24 @@ export class ProductDialogComponent implements OnInit {
     this.productPrice = data.product ? data.product.price : '';
     this.productStock = data.product ? data.product.stock : '';
 
+    this.productForm = this.formBuilder.group({
+      name: [this.productName, [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
+      category: [this.productCategory, Validators.required],
+      description: [this.productDescription, Validators.required],
+      price: [this.productPrice, [Validators.required, Validators.min(0)]],
+      stock: [this.productStock, [Validators.required, Validators.min(0)]]
+    });
 
+    console.log(data.product)
   }
   ngOnInit(): void {
     this.getCategories();
   }
+
+  compareCategories(category1: any, category2: any): boolean {
+    return category1 && category2 ? category1.id === category2.id : category1 === category2;
+  }
+  
 
   getCategories(): void {
     const baseUrl = 'http://localhost:8080/api/v1/management/category';
@@ -63,67 +80,90 @@ export class ProductDialogComponent implements OnInit {
     this.dialogRef.close({ success: false });
   }
 
-  addProduct(): void {
-    const productDetails = {
-      name: this.productName,
-      description: this.productDescription,
-      category: this.productCategory,
-      price: this.productPrice,
-      stock: this.productStock
+  handleSubmit(action: string){
+    if (this.productForm.invalid) {
+      return;
     }
 
-    this.productService.addProduct(productDetails).subscribe(
-      (response) => {
-        console.log(response)
-        this.dialogRef.close({ success: true });
-      },
-      (error) => {
-        console.log(error)
-      }
-    );
+    switch (this.action) {
+      case 'Add':
+        this.addProduct();
+        break;
+      case 'Edit':
+        this.editProduct();
+        break;
+      default:
+        break;
+    }
+  }
 
-    this.dialogRef.close();
+  addProduct(): void {
+    if(this.productForm.valid){
+      const productDetails = {
+        name: this.productForm.get('name')?.value,
+        description: this.productForm.get('description')?.value,
+        category: this.productForm.get('category')?.value,
+        price: this.productForm.get('price')?.value,
+        stock: this.productForm.get('stock')?.value
+      }
+  
+      this.productService.addProduct(productDetails).subscribe(
+        (response) => {
+          console.log(response)
+          this.dialogRef.close({ success: true });
+        },
+        (error) => {
+          console.log(error)
+        }
+      );
+  
+      this.dialogRef.close();
+    }
   }
 
   editProduct(): void {
-    const productDetails = {
-      id: this.productId,
-      name: this.productName,
-      description: this.productDescription,
-      category: this.productCategory,
-      price: this.productPrice,
-      stock: this.productStock
-    }
-
-    this.productService.editProduct(productDetails).subscribe(
-      (response) => {
-        console.log(response)
-        this.dialogRef.close({ success: true });
-      },
-      (error) => {
-        console.log(error)
+    if(this.productForm.valid){
+      const productDetails = {
+        id: this.productId,
+        name: this.productName,
+        description: this.productDescription,
+        category: this.productCategory,
+        price: this.productPrice,
+        stock: this.productStock
       }
-    );
-
-    this.dialogRef.close();
+  
+      this.productService.editProduct(productDetails).subscribe(
+        (response) => {
+          console.log(response)
+          this.dialogRef.close({ success: true });
+        },
+        (error) => {
+          console.log(error)
+        }
+      );
+  
+      this.dialogRef.close();
+    }
   }
 
   deleteProduct(): void {
-    const productDetails = {
-      id: this.productId,
-    }
-
-    this.productService.deleteProduct(productDetails).subscribe(
-      (response) => {
-        console.log(response)
-        this.dialogRef.close({ success: true });
-      },
-      (error) => {
-        console.log(error)
+    if(this.productForm.valid){
+      const productDetails = {
+        id: this.productId,
       }
-    );
-
-    this.dialogRef.close();
+  
+      this.productService.deleteProduct(productDetails).subscribe(
+        (response) => {
+          console.log(response)
+          this.dialogRef.close({ success: true });
+        },
+        (error) => {
+          console.log(error)
+        }
+      );
+  
+      this.dialogRef.close();
+    }
   }
 
   cancel(): void {
