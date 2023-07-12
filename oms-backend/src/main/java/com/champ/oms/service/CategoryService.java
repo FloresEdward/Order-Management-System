@@ -1,7 +1,9 @@
 package com.champ.oms.service;
 
 import com.champ.oms.bean.CategoryBean;
+import com.champ.oms.bean.MenuBean;
 import com.champ.oms.document.Category;
+import com.champ.oms.document.Menu;
 import com.champ.oms.repo.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
@@ -16,6 +18,9 @@ public class CategoryService {
 
     @Autowired
     private final CategoryRepository categoryRepository;
+
+    @Autowired
+    private final MenuService menuService;
 
     public void saveCategory (CategoryBean categoryBean) {
         Category category = Category.builder()
@@ -51,6 +56,12 @@ public class CategoryService {
         category.setName(categoryBean.getName());
 
         categoryRepository.save(category);
+
+        List<Menu> menuItems = menuService.findActiveMenuItemsByCategoryId(categoryId);
+
+        for(Menu item : menuItems){
+            menuService.setMenuCategoriesWhenCategoryIsUpdated(category, item.getId());
+        }
     }
 }
 
