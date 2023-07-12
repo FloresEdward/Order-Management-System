@@ -35,7 +35,6 @@ export class UserDialogComponent {
   ) {}
 
   onSave(): void {
-    // Perform any necessary validation or data manipulation before closing the dialog
     this.dialogRef.close(this.data);
   }
 

@@ -69,9 +69,7 @@ export class SignupComponent {
       email: this.signupForm.value.email,
       password: this.signupForm.value.password,
       firstname: this.signupForm.value.firstname,
-      lastname: this.signupForm.value.lastname,
-      role: 'ADMIN'
-      // Add default Role to this object before insert to database
+      lastname: this.signupForm.value.lastname
     };
     // check if email is unique
     this.authenticationService.register(userDetails).subscribe(
