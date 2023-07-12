@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CustomerService } from 'src/app/services/customer.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-order-status',
@@ -137,7 +138,6 @@ export class CreateOrderComponent implements OnInit {
     this.dataSource.data.push(element);
     this.dataSource._updateChangeSubscription();
 
-    // Reset the form
     this.productOrderForm.reset();
   }
 
@@ -149,44 +149,45 @@ export class CreateOrderComponent implements OnInit {
     });
   }
 
-  // submitAction() {
-  //   console.log("called submitAction()")
-
-  //   const orderItems = this.dataSource.data;
-  //   console.log(`${orderItems}`);
-  //   const orderDetails = {
-  //     orderItems: orderItems,
-  //     quantity: orderItems.length,
-  //   };
-
-  //   this.orderService.addOrder(orderDetails).subscribe(
-  //     (response) => {
-  //       console.log(response);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
-
   submitAction() {
     const orderItems = this.dataSource.data.map((item: any) => ({
       category: item.category.name,
       product: item.product.name,
       price: item.price,
-      quantity: item.quantity,
+      quantity: parseInt(item.quantity),
       total: item.total
     }));
 
-    console.log(orderItems);
+    const customerDetails = {
+      name: this.customerOrderForm.get('name').value,
+      email: this.customerOrderForm.get('email').value,
+      contactNumber: this.customerOrderForm.get('contactNumber').value,
+      address: this.customerOrderForm.get('address').value,
+      paymentMethod: this.customerOrderForm.get('paymentMethod').value,
+    }
+
+    const orderDetails = {
+      orderItems: orderItems, 
+      customerDetails: customerDetails, 
+      courierId: '1',
+      addressId: customerDetails.address,
+      quantity: orderItems.reduce((quantity, item) => quantity + item.quantity, 0),
+      grandTotal: orderItems.reduce((total, item) => total + item.total, 0)
+    }
+
+    console.log(orderDetails);
   
-    this.orderService.addOrder(orderItems).subscribe(
-      (response) => {
-        console.log(response);
+    const addOrderRequest = this.orderService.addOrder(orderDetails);
+    const addCustomerRequest = this.customerService.addCustomer(customerDetails);
+
+    forkJoin([addOrderRequest, addCustomerRequest]).subscribe(
+      ([orderResponse, customerResponse]) => {
+        console.log('Order response: ', orderResponse);
+        console.log('Customer response: ', customerResponse);
       },
       (error) => {
-        console.log(error);
+        console.log('Error', error);
       }
-    );
+    )
   }
 }

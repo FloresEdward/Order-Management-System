@@ -18,9 +18,13 @@ public class OrderController {
     @Autowired
     private final OrderService orderService;
 
-    @PostMapping("/")
-    public void createOrder(@RequestBody List<OrderItemBean> orderItemBean) {
-        orderService.saveOrder(orderItemBean);
-    }
+//    @PostMapping("/")
+//    public void createOrder(@RequestBody List<OrderItemBean> orderItemBean) {
+//        orderService.saveOrder(orderItemBean);
+//    }
 
+    @PostMapping("/")
+    public void createOrder(@RequestBody OrderBean orderBean) {
+        orderService.saveOrder(orderBean);
+    }
 }

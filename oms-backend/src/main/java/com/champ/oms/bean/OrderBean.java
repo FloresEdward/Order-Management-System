@@ -2,6 +2,7 @@ package com.champ.oms.bean;
 
 import com.champ.oms.document.Customer;
 import com.champ.oms.document.Menu;
+import com.champ.oms.document.Order;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,12 +17,13 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderBean {
 
-    private Customer customerId;
+    private Customer customer;
     private String creatorId;
     private String courierId;
-    private String deliveryAddressId;
-    private List<Menu> orderItems;
-    private String quantity;
+    private String addressId;
+    private List<OrderItemBean> orderItems;
+    private int quantity;
+    private float grandTotal;
     private String status;
     private Date createdAt;
     private Date fulfilledDate;

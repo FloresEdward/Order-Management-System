@@ -21,12 +21,13 @@ public class Order {
 
     @Id
     private String id;
-    private Customer customerId;
+    private Customer customer;
     private String creatorId;
-    private String courierId; // ?
-    private String deliveryAddressId;
+    private String courierId;
+    private String addressId;
     private List<OrderItemBean> orderItems;
-    private String quantity;
+    private int quantity;
+    private float grandTotal;
     private String status;
     private Date createdAt;
     private Date fulfilledDate;

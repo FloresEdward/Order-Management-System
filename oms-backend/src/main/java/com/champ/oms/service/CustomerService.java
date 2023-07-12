@@ -19,6 +19,7 @@ public class CustomerService {
                 .email(customerBean.getEmail())
                 .contactNumber(customerBean.getContactNumber())
                 .address(customerBean.getAddress())
+                .paymentMethod(customerBean.getPaymentMethod())
                 .build();
         customerRepository.save(customer);
     }

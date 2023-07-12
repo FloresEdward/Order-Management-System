@@ -20,7 +20,6 @@ import java.util.List;
 public class OrderItemBean {
     private String category;
     private String product;
-
     private float price;
     private int quantity;
     private float total;

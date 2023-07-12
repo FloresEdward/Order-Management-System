@@ -14,5 +14,6 @@ public class CustomerBean {
     private String name;
     private String email;
     private String contactNumber;
-    private String[] address;
+    private String address;
+    private String paymentMethod;
 }

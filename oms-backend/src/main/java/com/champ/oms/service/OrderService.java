@@ -17,15 +17,31 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public void saveOrder(List<OrderItemBean> orderItemBean) {
+//    public void saveOrder(List<OrderItemBean> orderItemBean) {
+//        var order = Order.builder()
+////                .id(new ObjectId().toString())
+////                .courierId(orderBean.getCourierId())
+////                .deliveryAddressId(orderBean.getDeliveryAddressId())
+////                .orderItems(orderBean.getOrderItems())
+////                .quantity(orderBean.getQuantity())
+//                .orderItems(orderItemBean)
+//                .build();
+//        orderRepository.save(order);
+//    }
+    public void saveOrder(OrderBean orderBean) {
         var order = Order.builder()
-//                .id(new ObjectId().toString())
-//                .courierId(orderBean.getCourierId())
-//                .deliveryAddressId(orderBean.getDeliveryAddressId())
-//                .orderItems(orderBean.getOrderItems())
-//                .quantity(orderBean.getQuantity())
-                .orderItems(orderItemBean)
+                .customer(orderBean.getCustomer())
+                .creatorId(orderBean.getCreatorId())
+                .courierId(orderBean.getCourierId())
+                .addressId(orderBean.getAddressId())
+                .orderItems(orderBean.getOrderItems())
+                .quantity(orderBean.getQuantity())
+                .grandTotal(orderBean.getGrandTotal())
+                .status(orderBean.getStatus())
+                .createdAt(orderBean.getCreatedAt())
+                .fulfilledDate(orderBean.getFulfilledDate())
                 .build();
         orderRepository.save(order);
     }
+
 }
