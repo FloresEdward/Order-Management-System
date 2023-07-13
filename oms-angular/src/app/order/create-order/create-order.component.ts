@@ -178,7 +178,7 @@ export class CreateOrderComponent implements OnInit {
     const orderDetails = {
       orderItems: orderItems, 
       customer: customerDetails, 
-      courierName: '',
+      courierName: 'none',
       status: 'pending',
       addressId: customerDetails.address,
       createdAt: new Date(),

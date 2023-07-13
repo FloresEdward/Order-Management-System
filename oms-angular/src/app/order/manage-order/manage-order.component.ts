@@ -24,7 +24,6 @@ export class ManageOrderComponent implements OnInit {
   listOfRiders: string[] = [];
   orders: any[] = [];
   responseMessage: any;
-  // selectedRiders: { [key: string]: string } = {};
   selectedRiders: Map<number, string> = new Map<number, string>();//
 
   
@@ -62,7 +61,6 @@ export class ManageOrderComponent implements OnInit {
         console.log('Error:', error);
       }
     );
-
   }
 
   applyFilter(event: Event): void {

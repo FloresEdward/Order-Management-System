@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OrderHistoryListComponent } from './order-history-list/order-history-list.component';
+import { HttpClient } from '@angular/common/http';
+import { OrderService } from 'src/app/services/order.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-order-history',
@@ -11,13 +14,13 @@ import { OrderHistoryListComponent } from './order-history-list/order-history-li
   styleUrls: ['./order-history.component.css']
 })
 export class OrderHistoryComponent implements OnInit{
-
+  private baseUrl = 'http://localhost:8080/api/v1/management/order';
   cardTitle: string = 'Order History';
 
   selectedValue: string | null = null;
 
-  displayedColumns: string[] = ['id', 'name', 'address', 'contactNumber', 'total', 'rider', 'state', 'view'];
-  listOfRiders: string[] = [];
+  displayedColumns: string[] = ['name', 'address', 'contactNumber', 'total', 'rider', 'state', 'view'];
+  orders: any[] = [];
   dataSource!: MatTableDataSource<any>;
   responseMessage: any;
   checkButtonDisabled: boolean = false;
@@ -25,21 +28,26 @@ export class OrderHistoryComponent implements OnInit{
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private snackBar: MatSnackBar){
+    private orderService: OrderService,
+    private snackbarService: SnackbarService, 
+    private http: HttpClient, 
+    private route: ActivatedRoute){
   }
 
   ngOnInit(): void {
-    this.tableData();
+    this.getOrders();
   }
 
-  tableData() {
-  
-    const data = [
-      { id: 1, name: 'John Doe', address: 'Sa tabi-tabi', contactNumber: '1234567890', rider: "Rider 1", state: 'Delivered', total: '$100'},
-      { id: 2, name: 'Jane Smith', address: 'Sa Bahay', contactNumber: '9876543210', rider: " ", state: 'Canceled', total: '$150'},
-      { id: 3, name: 'Joe Smith', address: '123 Street', contactNumber: '9024865210', rider: "Rider 3", state: 'Delivered', total: '$250'},
-    ];
-    this.dataSource = new MatTableDataSource(data);
+  getOrders(): void {
+    this.http.get<any[]>(this.baseUrl + '/').subscribe(
+      (response) => {
+        this.orders = response;
+        console.log(this.orders)
+      },
+      (error) => {
+        console.log('Error:', error);
+      }
+    );
   }
 
   applyFilter(event: Event) {
@@ -59,14 +67,6 @@ export class OrderHistoryComponent implements OnInit{
     })
   }
 
-
-  downloadReportAction(values:any) {
-
-  }
-
-  deleteBill() {
-
-  }
 
   updateCheckButtonDisabled() {
     this.checkButtonDisabled = false;

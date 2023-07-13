@@ -8,7 +8,7 @@ import { ManageOrderProductsComponent } from '../../manage-order/manage-order-pr
   styleUrls: ['./order-history-list.component.css']
 })
 export class OrderHistoryListComponent implements OnInit{
-  displayedColumns: string[] = ['product', 'category', 'price', 'quantity', 'rider', 'status', 'total'];
+  displayedColumns: string[] = ['category', 'product', 'price', 'quantity', 'rider', 'status', 'total'];
   dataSource: any;
   data: any;
 
@@ -16,8 +16,21 @@ export class OrderHistoryListComponent implements OnInit{
   public dialogRef: MatDialogRef<ManageOrderProductsComponent>) { }
 
   ngOnInit() {
-    this.data = this.dialogData.data;
-    this.dataSource = JSON.parse(this.dialogData.data.productDetail);
-    console.log(this.dialogData.data);
+    this.data = this.dialogData?.data;
+    if (this.data && this.data.orderItems) {
+      this.dataSource = this.data.orderItems.map((item: any) => {
+        return {
+          category: item.category,
+          product: item.product,
+          price: item.price,
+          quantity: item.quantity,
+          total: item.total
+        };
+      });
+    } else {
+      this.dataSource = [];
+    } 
+    console.log('this.data = ',this.data);
+    console.log('this.dataSource =', this.dataSource);
   }
 }
