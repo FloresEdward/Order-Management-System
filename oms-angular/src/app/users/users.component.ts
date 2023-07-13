@@ -12,7 +12,7 @@ import { SnackbarService } from '../services/snackbar.service';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit{
+export class UsersComponent implements OnInit {
 
   cardTitle: string = 'Manage Accounts';
   dataSource!: MatTableDataSource<any>;
@@ -25,8 +25,8 @@ export class UsersComponent implements OnInit{
     { role: 'MENU', description: ['Menu Management', 'Category (Read)', 'Order (Create)'] },
     { role: 'ORDER', description: ['Order Management', 'Category (Read)', 'Menu (Read)', 'Account (Read)'] },
     { role: 'ACCOUNT', description: ['Account Management'] },
-    { role: 'TELLER', description: ['Category (Read)', 'Menu (Read)', 'Order (Read)', 'Order (Create)' ] },
-    { role: 'RIDER', description: ['Order (Read)', 'Order (Update)' ] },
+    { role: 'TELLER', description: ['Category (Read)', 'Menu (Read)', 'Order (Read)', 'Order (Create)'] },
+    { role: 'RIDER', description: ['Order (Read)', 'Order (Update)'] },
   ];
 
   constructor(private dialog: MatDialog, private http: HttpClient, private snackbarService: SnackbarService,) { }
@@ -37,25 +37,25 @@ export class UsersComponent implements OnInit{
 
   getAllUser() {
     this.http.get("http://localhost:8080/api/v1/management/user/getAll")
-    .subscribe((resultData: any) => {
-      this.userArray = resultData;
-      this.tableData();
-    });
+      .subscribe((resultData: any) => {
+        this.userArray = resultData;
+        this.tableData();
+      });
   }
 
   tableData() {
     this.dataSource = new MatTableDataSource(this.userArray);
   }
-  
+
 
   editUser(user: any) {
     const originalUser = Object.assign({}, user);
-  
+
     const dialogRef = this.dialog.open(UserDialogComponent, {
       width: '275px',
       data: user
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         let bodyData = {
@@ -64,16 +64,21 @@ export class UsersComponent implements OnInit{
           "lastname": user.lastname,
           "email": user.email,
           "password": user.password,
-          "status" : user.status,
-          "role" : user.role
+          "status": user.status,
+          "role": user.role
         };
-      
+
         this.http.put(`http://localhost:8080/api/v1/management/user/edit/${user.id}`, bodyData, result)
           .subscribe((updatedUser: any) => {
             user.status = updatedUser.status;
             user.role = updatedUser.role;
             this.snackbarService.openSnackBar(`${user.email} updated Successfully`, 'success');
-          });
+          },
+            (error) => {
+              this.snackbarService.openSnackBar("You have no authority to update", 'error');
+              user.status = originalUser.status;
+              user.role = originalUser.role;
+            });
       } else {
         user.status = originalUser.status;
         user.role = originalUser.role;
@@ -96,9 +101,12 @@ export class UsersComponent implements OnInit{
             if (index !== -1) {
               this.userArray.splice(index, 1);
               this.tableData();
+              this.snackbarService.openSnackBar(`${user.email} deleted Successfully`, 'success');
             }
-          });
-          this.snackbarService.openSnackBar(`${user.email} deleted Successfully`, 'success');
+          },
+            (error) => {
+              this.snackbarService.openSnackBar("You have no authority to delete", 'error');
+            });
 
       }
     });
