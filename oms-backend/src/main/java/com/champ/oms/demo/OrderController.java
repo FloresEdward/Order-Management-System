@@ -41,23 +41,39 @@ public class OrderController {
         return orderService.getAllOrders();
     }
 
-    @PostMapping("/cancel/{id}")
-    @PreAuthorize("hasAuthority('order:delete')")
-    public ResponseEntity<?> deleteOrder(@PathVariable String id) {
+//    @PostMapping("/cancel/{id}")
+//    @PreAuthorize("hasAuthority('order:delete')")
+//    public ResponseEntity<?> deleteOrder(@PathVariable String id) {
+//        try {
+//            orderService.updateOrderStatusAsCancel(id, "Cancelled");
+//            return ResponseEntity.status(HttpStatus.OK).build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
+
+    @PostMapping(value = "/fulfill")
+    @PreAuthorize("hasAuthority('order:update')")
+    public ResponseEntity<?> fulfillOrder(@RequestBody OrderBean order) {
         try {
-            orderService.updateOrderStatusAsCancel(id, "Cancelled");
+            orderService.fullFilledOrder(order);
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @PostMapping(value = "/fulfill")
+    @PostMapping(value = "/cancel")
     @PreAuthorize("hasAuthority('order:update')")
-    public ResponseEntity<?> fulfillOrder(@RequestBody OrderBean order) {
+    public ResponseEntity<?> cancelOrder(@RequestBody OrderBean order) {
 
-        orderService.fullFilledOrder(order);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        try{
+            orderService.cancelledOrder(order);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
     }
 
 }

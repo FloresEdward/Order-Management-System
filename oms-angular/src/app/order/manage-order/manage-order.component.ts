@@ -98,7 +98,7 @@ export class ManageOrderComponent implements OnInit {
           const courierName = this.selectedRiders.get(orderId);
           order.courierName = courierName;
           console.log(order);
-          this.orderService.setOrderStatusCancel(order).subscribe(
+          this.orderService.setOrderStatusCancelled(order).subscribe(
             (response) => {
               console.log('Order Cancel');
               this.snackbarService.openSnackBar(GlobalConstants.cancel, 'success');

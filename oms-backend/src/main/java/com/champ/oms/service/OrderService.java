@@ -70,6 +70,13 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    public void cancelledOrder(OrderBean orderBean) {
+        Order order = orderRepository.findById(orderBean.getId())
+                .orElseThrow(() -> new OrderNotFoundException("Order not found with ID: " + orderBean.getId()));
+        order.setCourierName(orderBean.getCourierName());
+        order.setStatus("cancelled");
+        orderRepository.save(order);
+    }
 
     class OrderNotFoundException extends RuntimeException {
 
