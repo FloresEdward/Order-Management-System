@@ -6,6 +6,8 @@ import com.champ.oms.document.Order;
 import com.champ.oms.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +43,17 @@ public class OrderController {
     @GetMapping("/getAll")
     public List<Order> getAllOrders() {
         return orderService.getAllOrders();
+    }
+
+    @PostMapping("/cancel/{id}")
+    @PreAuthorize("hasAuthority('order:delete')")
+    public ResponseEntity<?> deleteOrder(@PathVariable String id) {
+        try {
+            orderService.updateOrderStatus(id, "Cancelled");
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 }

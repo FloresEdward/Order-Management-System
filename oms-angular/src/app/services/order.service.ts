@@ -15,4 +15,10 @@ export class OrderService {
 
     return this.http.post(url, addOrderRequest);
   }
+
+  public setOrderStatusCancel(editOrderRequest: any): Observable<any> {
+    const url = `${this.baseUrl}/cancel/${editOrderRequest.orderId}`;
+
+    return this.http.post(url, editOrderRequest);
+  }
 }

@@ -53,4 +53,20 @@ public class OrderService {
         return orderRepository.findByStatus("pending");
     }
 
+    public void updateOrderStatus(String orderId, String status) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException("Order not found with ID: " + orderId));
+
+        order.setStatus(status);
+
+        orderRepository.save(order);
+
+    }
+}
+
+class OrderNotFoundException extends RuntimeException {
+
+    public OrderNotFoundException(String message) {
+        super(message);
+    }
 }

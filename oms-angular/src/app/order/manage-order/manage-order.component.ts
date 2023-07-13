@@ -7,6 +7,8 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { HttpClient } from '@angular/common/http';
+import { GlobalConstants } from 'src/app/shared/global-constants';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-order',
@@ -19,16 +21,17 @@ export class ManageOrderComponent implements OnInit {
   cardTitle: string = 'Manage Order';
 
   displayedColumns: string[] = ['name', 'address', 'contactNumber', 'total', 'rider', 'action'];
-  // listOfRiders: string[] = ['Edward', 'Emman', 'Troy'];
   listOfRiders: string[] = [];
   orders: any[] = [];
+  // filteredOrders: any[] = []; //
   responseMessage: any;
-  checkButtonDisabled: boolean = false;
+  selectedRiders: { [key: string]: string } = {};
   
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private snackBar: SnackbarService, 
+    private orderService: OrderService,
+    private snackbarService: SnackbarService, 
     private http: HttpClient, 
     private route: ActivatedRoute){
   }
@@ -39,7 +42,6 @@ export class ManageOrderComponent implements OnInit {
   }
 
   getRiders() {
-    console.log('getting Riders from DB');
     this.http.get("http://localhost:8080/api/v1/management/user/getAll")
     .subscribe((resultData: any) => {
       console.log(`all users ${resultData}`);
@@ -47,18 +49,13 @@ export class ManageOrderComponent implements OnInit {
       this.listOfRiders = this.listOfRiders
         .filter((rider: any) => rider.role === "RIDER")
         .map((rider: any) => rider.lastname + ' ' + rider.firstname);
-      console.log(`all Riders ${this.listOfRiders}`);
-      
     });
   }
-
+  
   getOrders(): void {
-    console.log('getOrders() is called should display data now.');
-
     this.http.get<any[]>(this.baseUrl + '/').subscribe(
       (response) => {
         this.orders = response;
-        console.log(this.orders);
       },
       (error) => {
         console.log('Error:', error);
@@ -67,9 +64,10 @@ export class ManageOrderComponent implements OnInit {
 
   }
 
-  applyFilter(event: any) {
+  applyFilter(event: Event): void {
 
   }
+  
 
   handleViewAction(orders: any) {
     const dialogConfig = new MatDialogConfig();
@@ -81,9 +79,10 @@ export class ManageOrderComponent implements OnInit {
     this.router.events.subscribe(()=>{
       dialogRef.close();
     })
-  }
 
-  handleDeleteAction(index: number) {
+  }
+  
+  handleCancelAction(index: any) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         message: 'Are you sure you want to cancel this order?',
@@ -91,15 +90,43 @@ export class ManageOrderComponent implements OnInit {
     });
   
     dialogRef.afterClosed().subscribe(result => {
+      console.log('Index: ', index);
+      console.log(result);
       if (result === true) {
-        console.log(`Row Deleted`);
+        const order = index;
+        if (order) {
+          const orderId = order.id;
+          const updatedOrder = { orderId: orderId };
+          this.orderService.setOrderStatusCancel(updatedOrder).subscribe(
+            (response) => {
+              console.log('Order Cancel');
+              this.snackbarService.openSnackBar(GlobalConstants.cancel, 'success');
+              this.getOrders();
+              
+            },
+            (error) => {
+              console.log('Error:', error);
+            }
+          );
+        } else {
+          console.log('Order ID is undefined');
+          this.snackbarService.openSnackBar(GlobalConstants.errorCancel, 'error');
+        }
       }
+      
     });
-
+    
+  }
+  
+  updateSelectedRider(index: number, rider: string) {
+    this.selectedRiders[index] = rider;
   }
 
-  updateCheckButtonDisabled() {
-    this.checkButtonDisabled = false;
+  isCheckButtonDisabled(index: number) {
+    return !this.selectedRiders[index];
   }
 
+  editOrderStatus() {
+    
+  }
 }

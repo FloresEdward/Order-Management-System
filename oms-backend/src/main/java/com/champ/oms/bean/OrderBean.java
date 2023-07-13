@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderBean {
 
+    private String id;
     private Customer customer;
     private String creatorId;
     private String courierId;
