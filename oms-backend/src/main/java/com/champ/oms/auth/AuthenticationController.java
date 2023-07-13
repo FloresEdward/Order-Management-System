@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -38,5 +39,14 @@ public class AuthenticationController {
         service.refreshToken(request, response);
     }
 
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody Map<String, String> requestMap) {
+        try {
+            return ResponseEntity.ok(service.changePassword(requestMap));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
+        return null;
+    }
 }

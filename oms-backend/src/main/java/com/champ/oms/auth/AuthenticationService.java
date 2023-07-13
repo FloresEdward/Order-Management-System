@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -145,5 +146,22 @@ public class AuthenticationService {
         new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
       }
     }
+  }
+
+  public ResponseEntity<?> changePassword(Map<String, String> requestMap) {
+    try {
+      User user  = repository.findByEmail(requestMap.get("email")).orElse(null);
+
+      if(passwordEncoder.matches(requestMap.get("old"), user.getPassword())) {
+        user.setPassword(passwordEncoder.encode(requestMap.get("new")));
+        repository.save(user);
+
+        return ResponseEntity.ok("Password updated successfully");
+      }
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+
+    return ResponseEntity.status(500).build();
   }
 }
