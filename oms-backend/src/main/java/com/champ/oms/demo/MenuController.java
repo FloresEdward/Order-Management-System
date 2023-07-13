@@ -6,6 +6,9 @@ import com.champ.oms.document.Menu;
 import com.champ.oms.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,10 +26,18 @@ public class MenuController {
     @Autowired
     private final MenuService service;
 
-    @GetMapping("/")
+//    @GetMapping("/")
+//    @PreAuthorize("hasAuthority('menu:read')")
+//    public List<Menu> getMenuItems() {
+//        return service.getAllActiveMenuItems();
+//    }
+
+    @GetMapping("/paginated")
     @PreAuthorize("hasAuthority('menu:read')")
-    public List<Menu> getMenuItems() {
-        return service.getAllActiveMenuItems();
+    public Page<Menu> getMenuItemsPaginated(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "updatedDate");
+        PageRequest pageable = PageRequest.of(page, size, sort);
+        return service.findAllByStatus(pageable);
     }
 
     @GetMapping("/category/{categoryId}")

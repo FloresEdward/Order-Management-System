@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ProductDialogComponent } from './dialogs/product-dialog/product-dialog.component';
+import { Observable } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-product',
@@ -15,20 +17,53 @@ export class ProductComponent implements OnInit{
   products: any[] = [];
   dialogRef: MatDialogRef<ProductDialogComponent> | undefined;
 
+  totalElements: number = 0;
+  pageSize: number = 10;
+  currentPage: number = 0;
+
   constructor(private dialog: MatDialog, private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.getProducts();
+    //this.getProducts();
+
+    this.getProductsPaginated()
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.getProductsPaginated();
   }
 
   truncateDescription(description: string, length: number): string {
     return (description.length > length) ? description.substr(0, length) + '...' : description;
   }
 
-  getProducts(): void {
-    this.http.get<any[]>(this.baseUrl + '/').subscribe(
+  // getProducts(): void {
+  //   this.http.get<any[]>(this.baseUrl + '/').subscribe(
+  //     (response) => {
+  //       this.getProductsArray(response);
+  //     },
+  //     (error) => {
+  //       console.log('Error:', error);
+  //     }
+  //   );
+  // }
+
+  setProductsArray(response: any) {
+    this.products = response.content;
+    this.totalElements = response.totalElements;
+  }
+
+  public getProductsPaginated(): void {
+    let page = this.currentPage;
+    let size = this.pageSize;
+    let params = new HttpParams().set('page', page.toString()).set('size', size.toString());
+
+    this.http.get<any[]>(this.baseUrl + '/paginated', { params }).subscribe(
       (response) => {
-        this.products = response;
+        console.log(response);
+        this.setProductsArray(response);
       },
       (error) => {
         console.log('Error:', error);
@@ -45,7 +80,7 @@ export class ProductComponent implements OnInit{
     this.dialogRef = this.dialog.open(ProductDialogComponent, { data: dialogData });
     this.dialogRef?.afterClosed().subscribe(result => {
       console.log(result);
-      this.getProducts();
+      this.getProductsPaginated();
     });
   }
 }

@@ -8,6 +8,10 @@ import com.champ.oms.repo.MenuRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +36,7 @@ public class MenuService {
     }
 
     public void saveProduct (MenuBean menuBean) {
+
         Menu menu = Menu.builder()
                 .id(new ObjectId().toString())
                 .name(menuBean.getName())
@@ -75,6 +80,10 @@ public class MenuService {
         menu.setCategory(category);
 
         menuRepository.save(menu);
+    }
+
+    public Page<Menu> findAllByStatus(Pageable pageable) {
+        return menuRepository.findAllByStatus("active", pageable);
     }
 }
 
