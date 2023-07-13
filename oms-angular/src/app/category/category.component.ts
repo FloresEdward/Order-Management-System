@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CategoryDialogComponent } from './dialogs/category-dialog/category-dialog.component';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { PageEvent } from '@angular/material/paginator';
 
 
 interface Category {
@@ -22,18 +23,49 @@ export class CategoryComponent implements OnInit {
   categories: any[] = [];
   dialogRef: MatDialogRef<CategoryDialogComponent> | undefined;
 
+  totalElements: number = 0;
+  pageSize: number = 10;
+  currentPage: number = 0;
+
   constructor(private dialog: MatDialog, 
               private router: Router, 
               private http: HttpClient, 
               private route: ActivatedRoute) { }
   ngOnInit(): void {
-    this.getCategories();
+    this.getCategoriesPaginated();
   }
 
-  getCategories(): void {
-    this.http.get<any[]>(this.baseUrl + '/').subscribe(
+  onPageChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.getCategoriesPaginated();
+  }
+
+  // getCategories(): void {
+  //   this.http.get<any[]>(this.baseUrl + '/').subscribe(
+  //     (response) => {
+  //       this.categories = response;
+  //     },
+  //     (error) => {
+  //       console.log('Error:', error);
+  //     }
+  //   );
+  // }
+
+  setCategoriesArray(response: any) {
+    this.categories = response.content;
+    this.totalElements = response.totalElements;
+  }
+
+  public getCategoriesPaginated(): void {
+    let page = this.currentPage;
+    let size = this.pageSize;
+    let params = new HttpParams().set('page', page.toString()).set('size', size.toString());
+    
+    this.http.get<any[]>(this.baseUrl + '/paginated', { params }).subscribe(
       (response) => {
-        this.categories = response;
+        console.log(response);
+        this.setCategoriesArray(response);
       },
       (error) => {
         console.log('Error:', error);
@@ -52,7 +84,7 @@ export class CategoryComponent implements OnInit {
     this.dialogRef = this.dialog.open(CategoryDialogComponent, { data: dialogData });
     this.dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      this.getCategories();
+      this.getCategoriesPaginated();
     });
   }
 }

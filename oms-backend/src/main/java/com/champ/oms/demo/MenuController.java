@@ -26,11 +26,11 @@ public class MenuController {
     @Autowired
     private final MenuService service;
 
-//    @GetMapping("/")
-//    @PreAuthorize("hasAuthority('menu:read')")
-//    public List<Menu> getMenuItems() {
-//        return service.getAllActiveMenuItems();
-//    }
+    @GetMapping("/")
+    @PreAuthorize("hasAuthority('menu:read')")
+    public List<Menu> getMenuItems() {
+        return service.getAllActiveMenuItems();
+    }
 
     @GetMapping("/paginated")
     @PreAuthorize("hasAuthority('menu:read')")

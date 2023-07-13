@@ -8,6 +8,8 @@ import com.champ.oms.repo.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -63,6 +65,11 @@ public class CategoryService {
             menuService.setMenuCategoriesWhenCategoryIsUpdated(category, item.getId());
         }
     }
+
+    public Page<Category> findAllByStatus(Pageable pageable) {
+        return categoryRepository.findAllByStatus("active", pageable);
+    }
+
 }
 
 class CategoryNotFoundException extends RuntimeException {

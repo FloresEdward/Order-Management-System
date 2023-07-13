@@ -2,9 +2,13 @@ package com.champ.oms.demo;
 
 import com.champ.oms.bean.CategoryBean;
 import com.champ.oms.document.Category;
+import com.champ.oms.document.Menu;
 import com.champ.oms.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,6 +31,14 @@ public class CategoryController {
     @PreAuthorize("hasAuthority('category:read')")
     public List<Category> getCategories(){
         return service.getAllActiveCategories();
+    }
+
+    @GetMapping("/paginated")
+    @PreAuthorize("hasAuthority('category:read')")
+    public Page<Category> getCategoryPaginated(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "updatedDate");
+        PageRequest pageable = PageRequest.of(page, size, sort);
+        return service.findAllByStatus(pageable);
     }
 
     @PostMapping("/")
