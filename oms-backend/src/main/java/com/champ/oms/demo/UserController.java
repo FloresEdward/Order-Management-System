@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/management/user")
-@PreAuthorize("hasAnyRole('ADMIN', 'ACCOUNT', 'ORDER')")
+//@PreAuthorize("hasAnyRole('ADMIN', 'ACCOUNT', 'ORDER')")
 @CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 public class UserController {
@@ -18,7 +18,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/getAll")
-    @PreAuthorize("hasAuthority('account:read')")
+//    @PreAuthorize("hasAuthority('account:read')")
     public Iterable<User> getUsers() {
         return userService.listAll();
     }
