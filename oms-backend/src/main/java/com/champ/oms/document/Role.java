@@ -92,7 +92,8 @@ public enum Role {
                   Permission.CATEGORY_READ,
                   Permission.MENU_READ,
                   Permission.ORDER_READ,
-                  Permission.ORDER_CREATE
+                  Permission.ORDER_CREATE,
+                  Permission.ACCOUNT_READ
           )
   ),
   RIDER(
