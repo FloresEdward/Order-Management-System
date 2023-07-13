@@ -72,7 +72,7 @@ public class AuthenticationService {
         user.setLoginAttempts(user.getLoginAttempts() + 1);
 
         if(user.getLoginAttempts() >= 3) {
-          user.setStatus("inactive");
+          user.setStatus("locked");
         }
 
         repository.save(user);
