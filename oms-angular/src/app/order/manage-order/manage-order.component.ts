@@ -18,8 +18,8 @@ export class ManageOrderComponent implements OnInit {
   private baseUrl = 'http://localhost:8080/api/v1/management/order';
   cardTitle: string = 'Manage Order';
 
-  dropDownList: string[] = ['Edward', 'Emman', 'Troy'];
   displayedColumns: string[] = ['name', 'address', 'contactNumber', 'total', 'rider', 'action'];
+  // listOfRiders: string[] = ['Edward', 'Emman', 'Troy'];
   listOfRiders: string[] = [];
   orders: any[] = [];
   responseMessage: any;
@@ -35,6 +35,21 @@ export class ManageOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOrders();
+    this.getRiders();
+  }
+
+  getRiders() {
+    console.log('getting Riders from DB');
+    this.http.get("http://localhost:8080/api/v1/management/user/getAll")
+    .subscribe((resultData: any) => {
+      console.log(`all users ${resultData}`);
+      this.listOfRiders = resultData;
+      this.listOfRiders = this.listOfRiders
+        .filter((rider: any) => rider.role === "RIDER")
+        .map((rider: any) => rider.lastname + ' ' + rider.firstname);
+      console.log(`all Riders ${this.listOfRiders}`);
+      
+    });
   }
 
   getOrders(): void {

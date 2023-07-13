@@ -43,8 +43,7 @@
         <ng-container matColumnDef="rider">
             <th mat-header-cell *matHeaderCellDef>Rider</th>
             <td mat-cell *matCellDef="let element">
-                <!-- <mat-select [(value)]="element.rider" (change)="selectedValue = element.rider; updateCheckButtonDisabled()" placeholder="Select Rider"> -->
-                <mat-select [(value)]="element.rider"  placeholder="Select Rider">
+              <mat-select [(value)]="element.rider" placeholder="Select Rider">
                 <mat-select-trigger>
                   {{ element.rider ? element.rider : 'Select Rider' }}
                 </mat-select-trigger>

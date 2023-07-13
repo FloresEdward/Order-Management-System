@@ -178,9 +178,10 @@ export class CreateOrderComponent implements OnInit {
     const orderDetails = {
       orderItems: orderItems, 
       customer: customerDetails, 
-      courierId: '1',
+      courierId: '',
       status: 'pending',
       addressId: customerDetails.address,
+      createdAt: new Date(),
       totalQuantity: orderItems.reduce((totalQuantity, item) => totalQuantity + item.quantity, 0),
       grandTotal: orderItems.reduce((total, item) => total + item.total, 0)
     }
