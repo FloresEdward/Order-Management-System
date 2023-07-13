@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/management/order")
-@PreAuthorize("hasAnyRole('CATEGORY', 'ADMIN', 'TELLER', 'MENU', 'ORDER', 'RIDER')")
+@PreAuthorize("hasAnyRole('CATEGORY', 'ADMIN', 'TELLER', 'MENU', 'ORDER', 'RIDER', 'ACCOUNT')")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 public class OrderController {
@@ -36,6 +36,11 @@ public class OrderController {
     @PreAuthorize("hasAuthority('order:read')")
     public List<Order> getOrders() {
         return orderService.getAllActiveOrders();
+    }
+
+    @GetMapping("/getAll")
+    public List<Order> getAllOrders() {
+        return orderService.getAllOrders();
     }
 
 }
