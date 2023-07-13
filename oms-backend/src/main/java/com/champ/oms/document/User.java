@@ -25,8 +25,9 @@ public class User implements UserDetails {
   private String lastname;
   private String email;
   private String password;
-
+  private int loginAttempts;
   private String status;
+
   private Date createdAt;
   private Date updatedAt;
 //  @Enumerated(EnumType.STRING)

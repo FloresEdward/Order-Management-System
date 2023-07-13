@@ -2,6 +2,7 @@ package com.champ.oms.auth;
 
 import com.champ.oms.config.JwtService;
 import com.champ.oms.document.Role;
+import com.champ.oms.service.UserService;
 import com.champ.oms.token.Token;
 import com.champ.oms.token.TokenRepository;
 import com.champ.oms.token.TokenType;
@@ -16,6 +17,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,13 +34,14 @@ public class AuthenticationService {
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
+  private final UserService userService;
 
   public AuthenticationResponse register(RegisterRequest request) {
     var user = User.builder()
             .id(new ObjectId().toString())
             .firstname(request.getFirstname())
             .lastname(request.getLastname())
-            .email(request.getEmail())
+            .email(request.getEmail().toLowerCase())
             .password(passwordEncoder.encode(request.getPassword()))
             .status("active")
             .role(request.getRole() != null ? request.getRole() : Role.TELLER)
@@ -55,13 +59,28 @@ public class AuthenticationService {
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
-    authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(
-            request.getEmail(),
-            request.getPassword()
-        )
-    );
-    var user = repository.findByEmail(request.getEmail())
+
+    try {
+      authenticationManager.authenticate(
+              new UsernamePasswordAuthenticationToken(
+                      request.getEmail().toLowerCase(),
+                      request.getPassword()
+              )
+      );
+    } catch (AuthenticationException exception) {
+        var user = repository.findByEmail(request.getEmail().toLowerCase()).orElseThrow();
+        user.setLoginAttempts(user.getLoginAttempts() + 1);
+
+        if(user.getLoginAttempts() >= 3) {
+          user.setStatus("inactive");
+        }
+
+        repository.save(user);
+
+        throw exception;
+    }
+
+    var user = repository.findByEmail(request.getEmail().toLowerCase())
         .orElseThrow();
     if (!user.isAccountNonLocked()){
       throw new LockedException("User account is locked");
