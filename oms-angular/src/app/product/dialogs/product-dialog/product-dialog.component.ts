@@ -45,11 +45,11 @@ export class ProductDialogComponent implements OnInit {
     this.productStock = data.product ? data.product.stock : '';
 
     this.productForm = this.formBuilder.group({
-      name: [this.productName, [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
+      name: [this.productName, [Validators.pattern(/^[a-zA-Z\s]+$/), Validators.required]],
       category: [this.productCategory, Validators.required],
       description: [this.productDescription, Validators.required],
-      price: [this.productPrice, [Validators.required, Validators.min(0)]],
-      stock: [this.productStock, [Validators.required, Validators.min(0)]]
+      price: [this.productPrice, [Validators.min(0), Validators.required]],
+      stock: [this.productStock, [Validators.min(0), Validators.required]]
     });
 
     console.log(data.product)

@@ -3,10 +3,11 @@
   <form [formGroup]="productForm" (ngSubmit)="handleSubmit(action)">
     <mat-dialog-content>
       <mat-form-field class="form-input full-width" *ngIf="action !== 'Delete' && action !== 'View'">
-        <input matInput placeholder="Name" formControlName="name">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name*" formControlName="name">
         <mat-error
           *ngIf="productForm.controls['name'].invalid && (productForm.controls['name'].dirty || productForm.controls['name'].touched)">
-          <span *ngIf="productForm.controls['name'].errors?.['required']">Name is required.</span>
+          <span *ngIf="productForm.controls['name'].errors?.['required']" >Name is required.</span>
           <span *ngIf="productForm.controls['name'].errors?.['pattern']" style="font-size: small;">Name should not
             contain
             numbers or symbols.</span>
@@ -25,7 +26,7 @@
       </mat-form-field>
 
       <mat-form-field class="form-input full-width" *ngIf="action === 'Edit'">
-        <mat-label>Category edit</mat-label>
+        <mat-label>Category</mat-label>
         <mat-select formControlName="category" [compareWith]="compareCategories">
           <mat-option *ngFor="let category of categories" [value]="category">{{ category.name }}</mat-option>
         </mat-select>
@@ -36,7 +37,8 @@
       </mat-form-field>
 
       <mat-form-field class="form-input full-width" *ngIf="action !== 'Delete' && action !== 'View'">
-        <textarea matInput placeholder="Description" formControlName="description"></textarea>
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Description*" formControlName="description"></textarea>
         <mat-error
           *ngIf="productForm.controls['description'].invalid && (productForm.controls['description'].dirty || productForm.controls['description'].touched)">
           <span *ngIf="productForm.controls['description'].errors?.['required']">Description is required.</span>
@@ -44,7 +46,8 @@
       </mat-form-field>
 
       <mat-form-field class="form-input full-width" *ngIf="action !== 'Delete' && action !== 'View'">
-        <input matInput type="number" placeholder="Price" formControlName="price">
+        <mat-label>Price</mat-label>
+        <input matInput type="number" placeholder="Price*" formControlName="price">
         <mat-error
           *ngIf="productForm.controls['price'].invalid && (productForm.controls['price'].dirty || productForm.controls['price'].touched)">
           <span *ngIf="productForm.controls['price'].errors?.['required']">Price is required.</span>
@@ -53,7 +56,8 @@
       </mat-form-field>
 
       <mat-form-field class="form-input full-width" *ngIf="action !== 'Delete' && action !== 'View'">
-        <input matInput type="number" placeholder="Stock" formControlName="stock">
+        <mat-label>Stock</mat-label>
+        <input matInput type="number" placeholder="Stock*" formControlName="stock">
         <mat-error
           *ngIf="productForm.controls['stock'].invalid && (productForm.controls['stock'].dirty || productForm.controls['stock'].touched)">
           <span *ngIf="productForm.controls['stock'].errors?.['required']">Stock is required.</span>
