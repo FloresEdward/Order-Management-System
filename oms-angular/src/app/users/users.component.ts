@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogComponent } from '../order/manage-order/confirmation-dialog/confirmation-dialog.component';
 import { HttpClient } from '@angular/common/http';
 import { InfoDialogComponent } from './user-dialog/info-dialog.component';
+import { SnackbarService } from '../services/snackbar.service';
 
 @Component({
   selector: 'app-users',
@@ -28,7 +29,7 @@ export class UsersComponent implements OnInit{
     { role: 'RIDER', description: ['Order (Read)', 'Order (Update)' ] },
   ];
 
-  constructor(private dialog: MatDialog, private http: HttpClient) { }
+  constructor(private dialog: MatDialog, private http: HttpClient, private snackbarService: SnackbarService,) { }
 
   ngOnInit(): void {
     this.getAllUser();
@@ -48,10 +49,8 @@ export class UsersComponent implements OnInit{
   
 
   editUser(user: any) {
-    // Create a copy of the original user data
     const originalUser = Object.assign({}, user);
   
-    // Open the UserDialogComponent as a MatDialog with the selected user data
     const dialogRef = this.dialog.open(UserDialogComponent, {
       width: '275px',
       data: user
@@ -65,13 +64,15 @@ export class UsersComponent implements OnInit{
           "lastname": user.lastname,
           "email": user.email,
           "password": user.password,
-          "role" : user.role,
           "status" : user.status,
+          "role" : user.role
         };
+      
         this.http.put(`http://localhost:8080/api/v1/management/user/edit/${user.id}`, bodyData, result)
           .subscribe((updatedUser: any) => {
             user.status = updatedUser.status;
             user.role = updatedUser.role;
+            this.snackbarService.openSnackBar(`${user.email} updated Successfully`, 'success');
           });
       } else {
         user.status = originalUser.status;
@@ -89,16 +90,16 @@ export class UsersComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Send an HTTP request to delete the user on the backend
         this.http.delete(`http://localhost:8080/api/v1/management/user/delete/${user.id}`)
           .subscribe(() => {
-            // Remove the user from the userArray in the frontend
             const index = this.userArray.findIndex(u => u.id === user.id);
             if (index !== -1) {
               this.userArray.splice(index, 1);
               this.tableData();
             }
           });
+          this.snackbarService.openSnackBar(`${user.email} deleted Successfully`, 'success');
+
       }
     });
   }

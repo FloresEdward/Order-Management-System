@@ -9,31 +9,31 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/management/user")
-@PreAuthorize("hasAnyRole('ADMIN', 'ACCOUNT', 'ORDER)")
+@PreAuthorize("hasAnyRole('ADMIN', 'ACCOUNT', 'ORDER')")
 @CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 public class UserController {
 
     @Autowired
-    private final UserService service;
+    private final UserService userService;
 
     @GetMapping("/getAll")
     @PreAuthorize("hasAuthority('account:read')")
     public Iterable<User> getUsers() {
-        return service.listAll();
+        return userService.listAll();
     }
 
     @PutMapping(value = "/edit/{id}")
     @PreAuthorize("hasAuthority('account:update')")
-    private User update(@RequestBody User user, @PathVariable(name = "id") String _id) {
+    public User update(@RequestBody User user, @PathVariable(name = "id") String _id) {
         user.setId(_id);
-        service.updateUser(user);
+        userService.updateUser(user);
         return user;
     }
 
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('account:delete')")
-    private void delete(@PathVariable("id") String _id) {
-        service.deleteUser(_id);
+    public void delete(@PathVariable("id") String _id) {
+        userService.deleteUser(_id);
     }
 }

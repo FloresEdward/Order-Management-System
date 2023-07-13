@@ -6,7 +6,7 @@ import com.champ.oms.token.Token;
 import com.champ.oms.token.TokenRepository;
 import com.champ.oms.token.TokenType;
 import com.champ.oms.document.User;
-import com.champ.oms.user.UserRepository;
+import com.champ.oms.repo.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

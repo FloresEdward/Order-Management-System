@@ -1,6 +1,6 @@
 package com.champ.oms.config;
 
-import com.champ.oms.user.UserRepository;
+import com.champ.oms.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

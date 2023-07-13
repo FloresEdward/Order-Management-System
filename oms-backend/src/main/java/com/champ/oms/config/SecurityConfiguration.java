@@ -69,7 +69,7 @@ public class SecurityConfiguration {
                 .requestMatchers(PUT,"/api/v1/management/order/**").hasAnyAuthority(ORDER_UPDATE.name())
                 .requestMatchers(DELETE,"/api/v1/management/order/**").hasAnyAuthority(ORDER_DELETE.name())
                 // ACCOUNT MANAGER
-                .requestMatchers("/api/v1/management/user/**").hasAnyRole( ADMIN.name(), ACCOUNT.name())
+                .requestMatchers("/api/v1/management/user/**").hasAnyRole( ADMIN.name(), ACCOUNT.name(), ORDER.name())
                 .requestMatchers(GET,"/api/v1/management/user/**").hasAnyAuthority(ACCOUNT_READ.name())
                 .requestMatchers(PUT,"/api/v1/management/user/**").hasAnyAuthority(ACCOUNT_UPDATE.name())
                 .requestMatchers(DELETE,"/api/v1/management/user/**").hasAnyAuthority(ACCOUNT_DELETE.name())
