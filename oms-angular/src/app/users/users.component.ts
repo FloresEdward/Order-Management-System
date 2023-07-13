@@ -37,7 +37,6 @@ export class UsersComponent implements OnInit{
   getAllUser() {
     this.http.get("http://localhost:8080/api/v1/management/user/getAll")
     .subscribe((resultData: any) => {
-      console.log(resultData);
       this.userArray = resultData;
       this.tableData();
     });

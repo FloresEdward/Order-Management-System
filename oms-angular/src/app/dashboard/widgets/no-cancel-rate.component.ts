@@ -15,6 +15,9 @@ export class NoCancelRateComponent implements OnInit {
     chart: {
       type: 'column',
     },
+    accessibility: {
+      enabled: false
+    },
     title: {
       text: 'No-Cancel Rate'
     },

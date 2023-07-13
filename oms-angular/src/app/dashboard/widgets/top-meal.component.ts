@@ -39,6 +39,9 @@ export class TopMealComponent {
       type: 'pie',
       height: 250,
     },
+    accessibility: {
+      enabled: false
+    },
     title: {
       text: 'Top Meal Ordered'
     },

@@ -9,6 +9,8 @@ import { Chart } from 'angular-highcharts';
 export class OrderStatusComponent {
 
   chart = new Chart({
-    
+    accessibility: {
+      enabled: false
+    },
   });
 }
