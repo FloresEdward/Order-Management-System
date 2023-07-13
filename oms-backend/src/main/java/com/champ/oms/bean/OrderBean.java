@@ -3,6 +3,7 @@ package com.champ.oms.bean;
 import com.champ.oms.document.Customer;
 import com.champ.oms.document.Menu;
 import com.champ.oms.document.Order;
+import com.champ.oms.document.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +21,7 @@ public class OrderBean {
     private String id;
     private Customer customer;
     private String creatorId;
-    private String courierId;
+    private String courierName;
     private String addressId;
     private List<OrderItemBean> orderItems;
     private int quantity;

@@ -7,6 +7,7 @@ export class GlobalConstants {
     public static orderAdded: string = "Order Create Success!"
     public static delete: string = "Delete Successful";
     public static cancel: string = "Order Canceled";
+    public static processed: string = "Order Processed";
     public static errorCancel: string = "Error Cancelling Order!";
 
     public static nameRegex: string = "[a-zA-Z0-9]*";

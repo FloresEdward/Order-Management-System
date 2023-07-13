@@ -23,9 +23,10 @@ export class ManageOrderComponent implements OnInit {
   displayedColumns: string[] = ['name', 'address', 'contactNumber', 'total', 'rider', 'action'];
   listOfRiders: string[] = [];
   orders: any[] = [];
-  // filteredOrders: any[] = []; //
   responseMessage: any;
-  selectedRiders: { [key: string]: string } = {};
+  // selectedRiders: { [key: string]: string } = {};
+  selectedRiders: Map<number, string> = new Map<number, string>();//
+
   
   constructor(
     private dialog: MatDialog,
@@ -44,7 +45,6 @@ export class ManageOrderComponent implements OnInit {
   getRiders() {
     this.http.get("http://localhost:8080/api/v1/management/user/getAll")
     .subscribe((resultData: any) => {
-      console.log(`all users ${resultData}`);
       this.listOfRiders = resultData;
       this.listOfRiders = this.listOfRiders
         .filter((rider: any) => rider.role === "RIDER")
@@ -56,6 +56,7 @@ export class ManageOrderComponent implements OnInit {
     this.http.get<any[]>(this.baseUrl + '/').subscribe(
       (response) => {
         this.orders = response;
+        console.log(this.orders)
       },
       (error) => {
         console.log('Error:', error);
@@ -90,19 +91,18 @@ export class ManageOrderComponent implements OnInit {
     });
   
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Index: ', index);
-      console.log(result);
       if (result === true) {
         const order = index;
         if (order) {
           const orderId = order.id;
-          const updatedOrder = { orderId: orderId };
-          this.orderService.setOrderStatusCancel(updatedOrder).subscribe(
+          const courierName = this.selectedRiders.get(orderId);
+          order.courierName = courierName;
+          console.log(order);
+          this.orderService.setOrderStatusCancel(order).subscribe(
             (response) => {
               console.log('Order Cancel');
               this.snackbarService.openSnackBar(GlobalConstants.cancel, 'success');
               this.getOrders();
-              
             },
             (error) => {
               console.log('Error:', error);
@@ -113,20 +113,47 @@ export class ManageOrderComponent implements OnInit {
           this.snackbarService.openSnackBar(GlobalConstants.errorCancel, 'error');
         }
       }
-      
     });
+  }
+
+  handleProcessAction(order: any) {
+    const orderId = order.id;
+    const courierName = this.selectedRiders.get(orderId);
+
+    order.courierName = courierName;
+
+    console.log(order);
     
+    if (courierName) {
+      this.orderService.setOrderStatusFulfilled(order).subscribe(
+        (response) => {
+          console.log('Order Fulfilled');
+          this.snackbarService.openSnackBar(GlobalConstants.processed, 'success');
+          this.updateCourierNameInOrders(orderId, courierName); //
+          this.getOrders();
+        },
+        (error) => {
+          console.log('Error:', error);
+        }
+      );
+    } else {
+      this.snackbarService.openSnackBar(GlobalConstants.errorCancel, 'error');
+    }
   }
   
-  updateSelectedRider(index: number, rider: string) {
-    this.selectedRiders[index] = rider;
+  updateCourierNameInOrders(orderId: number, courierName: string) {
+    const orderToUpdate = this.orders.find((order) => order.id === orderId);
+    if (orderToUpdate) {
+      orderToUpdate.rider = courierName;
+    }
   }
-
+  
+  updateSelectedRider(orderId: number, rider: string) {
+    this.selectedRiders.set(orderId, rider);
+  }
+  
   isCheckButtonDisabled(index: number) {
-    return !this.selectedRiders[index];
+    return !this.selectedRiders.has(index);
   }
 
-  editOrderStatus() {
-    
-  }
 }

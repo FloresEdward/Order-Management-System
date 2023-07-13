@@ -21,4 +21,16 @@ export class OrderService {
 
     return this.http.post(url, editOrderRequest);
   }
+
+  public setOrderStatusFulfilled(editOrderRequest: any) : Observable<any> {
+    const url = `${this.baseUrl}/fulfill`;
+
+    return this.http.post(url, editOrderRequest);
+  }
+
+  public updateCourierName(editOrderRequest: any) : Observable<any> {
+    const url = `${this.baseUrl}/${editOrderRequest.orderId}/courier/${editOrderRequest.courierName}`;
+
+    return this.http.post(url, editOrderRequest);
+  }
 }

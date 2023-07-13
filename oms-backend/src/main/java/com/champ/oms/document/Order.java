@@ -23,7 +23,7 @@ public class Order {
     private String id;
     private Customer customer;
     private String creatorId;
-    private String courierId;
+    private String courierName;
     private String addressId;
     private List<OrderItemBean> orderItems;
     private int quantity;

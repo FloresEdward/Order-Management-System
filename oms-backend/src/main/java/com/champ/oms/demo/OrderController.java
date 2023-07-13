@@ -3,6 +3,7 @@ package com.champ.oms.demo;
 import com.champ.oms.bean.OrderBean;
 import com.champ.oms.bean.OrderItemBean;
 import com.champ.oms.document.Order;
+import com.champ.oms.document.User;
 import com.champ.oms.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,6 @@ public class OrderController {
 
     @Autowired
     private final OrderService orderService;
-
-//    @PostMapping("/")
-//    public void createOrder(@RequestBody List<OrderItemBean> orderItemBean) {
-//        orderService.saveOrder(orderItemBean);
-//    }
 
     @PostMapping("/")
     @PreAuthorize("hasAuthority('order:create')")
@@ -49,11 +45,19 @@ public class OrderController {
     @PreAuthorize("hasAuthority('order:delete')")
     public ResponseEntity<?> deleteOrder(@PathVariable String id) {
         try {
-            orderService.updateOrderStatus(id, "Cancelled");
+            orderService.updateOrderStatusAsCancel(id, "Cancelled");
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @PostMapping(value = "/fulfill")
+    @PreAuthorize("hasAuthority('order:update')")
+    public ResponseEntity<?> fulfillOrder(@RequestBody OrderBean order) {
+
+        orderService.fullFilledOrder(order);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

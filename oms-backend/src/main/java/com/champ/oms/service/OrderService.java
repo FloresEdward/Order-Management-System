@@ -17,23 +17,11 @@ import java.util.List;
 public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
-
-//    public void saveOrder(List<OrderItemBean> orderItemBean) {
-//        var order = Order.builder()
-////                .id(new ObjectId().toString())
-////                .courierId(orderBean.getCourierId())
-////                .deliveryAddressId(orderBean.getDeliveryAddressId())
-////                .orderItems(orderBean.getOrderItems())
-////                .quantity(orderBean.getQuantity())
-//                .orderItems(orderItemBean)
-//                .build();
-//        orderRepository.save(order);
-//    }
     public void saveOrder(OrderBean orderBean) {
         var order = Order.builder()
                 .customer(orderBean.getCustomer())
                 .creatorId(orderBean.getCreatorId())
-                .courierId(orderBean.getCourierId())
+                .courierName(orderBean.getCourierName())
                 .addressId(orderBean.getAddressId())
                 .orderItems(orderBean.getOrderItems())
                 .quantity(orderBean.getQuantity())
@@ -53,20 +41,40 @@ public class OrderService {
         return orderRepository.findByStatus("pending");
     }
 
-    public void updateOrderStatus(String orderId, String status) {
+    public void updateOrderStatusAsCancel(String orderId, String status) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException("Order not found with ID: " + orderId));
-
         order.setStatus(status);
-
         orderRepository.save(order);
-
     }
-}
 
-class OrderNotFoundException extends RuntimeException {
+    public void updateOrderStatusAsFulfilled(String orderId, String status) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException("Order not found with ID: " + orderId));
+        order.setStatus(status);
+        orderRepository.save(order);
+    }
 
-    public OrderNotFoundException(String message) {
-        super(message);
+    public void updateCourier(String orderId, String courierName) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException("Order not found with ID: " + orderId));
+        order.setCourierName(courierName);
+        orderRepository.save(order);
+    }
+
+    public void fullFilledOrder(OrderBean orderBean) {
+        Order order = orderRepository.findById(orderBean.getId())
+                .orElseThrow(() -> new OrderNotFoundException("Order not found with ID: " + orderBean.getId()));
+        order.setCourierName(orderBean.getCourierName());
+        order.setStatus("fulfilled");
+        orderRepository.save(order);
+    }
+
+
+    class OrderNotFoundException extends RuntimeException {
+
+        public OrderNotFoundException(String message) {
+            super(message);
+        }
     }
 }
