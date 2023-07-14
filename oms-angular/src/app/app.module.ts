@@ -22,6 +22,8 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { ForgotPasswordComponent } from './landing/forgot-password/forgot-password.component';
 import { SetNewPasswordComponent } from './landing/set-new-password/set-new-password.component';
 import { AuthGuard } from './shared/auth-guard.service';
+import { ResetFormComponent } from './landing/forgot-password/reset-form/reset-form.component';
+import { ResetSuccessComponent } from './landing/forgot-password/reset-success/reset-success.component';
 // import { OrderHistoryComponent } from './order/order-history/order-history.component';
 
 
@@ -39,6 +41,8 @@ import { AuthGuard } from './shared/auth-guard.service';
     SignupComponent,
     ForgotPasswordComponent,
     SetNewPasswordComponent,
+    ResetFormComponent,
+    ResetSuccessComponent
   ],
   imports: [
     BrowserModule,

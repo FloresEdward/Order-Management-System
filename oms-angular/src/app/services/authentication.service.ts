@@ -28,6 +28,12 @@ export class AuthenticationService {
     );
   }
 
+  public forgotPassword(authenticationRequest: any): Observable<any> {
+    const url = `${this.baseUrl}/forgot-password`;
+
+    return this.http.post(url, authenticationRequest);
+  }
+
   public getTokenFromService(): any {
     return this.tokenService.getToken();
   }

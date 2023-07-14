@@ -11,7 +11,8 @@ export class SetNewPasswordComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder) {
     this.passwordForm = this.formBuilder.group({
-      password: ['', Validators.required],
+      oldPassword: ['', Validators.required],
+      newPassword: ['', Validators.required],
       confirmPassword: ['', Validators.required]
     });
   }

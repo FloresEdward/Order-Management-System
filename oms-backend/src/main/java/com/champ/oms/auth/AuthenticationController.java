@@ -58,6 +58,6 @@ public class AuthenticationController {
             ex.printStackTrace();
         }
 
-        return null;
+        return ResponseEntity.status(500).build();
     }
 }
