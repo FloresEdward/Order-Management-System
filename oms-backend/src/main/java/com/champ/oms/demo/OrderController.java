@@ -38,17 +38,17 @@ public class OrderController {
         return orderService.getAllActiveOrders();
     }
 
-//    @GetMapping("/getAll")
-//    public List<Order> getAllOrders() {
-//        return orderService.getAllOrders();
-//    }
+    @GetMapping("/getAll")
+    public List<Order> getAllOrders() {
+        return orderService.getAllOrders();
+    }
 
     @GetMapping("/paginated")
     @PreAuthorize("hasAuthority('order:read')")
     public Page<Order> getOrderItemsPaginated(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         Sort sort = Sort.by(Sort.Direction.DESC, "updatedDate");
         PageRequest pageable = PageRequest.of(page, size, sort);
-        return orderService.getAllOrders(pageable);
+        return orderService.getAllOrdersHistory(pageable);
     }
 //    @PostMapping("/cancel/{id}")
 //    @PreAuthorize("hasAuthority('order:delete')")

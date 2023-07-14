@@ -41,11 +41,11 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-//    public List<Order> getAllOrders() {
-//        return orderRepository.findAll();
-//    }
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
 
-    public Page<Order> getAllOrders(Pageable pageable) {
+    public Page<Order> getAllOrdersHistory(Pageable pageable) {
         return orderRepository.findAll(pageable);
     }
 
