@@ -8,7 +8,8 @@
         <div class="search-add-container">
             <!-- Search bar -->
             <mat-form-field class="search-input">
-                <input matInput type="text" placeholder="Search...">
+                <!-- <input matInput type="text" placeholder="Search..."> -->
+                <input matInput type="text" placeholder="Search..." (input)="applyFilter($event)">
             </mat-form-field>
 
             <!-- Add button -->

@@ -8,7 +8,9 @@
       <div class="search-add-container">
         <!-- Search bar -->
         <mat-form-field class="search-input">
-          <input matInput type="text" placeholder="Search...">
+          <!-- <input matInput type="text" placeholder="Search..."> -->
+          <input matInput type="text" placeholder="Search..." (input)="applyFilter($event)">
+
         </mat-form-field>
         <!-- <app-search-bar></app-search-bar> -->
         <!-- Add button -->
@@ -21,7 +23,8 @@
 
   <mat-card>
     <mat-card-content>
-      <table mat-table [dataSource]="products">
+      <!-- <table mat-table [dataSource]="products"> -->
+      <table mat-table [dataSource]="dataSource">
   
         <!-- Name column -->
         <ng-container matColumnDef="name">
