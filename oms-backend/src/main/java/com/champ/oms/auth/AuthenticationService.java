@@ -156,11 +156,13 @@ public class AuthenticationService {
     try {
       User user  = repository.findByEmail(requestMap.get("email")).orElse(null);
 
-      if(passwordEncoder.matches(requestMap.get("old"), user.getPassword())) {
-        user.setPassword(passwordEncoder.encode(requestMap.get("new")));
+      if(passwordEncoder.matches(requestMap.get("oldPassword"), user.getPassword())) {
+        user.setPassword(passwordEncoder.encode(requestMap.get("newPassword")));
         repository.save(user);
 
         return ResponseEntity.ok("Password updated successfully");
+      } else {
+        return ResponseEntity.ok("Old password is not correct");
       }
     } catch (Exception ex) {
       ex.printStackTrace();

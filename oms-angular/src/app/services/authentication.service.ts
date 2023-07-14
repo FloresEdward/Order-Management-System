@@ -34,6 +34,12 @@ export class AuthenticationService {
     return this.http.post(url, authenticationRequest);
   }
 
+  public changePassword(authenticationRequest: any): Observable<any> {
+    const url = `${this.baseUrl}/change-password`;
+
+    return this.http.post(url, authenticationRequest);
+  }
+
   public getTokenFromService(): any {
     return this.tokenService.getToken();
   }

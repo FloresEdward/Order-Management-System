@@ -6,10 +6,11 @@ import { ErrorComponent } from './error/error.component';
 import { LoginComponent } from './landing/login/login.component';
 import { SignupComponent } from './landing/signup/signup.component';
 import { ForgotPasswordComponent } from './landing/forgot-password/forgot-password.component';
-import { SetNewPasswordComponent } from './landing/set-new-password/set-new-password.component';
 import { AuthGuard } from './shared/auth-guard.service';
 import { ResetFormComponent } from './landing/forgot-password/reset-form/reset-form.component';
 import { ResetSuccessComponent } from './landing/forgot-password/reset-success/reset-success.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ChangeSuccessComponent } from './change-success/change-success.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,7 +22,7 @@ const routes: Routes = [
                                                                                 { path: 'form', component: ResetFormComponent }, 
                                                                                 { path: 'success', component: ResetSuccessComponent},
                                                                               ] },
-      { path: 'set-new-password', component: SetNewPasswordComponent },
+      { path: 'change-password-success', component: ChangeSuccessComponent },
     ]
   },
   {
@@ -66,9 +67,7 @@ const routes: Routes = [
         path: 'users',
         loadChildren: () => import('./users/users.module').then(m => m.UsersModule), // lazy
       },
-      
-      
-
+      { path: 'change-password', component: ChangePasswordComponent }, //not lazy since it is only a form and doesn't fetch data in the api
     ],
     canActivate: [AuthGuard],
   },

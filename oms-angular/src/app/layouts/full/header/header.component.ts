@@ -12,17 +12,15 @@ export class AppHeaderComponent {
 
   // constructor(private authService: AuthService,private route: Router) {
   // }
-  constructor(private route: Router, private tokenService: TokenService) {
+  constructor(private router: Router, private tokenService: TokenService) {
   }
 
   changePassword() {
-    // Add your change password logic here
-    console.log("Change Password");
+    this.router.navigateByUrl("/app/change-password");
   }
 
   logout() {
-    // this.authService.logout();
     this.tokenService.removeToken();
-    this.route.navigateByUrl('/');
+    this.router.navigateByUrl('/');
   }
 }

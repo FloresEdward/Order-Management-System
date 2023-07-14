@@ -20,10 +20,11 @@ import { AuthenticationService } from './services/authentication.service';
 import { SignupComponent } from './landing/signup/signup.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { ForgotPasswordComponent } from './landing/forgot-password/forgot-password.component';
-import { SetNewPasswordComponent } from './landing/set-new-password/set-new-password.component';
 import { AuthGuard } from './shared/auth-guard.service';
 import { ResetFormComponent } from './landing/forgot-password/reset-form/reset-form.component';
 import { ResetSuccessComponent } from './landing/forgot-password/reset-success/reset-success.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ChangeSuccessComponent } from './change-success/change-success.component';
 // import { OrderHistoryComponent } from './order/order-history/order-history.component';
 
 
@@ -40,9 +41,10 @@ import { ResetSuccessComponent } from './landing/forgot-password/reset-success/r
     ErrorComponent,
     SignupComponent,
     ForgotPasswordComponent,
-    SetNewPasswordComponent,
     ResetFormComponent,
-    ResetSuccessComponent
+    ResetSuccessComponent,
+    ChangePasswordComponent,
+    ChangeSuccessComponent
   ],
   imports: [
     BrowserModule,
