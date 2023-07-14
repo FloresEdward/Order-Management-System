@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ProductDialogComponent } from './dialogs/product-dialog/product-dialog.component';
 import { Observable } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-product',
@@ -21,6 +22,8 @@ export class ProductComponent implements OnInit{
   pageSize: number = 10;
   currentPage: number = 0;
 
+  dataSource!: MatTableDataSource<any>;
+  
   constructor(private dialog: MatDialog, private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -64,6 +67,7 @@ export class ProductComponent implements OnInit{
       (response) => {
         console.log(response);
         this.setProductsArray(response);
+        this.dataSource = new MatTableDataSource<any>(this.products);
       },
       (error) => {
         console.log('Error:', error);
@@ -83,4 +87,12 @@ export class ProductComponent implements OnInit{
       this.getProductsPaginated();
     });
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }  
 }
