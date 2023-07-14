@@ -57,8 +57,8 @@ export class DashboardComponent implements OnInit {
 
     this.updateOrderStatusComponent();
 
-    const cancelStartDate = new Date(endDate.getFullYear(), endDate.getMonth() - 5, endDate.getDate());
-    this.orderCancelRate = this.orderItems;
+    const startYear = new Date(startDate.getFullYear(), 0, 1);
+  this.orderCancelRate = this.filterOrdersByYear(this.orderItems, startYear);
     this.updateNoCancelRateComponent();
 
   }
@@ -69,6 +69,17 @@ export class DashboardComponent implements OnInit {
       return createdAt >= startDate && createdAt <= endDate;
     });
   }
+
+  filterOrdersByYear(orders: any[], year: Date): any[] {
+    const startYear = new Date(year.getFullYear(), 0, 1);
+    const endYear = new Date(year.getFullYear(), 11, 31, 23, 59, 59, 999);
+  
+    return orders.filter((order) => {
+      const createdAt = new Date(order.createdAt);
+      return createdAt >= startYear && createdAt <= endYear;
+    });
+  }
+  
 
   updateOrderStatusComponent(): void {
     this.cdr.detectChanges();
