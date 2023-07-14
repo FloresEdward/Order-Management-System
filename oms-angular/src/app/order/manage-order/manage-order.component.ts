@@ -23,8 +23,9 @@ export class ManageOrderComponent implements OnInit {
   displayedColumns: string[] = ['name', 'address', 'contactNumber', 'totalQuantity', 'grandTotal', 'rider', 'action'];
   listOfRiders: string[] = [];
   orders: any[] = [];
+  filteredOrders: any[] = [];
   responseMessage: any;
-  selectedRiders: Map<number, string> = new Map<number, string>();//
+  selectedRiders: Map<number, string> = new Map<number, string>();
 
   
   constructor(
@@ -55,6 +56,7 @@ export class ManageOrderComponent implements OnInit {
     this.http.get<any[]>(this.baseUrl + '/getActive').subscribe(
       (response) => {
         this.orders = response;
+        this.filteredOrders = response;
         console.log(this.orders)
       },
       (error) => {
@@ -63,10 +65,14 @@ export class ManageOrderComponent implements OnInit {
     );
   }
 
-  applyFilter(event: Event): void {
-
+  applyFilter(filterValue: string): void {
+    filterValue = filterValue.trim().toLowerCase();
+    this.filteredOrders = this.orders.filter((order: any) =>
+      order.customer?.name.toLowerCase().includes(filterValue) ||
+      order.customer?.address.toLowerCase().includes(filterValue) ||
+      order.customer?.contactNumber.toLowerCase().includes(filterValue)
+    );
   }
-  
 
   handleViewAction(orders: any) {
     const dialogConfig = new MatDialogConfig();
@@ -127,7 +133,7 @@ export class ManageOrderComponent implements OnInit {
         (response) => {
           console.log('Order Fulfilled');
           this.snackbarService.openSnackBar(GlobalConstants.processed, 'success');
-          this.updateCourierNameInOrders(orderId, courierName); //
+          this.updateCourierNameInOrders(orderId, courierName); 
           this.getOrders();
         },
         (error) => {

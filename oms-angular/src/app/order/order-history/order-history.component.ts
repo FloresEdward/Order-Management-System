@@ -26,9 +26,9 @@ export class OrderHistoryComponent implements OnInit{
   responseMessage: any;
   checkButtonDisabled: boolean = false;
   
-  totalElements: number = 0;//
-  pageSize: number = 10;//
-  currentPage: number = 0;//
+  totalElements: number = 0;
+  pageSize: number = 10;
+  currentPage: number = 0;
 
   constructor(
     private dialog: MatDialog,
@@ -40,7 +40,6 @@ export class OrderHistoryComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    // this.getOrders();
     this.getOrdersPaginated();
   }
 
@@ -53,6 +52,7 @@ export class OrderHistoryComponent implements OnInit{
   setOrdersArray(response: any) {
     this.orders = response.content;
     this.totalElements = response.totalElements;
+    this.dataSource = new MatTableDataSource<any>(this.orders);
   }
 
   public getOrdersPaginated(): void {
@@ -71,21 +71,12 @@ export class OrderHistoryComponent implements OnInit{
     )
   }
 
-  // getOrders(): void {
-  //   this.http.get<any[]>(this.baseUrl + '/getAll').subscribe(
-  //     (response) => {
-  //       this.orders = response;
-  //       console.log(this.orders)
-  //     },
-  //     (error) => {
-  //       console.log('Error:', error);
-  //     }
-  //   );
-  // }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   handleViewAction(values: any) {
