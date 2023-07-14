@@ -2,6 +2,7 @@ package com.champ.oms.service;
 
 import com.champ.oms.bean.CategoryBean;
 import com.champ.oms.bean.MenuBean;
+import com.champ.oms.bean.OrderItemBean;
 import com.champ.oms.document.Category;
 import com.champ.oms.document.Menu;
 import com.champ.oms.repo.MenuRepository;
@@ -84,6 +85,24 @@ public class MenuService {
 
     public Page<Menu> findAllByStatus(Pageable pageable) {
         return menuRepository.findAllByStatus("active", pageable);
+    }
+
+    public void updateOrderItemBeans(List<OrderItemBean> orderItemBeans) {
+        for (OrderItemBean orderItem : orderItemBeans) {
+            String menuName = orderItem.getProduct();
+            long quantity = (long) orderItem.getQuantity();
+            updateStock(menuName, quantity);
+        }
+    }
+
+    public void updateStock(String menuName, Long quantity) {
+        Menu menu = menuRepository.findByName(menuName);
+        long currentStock = menu.getStock();
+        long updatedStock = currentStock - quantity;
+
+        menu.setStock(updatedStock);
+
+        menuRepository.save(menu);
     }
 }
 

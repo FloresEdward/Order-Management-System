@@ -16,4 +16,6 @@ public interface MenuRepository extends MongoRepository<Menu, String> {
 
     List<Menu> findByCategory_IdAndStatus(String categoryId, String status);
     Page<Menu> findAllByStatus(String status, Pageable pageable);
+
+    Menu findByName(String name);
 }

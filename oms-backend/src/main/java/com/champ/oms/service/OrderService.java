@@ -2,6 +2,7 @@ package com.champ.oms.service;
 
 import com.champ.oms.bean.OrderBean;
 import com.champ.oms.bean.OrderItemBean;
+import com.champ.oms.document.Menu;
 import com.champ.oms.document.Order;
 import com.champ.oms.repo.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,9 @@ import java.util.List;
 public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private MenuService menuService;
     public void saveOrder(OrderBean orderBean) {
         var order = Order.builder()
                 .customer(orderBean.getCustomer())
@@ -31,6 +35,8 @@ public class OrderService {
                 .createdAt(orderBean.getCreatedAt())
                 .fulfilledDate(orderBean.getFulfilledDate())
                 .build();
+
+        menuService.updateOrderItemBeans(orderBean.getOrderedItems());
         orderRepository.save(order);
     }
 
