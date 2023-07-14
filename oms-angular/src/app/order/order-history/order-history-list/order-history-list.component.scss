@@ -2,11 +2,10 @@ mat-card {
     margin: 0 auto;
     padding: 20px;
     margin-bottom: 10px;
-
+  
     mat-card-title {
         font-size: 24px;
       }
-
     mat-card-content {
         padding: 0;
         .search-container {
@@ -18,7 +17,7 @@ mat-card {
               margin-right: 10px;
             }
         }
-
+  
     table {
         width: 100%;
   
@@ -50,4 +49,4 @@ mat-card {
         }
       }
     }
-}
+  }
