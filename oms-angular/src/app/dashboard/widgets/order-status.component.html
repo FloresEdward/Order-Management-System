@@ -3,8 +3,17 @@
       <div class="icon">
       </div>
       <div class="value">
-        <div class="top">6</div>
-        <div class="bottom">Cancel</div>
+        <div class="top">{{ cancel }}</div>
+        <div class="bottom">Cancelled</div>
+      </div>
+    </div>
+
+    <div class="widget yellow" *ngIf="pending !== 0">
+      <div class="icon">
+      </div>
+      <div class="value">
+        <div class="top">{{ pending }}</div>
+        <div class="bottom">Pending</div>
       </div>
     </div>
 
@@ -12,7 +21,7 @@
       <div class="icon">
       </div>
       <div class="value">
-        <div class="top">350</div>
+        <div class="top">{{ fulfilled }} </div>
         <div class="bottom">Fulfilled</div>
       </div>
     </div>

@@ -14,7 +14,7 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <div class="chart-container">
-      <widget-order-status></widget-order-status>
+      <widget-order-status [orderStatusByDay]="orderStatusByDay" #orderStatusComponent></widget-order-status>
     </div>
   </div>
 </div>
