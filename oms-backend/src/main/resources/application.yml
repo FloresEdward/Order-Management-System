@@ -7,6 +7,22 @@ spring:
       database: omsDB
       port: 3307
       host: localhost
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: oms.reset.service@gmail.com
+    password: omsim1234
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+logging:
+  level:
+    org.springframework.mail: DEBUG
+
 
 application:
   security:
@@ -15,3 +31,5 @@ application:
       expiration: 86400000 # a day
       refresh-token:
         expiration: 604800000 # 7 days
+
+

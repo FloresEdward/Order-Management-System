@@ -49,4 +49,15 @@ public class AuthenticationController {
 
         return null;
     }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> requestMap) {
+        try {
+            return ResponseEntity.ok(service.forgotPassword(requestMap));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
 }
