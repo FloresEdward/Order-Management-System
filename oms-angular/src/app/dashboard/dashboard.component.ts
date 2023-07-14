@@ -2,6 +2,7 @@ import { DatePipe, formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { OrderStatusComponent } from './widgets/order-status.component';
+import { NoCancelRateComponent } from './widgets/no-cancel-rate.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,15 +12,24 @@ import { OrderStatusComponent } from './widgets/order-status.component';
 })
 export class DashboardComponent implements OnInit {
   selectedDate: Date;
-  filteredData: any[] = [];
 
   // WIDGET orderStatus
   orderStatusByDay: any[] = [];
+
+  // WIDGET orderStatus
+  orderCancelRate: any[] = [];
+
+  // WIDGET orderStatus
+  // orderStatusByDay: any[] = [];
+
+  // WIDGET orderStatus
+  // orderStatusByDay: any[] = [];
 
   cardTitle = 'Dashboard';
   orderItems: any[] = [];
 
   @ViewChild('orderStatusComponent', { static: false }) orderStatusComponent: OrderStatusComponent | undefined;
+  @ViewChild('noCancelRateComponent', { static: false }) noCancelRateComponent: NoCancelRateComponent | undefined;
 
 
   constructor(private datePipe: DatePipe, private http: HttpClient, private cdr: ChangeDetectorRef) {
@@ -45,11 +55,11 @@ export class DashboardComponent implements OnInit {
 
     this.orderStatusByDay = this.filterOrdersByDate(this.orderItems, startDate, endDate);
 
-    // Update filteredData for other components if needed
-    this.filteredData = this.orderStatusByDay;
-
-    // Call a function to update the order status component
     this.updateOrderStatusComponent();
+
+    const cancelStartDate = new Date(endDate.getFullYear(), endDate.getMonth() - 5, endDate.getDate());
+    this.orderCancelRate = this.orderItems;
+    this.updateNoCancelRateComponent();
 
   }
 
@@ -61,6 +71,10 @@ export class DashboardComponent implements OnInit {
   }
 
   updateOrderStatusComponent(): void {
+    this.cdr.detectChanges();
+  }
+
+  updateNoCancelRateComponent(): void {
     this.cdr.detectChanges();
   }
 

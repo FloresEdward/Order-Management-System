@@ -27,11 +27,8 @@ export class OrderStatusComponent {
       return counts;
     }, {});
 
-    this.cancel = statusCounts['Cancelled'] || 0;
+    this.cancel = statusCounts['cancelled'] || 0;
     this.fulfilled = statusCounts['fulfilled'] || 0;
     this.pending = statusCounts['pending'] || 0;
-    console.log(`Cancelled: ${this.cancel}`);
-    console.log(`Fulfilled: ${this.fulfilled}`);
-    console.log(`Pending: ${this.pending}`);
   }
 }
