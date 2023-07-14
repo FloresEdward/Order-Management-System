@@ -8,8 +8,9 @@ import com.champ.oms.repo.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class OrderService {
                 .courierName(orderBean.getCourierName())
                 .addressId(orderBean.getAddressId())
                 .orderedItems(orderBean.getOrderedItems())
-                .quantity(orderBean.getQuantity())
+//                .quantity(orderBean.getQuantity())
                 .totalQuantity(orderBean.getTotalQuantity())
                 .grandTotal(orderBean.getGrandTotal())
                 .status(orderBean.getStatus())
@@ -40,8 +41,12 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+//    public List<Order> getAllOrders() {
+//        return orderRepository.findAll();
+//    }
+
+    public Page<Order> getAllOrders(Pageable pageable) {
+        return orderRepository.findAll(pageable);
     }
 
     public List<Order> getAllActiveOrders() {

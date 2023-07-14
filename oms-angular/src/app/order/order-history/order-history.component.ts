@@ -4,14 +4,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrderHistoryListComponent } from './order-history-list/order-history-list.component';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { OrderService } from 'src/app/services/order.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-order-history',
   templateUrl: './order-history.component.html',
-  styleUrls: ['./order-history.component.css']
+  styleUrls: ['./order-history.component.scss']
 })
 export class OrderHistoryComponent implements OnInit{
   private baseUrl = 'http://localhost:8080/api/v1/management/order';
@@ -25,6 +26,10 @@ export class OrderHistoryComponent implements OnInit{
   responseMessage: any;
   checkButtonDisabled: boolean = false;
   
+  totalElements: number = 0;//
+  pageSize: number = 10;//
+  currentPage: number = 0;//
+
   constructor(
     private dialog: MatDialog,
     private router: Router,
@@ -35,20 +40,48 @@ export class OrderHistoryComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getOrders();
+    // this.getOrders();
+    this.getOrdersPaginated();
   }
 
-  getOrders(): void {
-    this.http.get<any[]>(this.baseUrl + '/getAll').subscribe(
+  onPageChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.getOrdersPaginated();
+  }
+
+  setOrdersArray(response: any) {
+    this.orders = response.content;
+    this.totalElements = response.totalElements;
+  }
+
+  public getOrdersPaginated(): void {
+    let page = this.currentPage;
+    let size = this.pageSize;
+    let params = new HttpParams().set('page', page.toString()).set('size', size.toString());
+
+    this.http.get<any[]>(this.baseUrl + '/paginated', { params }).subscribe(
       (response) => {
-        this.orders = response;
-        console.log(this.orders)
+        console.log(response);
+        this.setOrdersArray(response);
       },
       (error) => {
         console.log('Error:', error);
       }
-    );
+    )
   }
+
+  // getOrders(): void {
+  //   this.http.get<any[]>(this.baseUrl + '/getAll').subscribe(
+  //     (response) => {
+  //       this.orders = response;
+  //       console.log(this.orders)
+  //     },
+  //     (error) => {
+  //       console.log('Error:', error);
+  //     }
+  //   );
+  // }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
