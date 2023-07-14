@@ -30,6 +30,7 @@ export class CreateOrderComponent implements OnInit {
   price: any;
   totalAmount: number = 0;
   responseMessage: any;
+  hasTableData: boolean = false; 
 
   constructor(private formBuilder: FormBuilder,
     private dialog: MatDialog,
@@ -63,22 +64,6 @@ export class CreateOrderComponent implements OnInit {
     this.getCategories();
   }
 
-  calculateTotal() {
-    const price = this.productOrderForm.get('price').value;
-    console.log(price);
-    let quantity = this.productOrderForm.get('quantity').value;
-    console.log(quantity);
-    if(quantity < 1) {
-      quantity = 1;
-    }
-    const total = price * quantity;
-    this.productOrderForm.get('total').setValue(total);
-  }
-
-  isFormValid(): boolean {
-    return this.customerOrderForm.valid && this.productOrderForm.valid;
-  }
-
   getCategories(): void {
     const baseUrl = 'http://localhost:8080/api/v1/management/category';
     this.http.get<any[]>(baseUrl + '/').subscribe(
@@ -91,6 +76,20 @@ export class CreateOrderComponent implements OnInit {
     );
   }
 
+  calculateTotal() {
+    const price = this.productOrderForm.get('price').value;
+    let quantity = this.productOrderForm.get('quantity').value;
+    console.log(`price: ${price} quantity: ${quantity}`);
+    if(quantity < 1) {
+      quantity = 1;
+    }
+    const total = price * quantity;
+    this.productOrderForm.get('total').setValue(total);
+  }
+
+  isFormValid(): boolean {
+    return this.customerOrderForm.valid && this.productOrderForm.valid;
+  }
 
   getProductsByCategory(category: any) {
     const baseUrl = 'http://localhost:8080/api/v1/management/menu/category';
@@ -106,16 +105,13 @@ export class CreateOrderComponent implements OnInit {
     );
   }
 
-
   getProductDetails(value: any) {
     if (value && value.price) {
       this.productOrderForm.get('price').setValue(value.price);
-
     }
   }
 
   add() {
-
     const category = this.productOrderForm.get('category').value;
     const product = this.productOrderForm.get('product').value;
     const price = this.productOrderForm.get('price').value;
@@ -132,9 +128,8 @@ export class CreateOrderComponent implements OnInit {
 
     this.dataSource.data.push(element);
     this.dataSource._updateChangeSubscription();
-
+    this.updateTableDataStatus();
     this.productOrderForm.reset();
-
     this.snackbarService.openSnackBar(GlobalConstants.productAdded, 'success');
   }
 
@@ -151,15 +146,15 @@ export class CreateOrderComponent implements OnInit {
         this.dataSource._updateChangeSubscription();
   
         this.dataSource = new MatTableDataSource<any>(this.dataSource.data);
+        this.snackbarService.openSnackBar(GlobalConstants.delete, 'success');
         console.log(`Row Deleted`);
       }
     });
-
-    this.snackbarService.openSnackBar(GlobalConstants.productAdded, 'success');
   }
   
   submitAction() {
-    const orderItems = this.dataSource.data.map((item: any) => ({
+    
+    const orderedItems = this.dataSource.data.map((item: any) => ({
       category: item.category.name,
       product: item.product.name,
       price: item.price,
@@ -176,17 +171,17 @@ export class CreateOrderComponent implements OnInit {
     }
 
     const orderDetails = {
-      orderItems: orderItems, 
+      orderedItems: orderedItems, 
       customer: customerDetails, 
       courierName: 'none',
       status: 'pending',
       addressId: customerDetails.address,
       createdAt: new Date(),
-      totalQuantity: orderItems.reduce((totalQuantity, item) => totalQuantity + item.quantity, 0),
-      grandTotal: orderItems.reduce((total, item) => total + item.total, 0)
+      totalQuantity: orderedItems.reduce((totalQuantity, item) => totalQuantity + item.quantity, 0),
+      grandTotal: orderedItems.reduce((total, item) => total + item.total, 0)
     }
 
-    console.log(orderDetails);
+    console.log('orderDetails: ', orderDetails);
   
     const addOrderRequest = this.orderService.addOrder(orderDetails);
     const addCustomerRequest = this.customerService.addCustomer(customerDetails);
@@ -194,15 +189,19 @@ export class CreateOrderComponent implements OnInit {
     forkJoin([addOrderRequest, addCustomerRequest]).subscribe(
       ([orderResponse, customerResponse]) => {
         this.snackbarService.openSnackBar(GlobalConstants.orderAdded, 'success');
-        console.log('Order response: ', orderResponse);
-        console.log('Customer response: ', customerResponse);
         this.dataSource.data = [];
+        this.customerOrderForm.reset();
+        this.updateTableDataStatus();
       },
       (error) => {
         this.snackbarService.openSnackBar(GlobalConstants.genericError, 'error');
         console.log('Error', error);
       }
     )
+  }
+
+  updateTableDataStatus() {
+    this.hasTableData = this.dataSource.data.length > 0;
   }
   
 }

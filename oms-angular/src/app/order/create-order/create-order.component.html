@@ -111,7 +111,7 @@
     </form>
     <div>
         <button mat-flat-button color="primary" [disabled]="!isFormValid()" (click)="add()">Add</button>
-        <button mat-flat-button color="primary" class="float-right" (click)="submitAction()">
+        <button mat-flat-button color="primary" class="float-right" [disabled]="!hasTableData" (click)="submitAction()">
             <mat-icon>monetization_on</mat-icon> Confirm Orders
         </button>
     </div>

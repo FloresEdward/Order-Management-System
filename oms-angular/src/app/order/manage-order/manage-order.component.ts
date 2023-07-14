@@ -20,7 +20,7 @@ export class ManageOrderComponent implements OnInit {
   private baseUrl = 'http://localhost:8080/api/v1/management/order';
   cardTitle: string = 'Manage Order';
 
-  displayedColumns: string[] = ['name', 'address', 'contactNumber', 'total', 'rider', 'action'];
+  displayedColumns: string[] = ['name', 'address', 'contactNumber', 'totalQuantity', 'grandTotal', 'rider', 'action'];
   listOfRiders: string[] = [];
   orders: any[] = [];
   responseMessage: any;

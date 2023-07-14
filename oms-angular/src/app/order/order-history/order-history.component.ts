@@ -19,7 +19,7 @@ export class OrderHistoryComponent implements OnInit{
 
   selectedValue: string | null = null;
 
-  displayedColumns: string[] = ['name', 'address', 'contactNumber', 'total', 'rider', 'state', 'view'];
+  displayedColumns: string[] = ['name', 'address', 'contactNumber','totalQuantity', 'grandTotal', 'rider', 'status', 'view'];
   orders: any[] = [];
   dataSource!: MatTableDataSource<any>;
   responseMessage: any;
@@ -39,7 +39,7 @@ export class OrderHistoryComponent implements OnInit{
   }
 
   getOrders(): void {
-    this.http.get<any[]>(this.baseUrl + '/').subscribe(
+    this.http.get<any[]>(this.baseUrl + '/getAll').subscribe(
       (response) => {
         this.orders = response;
         console.log(this.orders)

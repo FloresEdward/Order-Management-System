@@ -23,8 +23,13 @@
             <td mat-cell *matCellDef="let element">{{element.customer.contactNumber}}</td>
         </ng-container>
 
-        <ng-container matColumnDef="total">
-            <th mat-header-cell *matHeaderCellDef>Total</th>
+        <ng-container matColumnDef="totalQuantity">
+            <th mat-header-cell *matHeaderCellDef>Total Quantity</th>
+            <td mat-cell *matCellDef="let element">{{element.totalQuantity}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="grandTotal">
+            <th mat-header-cell *matHeaderCellDef>Grand Total</th>
             <td mat-cell *matCellDef="let element">{{element.grandTotal}}</td>
         </ng-container>
 
@@ -33,8 +38,8 @@
             <td mat-cell *matCellDef="let element">{{element.courierName}}</td>
         </ng-container>
 
-        <ng-container matColumnDef="state">
-            <th mat-header-cell *matHeaderCellDef>State</th>
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
             <td mat-cell *matCellDef="let element">{{element.status}}</td>
         </ng-container>
 

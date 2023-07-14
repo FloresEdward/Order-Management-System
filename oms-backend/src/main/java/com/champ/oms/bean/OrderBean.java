@@ -25,6 +25,7 @@ public class OrderBean {
     private String addressId;
     private List<OrderItemBean> orderItems;
     private int quantity;
+    private int totalQuantity;
     private float grandTotal;
     private String status;
     private Date createdAt;

@@ -27,6 +27,12 @@ export class OrderService {
 
     return this.http.post(url, editOrderRequest);
   }
+  
+  public getAllOrders(editOrderRequest: any) : Observable<any> {
+    const url = `${this.baseUrl}/getAll`;
+
+    return this.http.post(url, editOrderRequest);
+  }
 
   public setOrderStatusCancelled(editOrderRequest: any) : Observable<any> {
     const url = `${this.baseUrl}/cancel`;
