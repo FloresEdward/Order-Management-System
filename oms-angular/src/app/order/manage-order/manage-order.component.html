@@ -41,15 +41,6 @@
       <ng-container matColumnDef="rider">
         <th mat-header-cell *matHeaderCellDef>Rider</th>
         <td mat-cell *matCellDef="let element">
-
-          <!-- <mat-select [(value)]="selectedRiders[element.id]" placeholder="Select Rider" (selectionChange)="updateSelectedRider(element.id, $event.value)">
-            <mat-select-trigger>
-              {{ selectedRiders[element.id] ? selectedRiders[element.id] : 'Select Rider' }}
-            </mat-select-trigger>
-            <mat-option *ngFor="let rider of listOfRiders" [value]="rider">
-              {{ rider }}
-            </mat-option>
-          </mat-select> -->
           <mat-select [value]="selectedRiders.get(element.id)" placeholder="Select Rider" (selectionChange)="updateSelectedRider(element.id, $event.value)">
             <mat-select-trigger>
               {{ selectedRiders.get(element.id) ? selectedRiders.get(element.id) : 'Select Rider' }}

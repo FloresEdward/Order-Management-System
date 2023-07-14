@@ -198,6 +198,8 @@ export class CreateOrderComponent implements OnInit {
         console.log('Error', error);
       }
     )
+
+    console.log('This is the total quantity:' , orderDetails.totalQuantity)
   }
 
   updateTableDataStatus() {

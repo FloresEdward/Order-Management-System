@@ -52,7 +52,7 @@ export class ManageOrderComponent implements OnInit {
   }
   
   getOrders(): void {
-    this.http.get<any[]>(this.baseUrl + '/').subscribe(
+    this.http.get<any[]>(this.baseUrl + '/getActive').subscribe(
       (response) => {
         this.orders = response;
         console.log(this.orders)

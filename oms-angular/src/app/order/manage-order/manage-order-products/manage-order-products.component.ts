@@ -42,8 +42,10 @@ export class ManageOrderProductsComponent implements OnInit {
 
   ngOnInit() {
     this.data = this.dialogData?.data;
-    if (this.data && this.data.orderItems) {
-      this.dataSource = this.data.orderItems.map((item: any) => {
+
+    console.log('this.data: ' ,this.data)
+    if (this.data && this.data.orderedItems) {
+      this.dataSource = this.data.orderedItems.map((item: any) => {
         return {
           category: item.category,
           product: item.product,
@@ -54,9 +56,10 @@ export class ManageOrderProductsComponent implements OnInit {
       });
     } else {
       this.dataSource = [];
+
+      console.log('this is the data: ', this.data);
+      
     } 
-    console.log('this.data = ',this.data);
-    console.log('this.dataSource =', this.dataSource);
   }
   
  

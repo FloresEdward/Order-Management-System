@@ -25,7 +25,7 @@ public class Order {
     private String creatorId;
     private String courierName;
     private String addressId;
-    private List<OrderItemBean> orderItems;
+    private List<OrderItemBean> orderedItems;
     private int quantity;
     private int totalQuantity;
     private float grandTotal;

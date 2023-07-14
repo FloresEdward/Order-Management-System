@@ -30,7 +30,7 @@ public class OrderController {
         orderService.saveOrder(orderBean);
     }
 
-    @GetMapping("/")
+    @GetMapping("/getActive")
     @PreAuthorize("hasAuthority('order:read')")
     public List<Order> getOrders() {
         return orderService.getAllActiveOrders();
