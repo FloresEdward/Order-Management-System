@@ -9,7 +9,7 @@
   <div class="widget right">
     <mat-form-field>
       <input matInput [matDatepicker]="picker" [matDatepickerFilter]="dateFilter"
-        [(ngModel)]="selectedDate">
+        [(ngModel)]="selectedDate" (ngModelChange)="onDateSelected()">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
