@@ -31,6 +31,8 @@ export class CreateOrderComponent implements OnInit {
   totalAmount: number = 0;
   responseMessage: any;
   hasTableData: boolean = false; 
+  isQuantityValid: boolean = false;
+  currentStocks: number = 100;
 
   constructor(private formBuilder: FormBuilder,
     private dialog: MatDialog,
@@ -85,11 +87,28 @@ export class CreateOrderComponent implements OnInit {
     }
     const total = price * quantity;
     this.productOrderForm.get('total').setValue(total);
+
+    //Code for stocks
+    let stocks = this.currentStocks; // Still need replace with actual stocks from service
+    this.isQuantityValid = quantity <= stocks;
+    if (!this.isQuantityValid) {
+      this.productOrderForm.get('quantity').setErrors({ max: stocks });
+    } else {
+      this.productOrderForm.get('quantity').setErrors(null);
+    }
   }
 
+  // isFormValid(): boolean {
+  //   return this.customerOrderForm.valid && this.productOrderForm.valid;
+  // }
   isFormValid(): boolean {
-    return this.customerOrderForm.valid && this.productOrderForm.valid;
+    return (
+      this.customerOrderForm.valid &&
+      this.productOrderForm.valid &&
+      this.isQuantityValid
+    );
   }
+  
 
   getProductsByCategory(category: any) {
     const baseUrl = 'http://localhost:8080/api/v1/management/menu/category';
@@ -112,6 +131,11 @@ export class CreateOrderComponent implements OnInit {
   }
 
   add() {
+
+    if (!this.isQuantityValid) {
+      return; // Don't proceed if quantity is invalid
+    }
+    
     const category = this.productOrderForm.get('category').value;
     const product = this.productOrderForm.get('product').value;
     const price = this.productOrderForm.get('price').value;
@@ -126,6 +150,9 @@ export class CreateOrderComponent implements OnInit {
       total: total
     };
 
+    //subtract quantity
+    this.currentStocks -= quantity;
+    console.log('current stocks: ', this.currentStocks);
     this.dataSource.data.push(element);
     this.dataSource._updateChangeSubscription();
     this.updateTableDataStatus();
