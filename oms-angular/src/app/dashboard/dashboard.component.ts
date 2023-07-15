@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { OrderStatusComponent } from './widgets/order-status.component';
 import { NoCancelRateComponent } from './widgets/no-cancel-rate.component';
+import { CategoryPerformanceComponent } from './widgets/category-performance.component';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
-  providers: [DatePipe]
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
   selectedDate: Date;
@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
   orderCancelRate: any[] = [];
 
   // WIDGET orderStatus
-  // orderStatusByDay: any[] = [];
+  orderCategoryPerformance: any[] = [];
 
   // WIDGET orderStatus
   // orderStatusByDay: any[] = [];
@@ -30,9 +30,10 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild('orderStatusComponent', { static: false }) orderStatusComponent: OrderStatusComponent | undefined;
   @ViewChild('noCancelRateComponent', { static: false }) noCancelRateComponent: NoCancelRateComponent | undefined;
+  @ViewChild('categoryPerformanceComponent', { static: false }) categoryPerformanceComponent: CategoryPerformanceComponent | undefined;
 
 
-  constructor(private datePipe: DatePipe, private http: HttpClient, private cdr: ChangeDetectorRef) {
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
     this.selectedDate = new Date();
   }
 
@@ -54,12 +55,16 @@ export class DashboardComponent implements OnInit {
     const endDate = new Date(formattedDate + 'T23:59:59.999+00:00');
 
     this.orderStatusByDay = this.filterOrdersByDate(this.orderItems, startDate, endDate);
-
     this.updateOrderStatusComponent();
 
     const startYear = new Date(startDate.getFullYear(), 0, 1);
-  this.orderCancelRate = this.filterOrdersByYear(this.orderItems, startYear);
+    this.orderCancelRate = this.filterOrdersByYear(this.orderItems, startYear);
     this.updateNoCancelRateComponent();
+
+    const endMonth = new Date(startDate.getFullYear(), startDate.getMonth());
+    this.orderCategoryPerformance = this.filterOrdersByMonth(this.orderItems, startDate, endMonth);
+    // this.orderCategoryPerformance = this.filterOrdersByYear(this.orderItems, startYear);
+    this.updateCategoryPerformanceComponent();
 
   }
 
@@ -73,19 +78,34 @@ export class DashboardComponent implements OnInit {
   filterOrdersByYear(orders: any[], year: Date): any[] {
     const startYear = new Date(year.getFullYear(), 0, 1);
     const endYear = new Date(year.getFullYear(), 11, 31, 23, 59, 59, 999);
-  
+
     return orders.filter((order) => {
       const createdAt = new Date(order.createdAt);
       return createdAt >= startYear && createdAt <= endYear;
     });
   }
+
+  filterOrdersByMonth(orders: any[], year: Date, month: Date): any[] {
+    const startDate = new Date(year.getFullYear(), month.getMonth(), 1);
+    const endDate = new Date(year.getFullYear(), month.getMonth() + 1, 0, 23, 59, 59, 999);
+    console.log(startDate);
+    console.log(endDate);
   
+    return orders.filter((order) => {
+      const createdAt = new Date(order.createdAt);
+      return createdAt >= startDate && createdAt <= endDate;
+    });
+  }
 
   updateOrderStatusComponent(): void {
     this.cdr.detectChanges();
   }
 
   updateNoCancelRateComponent(): void {
+    this.cdr.detectChanges();
+  }
+
+  updateCategoryPerformanceComponent(): void {
     this.cdr.detectChanges();
   }
 
