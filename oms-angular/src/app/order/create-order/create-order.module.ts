@@ -17,7 +17,7 @@ import { NgForm, ReactiveFormsModule } from '@angular/forms';
     FlexLayoutModule,
     RouterModule.forChild(CreateOrderRoutes),
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   declarations: [CreateOrderComponent, ConfirmationDialogComponent],
 })

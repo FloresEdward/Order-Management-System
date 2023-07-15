@@ -51,10 +51,15 @@ export class CreateOrderComponent implements OnInit {
       });
 
     this.customerOrderForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', Validators.required],
-      contactNumber: ['', Validators.required],
-      address: ['', Validators.required],
+      // name: ['', Validators.required],
+      // email: ['', Validators.required, Validators.email],
+      // contactNumber: ['', Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}')],
+      // address: ['', Validators.required],
+      // paymentMethod: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      email: ['', [Validators.required, Validators.email]],
+      contactNumber: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
+      address: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       paymentMethod: ['', Validators.required],
     });
 
