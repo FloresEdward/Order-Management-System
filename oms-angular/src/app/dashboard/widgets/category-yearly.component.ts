@@ -112,7 +112,7 @@ export class CategoryYearComponent implements OnChanges {
     this.chart = new Chart({
       chart: {
         type: 'line',
-        height: 325
+        height: 375
       },
       accessibility: {
         enabled: false

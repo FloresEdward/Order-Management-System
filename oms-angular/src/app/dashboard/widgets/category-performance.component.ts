@@ -67,7 +67,7 @@ export class CategoryPerformanceComponent implements OnChanges {
     this.chart = new Chart({
       chart: {
         type: 'bar',
-        height: 325
+        height: 375
       },
       accessibility: {
         enabled: false
