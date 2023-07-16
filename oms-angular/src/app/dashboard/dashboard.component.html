@@ -25,8 +25,11 @@
     </div>
   </div>
   <div class="widget right">
+    <mat-slide-toggle (change)="toggleWidgets()">Yearly</mat-slide-toggle>
     <widget-category-performance 
-    [orderCategoryPerformance]="orderCategoryPerformance" #categoryPerformanceComponent>
-  </widget-category-performance>
-  </div>
+      [orderCategoryPerformance]="orderCategoryPerformance" [hidden]="isYearlyToggleActive" #categoryPerformanceComponent>
+    </widget-category-performance>
+    <widget-category-yearly [orderCategoryYearlyPerformance]="orderCategoryYearlyPerformance" 
+      [hidden]="!isYearlyToggleActive" #categoryYearComponent></widget-category-yearly>
+    </div>
 </div>

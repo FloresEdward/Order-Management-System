@@ -1,10 +1,11 @@
 import { DatePipe, formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { OrderStatusComponent } from './widgets/order-status.component';
 import { NoCancelRateComponent } from './widgets/no-cancel-rate.component';
 import { CategoryPerformanceComponent } from './widgets/category-performance.component';
 import { TopMealComponent } from './widgets/top-meal.component';
+import { CategoryYearComponent } from './widgets/category-yearly.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,13 +18,16 @@ export class DashboardComponent implements OnInit {
   // WIDGET orderStatus
   orderStatusByDay: any[] = [];
 
-  // WIDGET orderStatus
+  // WIDGET noCancelRate
   orderCancelRate: any[] = [];
 
-  // WIDGET orderStatus
+  // WIDGET categoryPerformance
   orderCategoryPerformance: any[] = [];
 
-  // WIDGET orderStatus
+  // WIDGET categoryYear
+  orderCategoryYearlyPerformance: any[] = [];
+
+  // WIDGET topMeal
   orderTopMeal: any[] = [];
 
   cardTitle = 'Dashboard';
@@ -33,6 +37,8 @@ export class DashboardComponent implements OnInit {
   @ViewChild('noCancelRateComponent', { static: false }) noCancelRateComponent: NoCancelRateComponent | undefined;
   @ViewChild('categoryPerformanceComponent', { static: false }) categoryPerformanceComponent: CategoryPerformanceComponent | undefined;
   @ViewChild('topMealComponent', { static: false }) topMealComponent: TopMealComponent | undefined;
+  @ViewChild('categoryYearComponent', { static: false }) categoryYearComponent: CategoryYearComponent | undefined;
+  isYearlyToggleActive: boolean = false;
 
 
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
@@ -65,10 +71,12 @@ export class DashboardComponent implements OnInit {
 
     const endMonth = new Date(startDate.getFullYear(), startDate.getMonth());
     this.orderCategoryPerformance = this.filterOrdersByMonth(this.orderItems, startDate, endMonth);
-    // this.orderCategoryPerformance = this.filterOrdersByYear(this.orderItems, startYear);
+
+    this.orderCategoryYearlyPerformance = this.filterOrdersByYear(this.orderItems, startYear);
     this.updateCategoryPerformanceComponent();
 
     this.orderTopMeal = this.filterOrdersByMonth(this.orderItems, startDate, endMonth);
+
     this.updateTopMealComponent();
 
   }
@@ -119,6 +127,10 @@ export class DashboardComponent implements OnInit {
   dateFilter = (date: Date | null): boolean => {
     const currentDate = new Date();
     return !date || date <= currentDate;
+  }
+
+  toggleWidgets() {
+    this.isYearlyToggleActive = !this.isYearlyToggleActive;
   }
 
 }

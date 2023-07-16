@@ -12,6 +12,7 @@ import { NoCancelRateComponent } from './widgets/no-cancel-rate.component';
 import { CategoryPerformanceComponent } from './widgets/category-performance.component';
 import { FormsModule } from '@angular/forms';
 import { ChartModule } from 'angular-highcharts';
+import { CategoryYearComponent } from './widgets/category-yearly.component';
 
 @NgModule({
   imports: [
@@ -23,6 +24,6 @@ import { ChartModule } from 'angular-highcharts';
     ChartModule,
     FormsModule
   ],
-  declarations: [DashboardComponent, TopMealComponent, OrderStatusComponent, NoCancelRateComponent, CategoryPerformanceComponent]
+  declarations: [DashboardComponent, TopMealComponent, OrderStatusComponent, NoCancelRateComponent, CategoryPerformanceComponent, CategoryYearComponent]
 })
 export class DashboardModule { }
