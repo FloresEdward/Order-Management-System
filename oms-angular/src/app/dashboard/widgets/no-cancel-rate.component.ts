@@ -1,22 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { Chart } from 'angular-highcharts';
 
 @Component({
   selector: 'widget-no-cancel-rate',
   template: '<div [chart]="chart"></div>',
 })
-export class NoCancelRateComponent implements OnInit {
-
+export class NoCancelRateComponent implements  OnChanges {
   @Input() orderCancelRate: any[] = [];
 
   categoryMonth: string[] = [];
   fulfilledData: number[] = [];
   cancelledData: number[] = [];
   chart: Chart | undefined;
-
-  ngOnInit() {
- 
-  }
 
   ngOnChanges() {
     this.updateNoCancelRateComponent();
@@ -31,27 +26,27 @@ export class NoCancelRateComponent implements OnInit {
         enabled: false,
       },
       title: {
-        text: 'No-Cancel Rate',
+        text: 'Order Status',
       },
       xAxis: {
         categories: this.categoryMonth
       },
       yAxis: {
         title: {
-          text: 'Percentage',
+          text: 'No. of Orders',
         },
       },
       series: [
         {
           name: 'Fulfilled',
           type: 'column',
-          data: [...this.getFulfilledDataForChart()],
+          data: this.getFulfilledDataForChart(),
           color: '#044342',
         },
         {
           name: 'Cancelled',
           type: 'column',
-          data: [...this.getCancelledDataForChart()],
+          data: this.getCancelledDataForChart(),
           color: '#7e0505',
         },
       ],
@@ -62,21 +57,11 @@ export class NoCancelRateComponent implements OnInit {
   }
 
   getFulfilledDataForChart(): number[] {
-    const fulfilledDataForChart: number[] = [];
-    for (const month of this.categoryMonth) {
-      const monthIndex = this.monthIndexMap[month];
-      fulfilledDataForChart.push(this.fulfilledData[monthIndex]);
-    }
-    return fulfilledDataForChart;
+    return this.categoryMonth.map(month => this.fulfilledData[this.monthIndexMap[month]]);
   }
 
   getCancelledDataForChart(): number[] {
-    const cancelledDataForChart: number[] = [];
-    for (const month of this.categoryMonth) {
-      const monthIndex = this.monthIndexMap[month];
-      cancelledDataForChart.push(this.cancelledData[monthIndex]);
-    }
-    return cancelledDataForChart;
+    return this.categoryMonth.map(month => this.cancelledData[this.monthIndexMap[month]]);
   }
 
   updateNoCancelRateComponent() {
@@ -87,14 +72,12 @@ export class NoCancelRateComponent implements OnInit {
 
   getCategoryMonth(): string[] {
     const monthsSet = new Set<string>();
-    this.orderCancelRate.forEach((order) => {
+    for (const order of this.orderCancelRate) {
       const createdAtDate = new Date(order.createdAt);
       const month = createdAtDate.toLocaleString('default', { month: 'short' });
       monthsSet.add(month);
-    });
-    const monthsArray = Array.from(monthsSet);
-    monthsArray.sort((a, b) => this.monthIndexMap[a] - this.monthIndexMap[b]);
-    return monthsArray;
+    }
+    return Array.from(monthsSet).sort((a, b) => this.monthIndexMap[a] - this.monthIndexMap[b]);
   }
 
   monthIndexMap: { [key: string]: number } = {
@@ -113,21 +96,18 @@ export class NoCancelRateComponent implements OnInit {
   };
 
   calculateData() {
-    this.fulfilledData = Array(12).fill(0); 
+    this.fulfilledData = Array(12).fill(0);
     this.cancelledData = Array(12).fill(0);
 
-    this.orderCancelRate.forEach((order) => {
+    for (const order of this.orderCancelRate) {
       const createdAtDate = new Date(order.createdAt);
-      const month = createdAtDate.getMonth(); // Get the month index (0-11)
+      const month = createdAtDate.getMonth();
 
       if (order.status === 'fulfilled') {
         this.fulfilledData[month]++;
       } else if (order.status === 'cancelled') {
         this.cancelledData[month]++;
       }
-    });
-    console.log(this.fulfilledData);
-    console.log(this.cancelledData);
+    }
   }
-
 }

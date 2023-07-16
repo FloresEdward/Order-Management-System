@@ -3,7 +3,7 @@
 <div class="middle-section">
   <div class="widget left">
     <div class="chart-container">
-      <widget-top-meal></widget-top-meal>
+      <widget-top-meal [orderTopMeal]="orderTopMeal" #topMealComponent></widget-top-meal>
     </div>
   </div>
   <div class="widget right">
@@ -25,6 +25,8 @@
     </div>
   </div>
   <div class="widget right">
-    <widget-category-performance></widget-category-performance>
+    <widget-category-performance 
+    [orderCategoryPerformance]="orderCategoryPerformance" #categoryPerformanceComponent>
+  </widget-category-performance>
   </div>
 </div>
