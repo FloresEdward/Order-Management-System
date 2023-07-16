@@ -4,6 +4,7 @@ import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angula
 import { OrderStatusComponent } from './widgets/order-status.component';
 import { NoCancelRateComponent } from './widgets/no-cancel-rate.component';
 import { CategoryPerformanceComponent } from './widgets/category-performance.component';
+import { TopMealComponent } from './widgets/top-meal.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +24,7 @@ export class DashboardComponent implements OnInit {
   orderCategoryPerformance: any[] = [];
 
   // WIDGET orderStatus
-  // orderStatusByDay: any[] = [];
+  orderTopMeal: any[] = [];
 
   cardTitle = 'Dashboard';
   orderItems: any[] = [];
@@ -31,6 +32,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('orderStatusComponent', { static: false }) orderStatusComponent: OrderStatusComponent | undefined;
   @ViewChild('noCancelRateComponent', { static: false }) noCancelRateComponent: NoCancelRateComponent | undefined;
   @ViewChild('categoryPerformanceComponent', { static: false }) categoryPerformanceComponent: CategoryPerformanceComponent | undefined;
+  @ViewChild('topMealComponent', { static: false }) topMealComponent: TopMealComponent | undefined;
 
 
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
@@ -66,6 +68,9 @@ export class DashboardComponent implements OnInit {
     // this.orderCategoryPerformance = this.filterOrdersByYear(this.orderItems, startYear);
     this.updateCategoryPerformanceComponent();
 
+    this.orderTopMeal = this.filterOrdersByMonth(this.orderItems, startDate, endMonth);
+    this.updateTopMealComponent();
+
   }
 
   filterOrdersByDate(orders: any[], startDate: Date, endDate: Date): any[] {
@@ -88,8 +93,6 @@ export class DashboardComponent implements OnInit {
   filterOrdersByMonth(orders: any[], year: Date, month: Date): any[] {
     const startDate = new Date(year.getFullYear(), month.getMonth(), 1);
     const endDate = new Date(year.getFullYear(), month.getMonth() + 1, 0, 23, 59, 59, 999);
-    console.log(startDate);
-    console.log(endDate);
   
     return orders.filter((order) => {
       const createdAt = new Date(order.createdAt);
@@ -106,6 +109,10 @@ export class DashboardComponent implements OnInit {
   }
 
   updateCategoryPerformanceComponent(): void {
+    this.cdr.detectChanges();
+  }
+
+  updateTopMealComponent(): void {
     this.cdr.detectChanges();
   }
 
