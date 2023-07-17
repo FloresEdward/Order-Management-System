@@ -48,7 +48,7 @@ export class CategoryPerformanceComponent implements OnChanges {
       (a, b) => categoryMap[b] - categoryMap[a]
     );
   
-    const topCategories = sortedCategories.slice(0, 6).map((category, index) => ({
+    const topCategories = sortedCategories.slice(0, 5).map((category, index) => ({
       category,
       totalQuantity: categoryMap[category],
       color: this.colors[index],
