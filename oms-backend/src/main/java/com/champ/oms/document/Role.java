@@ -93,6 +93,7 @@ public enum Role {
                   Permission.MENU_READ,
                   Permission.ORDER_READ,
                   Permission.ORDER_CREATE,
+                  Permission.ORDER_UPDATE,
                   Permission.ACCOUNT_READ
           )
   ),

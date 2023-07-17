@@ -109,6 +109,7 @@ export class ManageOrderComponent implements OnInit {
               this.getOrders();
             },
             (error) => {
+              this.snackbarService.openSnackBar('You can not VOID orders, contact your manager', 'error');
               console.log('Error:', error);
             }
           );

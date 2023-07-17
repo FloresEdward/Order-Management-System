@@ -73,7 +73,7 @@ public class OrderController {
     }
 
     @PostMapping(value = "/cancel")
-    @PreAuthorize("hasAuthority('order:update')")
+    @PreAuthorize("hasAuthority('order:delete')")
     public ResponseEntity<?> cancelOrder(@RequestBody OrderBean order) {
 
         try{
