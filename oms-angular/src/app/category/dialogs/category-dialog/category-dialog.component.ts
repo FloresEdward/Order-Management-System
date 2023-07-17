@@ -76,11 +76,11 @@ export class CategoryDialogComponent implements OnInit {
         (response) => {
           console.log(response)
           this.dialogRef.close({ success: true });
-          this.snackbar.openSnackBar("Menu item successfully added", "success")
+          this.snackbar.openSnackBar("Category successfully added", "success")
         },
         (error) => {
           console.log(error)
-          this.snackbar.openSnackBar("Failed to add menu item", "error")
+          this.snackbar.openSnackBar("Failed to add category", "error")
         }
       );
 
@@ -99,11 +99,11 @@ export class CategoryDialogComponent implements OnInit {
         (response) => {
           console.log(response)
           this.dialogRef.close({ success: true });
-          this.snackbar.openSnackBar("Menu item successfully edited", "success")
+          this.snackbar.openSnackBar("Category successfully edited", "success")
         },
         (error) => {
           console.log(error)
-          this.snackbar.openSnackBar("Failed to edit menu item", "error")
+          this.snackbar.openSnackBar("Failed to edit category", "error")
         }
       );
 
@@ -122,11 +122,11 @@ export class CategoryDialogComponent implements OnInit {
         (response) => {
           console.log(response)
           this.dialogRef.close({ success: true });
-          this.snackbar.openSnackBar("Menu item successfully deleted", "success")
+          this.snackbar.openSnackBar("Category successfully deleted", "success")
         },
         (error) => {
           console.log(error)
-          this.snackbar.openSnackBar("Failed to delete menu item", "error")
+          this.snackbar.openSnackBar("Failed to delete category", "error")
         }
       );
 

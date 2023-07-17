@@ -32,20 +32,34 @@ body {
   padding: 0px 8px 0px 15px !important;
 }
 
-.black-snackbar {
-  background: black !important;
-  color: white !important;
+.mat-mdc-snack-bar-container {
+  &.red-snackbar {
+    --mdc-snackbar-container-color: #c1121f;
+    --mat-mdc-snack-bar-button-color: white;
+    --mdc-snackbar-supporting-text-color: white;
+    margin-top: 80px;
+  }
+
+  &.blue-snackbar {
+    --mdc-snackbar-container-color: #00b4d8;
+    --mat-mdc-snack-bar-button-color: white;
+    --mdc-snackbar-supporting-text-color: white;
+    margin-top: 80px;
+  }
+
+  &.green-snackbar {
+    --mdc-snackbar-container-color: #57cc99;
+    --mat-mdc-snack-bar-button-color: white;
+    --mdc-snackbar-supporting-text-color: white;
+    margin-top: 80px;
+  }
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
-.green-snackbar {
-  background: #00ff7f !important;
-  color: black !important;
-}
-
-.red-snackbar {
-  background: #f44336 !important;
-  color: white !important;
-}
 
 
 .mat-snack-bar-container {

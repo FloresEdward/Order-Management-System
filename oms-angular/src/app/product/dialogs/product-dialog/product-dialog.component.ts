@@ -8,6 +8,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 
+
 @Component({
   selector: 'app-product-dialog',
   templateUrl: './product-dialog.component.html',
@@ -38,6 +39,7 @@ export class ProductDialogComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private snackbarService: SnackbarService
+
   ) {
     this.action = data.action;
     this.productId = data.product ? data.product.id : '';
@@ -144,6 +146,7 @@ export class ProductDialogComponent implements OnInit {
         },
         (error) => {
           console.log(error)
+          this.snackbarService.openSnackBar("Failed to edit menu item", "error")
         }
       );
 
@@ -165,6 +168,7 @@ export class ProductDialogComponent implements OnInit {
         },
         (error) => {
           console.log(error)
+          this.snackbarService.openSnackBar("Failed to delete menu item", "error")
         }
       );
 

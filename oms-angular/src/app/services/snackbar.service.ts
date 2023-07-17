@@ -12,14 +12,16 @@ export class SnackbarService {
   openSnackBar(message: string, action: string) {
     let panelClass = '';
     if (action === 'message') {
-      panelClass = 'black-snackbar';
+      panelClass = 'blue-snackbar';
     } else if (action === 'error') {
       panelClass = 'red-snackbar';
     } else {
       panelClass = 'green-snackbar';
     }
 
-    this.snackBar.open(message, '', {
+    console.log(panelClass);
+
+    this.snackBar.open(message, '',{
       horizontalPosition: 'center',
       verticalPosition: 'top',
       duration: 2000,
