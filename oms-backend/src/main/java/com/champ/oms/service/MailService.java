@@ -20,34 +20,6 @@ public class MailService {
     @Autowired
     private JavaMailSender emailSender;
 
-    //    public void sendEmail(String recipientEmail, String subject, String content) {
-//        SimpleMailMessage mailMessage = new SimpleMailMessage();
-//
-//        String htmlContent = "<!DOCTYPE html>"
-//                + "<html>"
-//                + "<head>"
-//                + "<style>"
-//                + "body {font-family: Arial, sans-serif;}"
-//                + ".container {max-width: 600px; margin: 0 auto; padding: 20px;}"
-//                + ".button {display: inline-block; background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;}"
-//                + "</style>"
-//                + "</head>"
-//                + "<body>"
-//                + "<div class=\"container\">"
-//                + "<h1>" + subject + "</h1>"
-//                + "<p>" + content + "</p>"
-//                + "<a href=\"https://example.com/login\" class=\"button\">Go to Login Page</a>"
-//                + "</div>"
-//                + "</body>"
-//                + "</html>";
-//
-//        mailMessage.setFrom("oms.reset.service@gmail.com");
-//        mailMessage.setTo(recipientEmail);
-//        mailMessage.setSubject(subject);
-//        mailMessage.setText(htmlContent);
-//
-//        this.emailSender.send(mailMessage);
-//    }
     public void sendEmail(String recipientEmail, String subject, String content) {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
@@ -57,18 +29,24 @@ public class MailService {
                 + "<head>"
                 + "<style>"
                 + "body {font-family: Arial, sans-serif;}"
-                + ".container {max-width: 600px; margin: 0 auto; padding: 20px;}"
-                + ".button {display: inline-block; background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;}"
+                + ".card {max-width: 600px; margin: 0 auto; padding: 20px; background-color: #2196F3; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16), 0 2px 12px rgba(0, 0, 0, 0.12);}"
+                + ".button {display: inline-block; background-color: white; color: #2196F3; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: 500;}"
+                + ".button a {color: #2196F3; text-decoration: none;}"
+                + ".button:hover {background-color: #1976D2; color: white;}"
                 + "</style>"
                 + "</head>"
                 + "<body>"
-                + "<div class=\"container\">"
-                + "<h1>" + subject + "</h1>"
-                + "<p>" + content + "</p>"
-                + "<a href=\"https://example.com/login\" class=\"button\">Go to Login Page</a>"
+                + "<div class=\"card\">"
+                + "<h1 style=\"color: white\">" + subject + "</h1>"
+                + "<p style=\"color: white\">Login your account using this temporary password: " + content + "</p>"
+                + "<a href=\"http://localhost:4200/login\" class=\"button\"><span style=\"text-decoration: none;\">Go to Login Page</span></a>"
                 + "</div>"
                 + "</body>"
                 + "</html>";
+
+
+
+
 
         try {
             helper.setTo(recipientEmail);
