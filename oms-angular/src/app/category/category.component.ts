@@ -43,22 +43,6 @@ export class CategoryComponent implements OnInit {
     this.getCategoriesPaginated();
   }
 
-  // getCategories(): void {
-  //   this.http.get<any[]>(this.baseUrl + '/').subscribe(
-  //     (response) => {
-  //       this.categories = response;
-  //     },
-  //     (error) => {
-  //       console.log('Error:', error);
-  //     }
-  //   );
-  // }
-
-  // setCategoriesArray(response: any) {
-  //   this.categories = response.content;
-  //   this.totalElements = response.totalElements;
-  // }
-
   setCategoriesArray(response: any) {
     this.categories = new MatTableDataSource<Category>(response.content);
     this.totalElements = response.totalElements;

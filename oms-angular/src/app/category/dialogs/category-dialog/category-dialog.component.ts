@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CategoryService } from 'src/app/services/category.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-category-dialog',
@@ -24,7 +25,8 @@ export class CategoryDialogComponent implements OnInit {
     private router: Router,
     private http: HttpClient,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private snackbar:SnackbarService
   ) {
     this.action = data.action;
     this.categoryName = data.category ? data.category.name : '';
@@ -74,9 +76,11 @@ export class CategoryDialogComponent implements OnInit {
         (response) => {
           console.log(response)
           this.dialogRef.close({ success: true });
+          this.snackbar.openSnackBar("Menu item successfully added", "success")
         },
         (error) => {
           console.log(error)
+          this.snackbar.openSnackBar("Failed to add menu item", "error")
         }
       );
 
@@ -95,9 +99,11 @@ export class CategoryDialogComponent implements OnInit {
         (response) => {
           console.log(response)
           this.dialogRef.close({ success: true });
+          this.snackbar.openSnackBar("Menu item successfully edited", "success")
         },
         (error) => {
           console.log(error)
+          this.snackbar.openSnackBar("Failed to edit menu item", "error")
         }
       );
 
@@ -116,9 +122,11 @@ export class CategoryDialogComponent implements OnInit {
         (response) => {
           console.log(response)
           this.dialogRef.close({ success: true });
+          this.snackbar.openSnackBar("Menu item successfully deleted", "success")
         },
         (error) => {
           console.log(error)
+          this.snackbar.openSnackBar("Failed to delete menu item", "error")
         }
       );
 

@@ -162,7 +162,7 @@ public class AuthenticationService {
 
         return ResponseEntity.ok("Password updated successfully");
       } else {
-        return ResponseEntity.ok("Old password is not correct");
+        return ResponseEntity.status(500).build();
       }
     } catch (Exception ex) {
       ex.printStackTrace();

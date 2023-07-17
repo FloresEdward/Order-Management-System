@@ -11,8 +11,10 @@ export class SnackbarService {
 
   openSnackBar(message: string, action: string) {
     let panelClass = '';
-    if (action === GlobalConstants.error) {
+    if (action === 'message') {
       panelClass = 'black-snackbar';
+    } else if (action === 'error') {
+      panelClass = 'red-snackbar';
     } else {
       panelClass = 'green-snackbar';
     }

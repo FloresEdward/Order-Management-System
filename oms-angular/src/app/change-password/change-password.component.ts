@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../services/authentication.service';
 import { TokenService } from '../services/token.service';
 import { Router } from '@angular/router';
+import { SnackbarService } from '../services/snackbar.service';
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
@@ -15,7 +16,8 @@ export class ChangePasswordComponent {
   constructor(private formBuilder: FormBuilder,
               private authenticationService: AuthenticationService,
               private tokenService: TokenService,
-              private router: Router) {
+              private router: Router,
+              private snackbar: SnackbarService) {
     this.passwordForm = this.formBuilder.group({
       oldPassword: ['', Validators.required],
       newPassword: ['', Validators.required],
@@ -47,6 +49,7 @@ export class ChangePasswordComponent {
         this.router.navigateByUrl('/change-password-success');
       },
       (error) => {
+        this.snackbar.openSnackBar("Your old password is incorrect", "error")
       }
     )
   }

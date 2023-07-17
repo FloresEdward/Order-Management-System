@@ -42,12 +42,12 @@ public class AuthenticationController {
     @PostMapping("/change-password")
     public ResponseEntity<?> changePassword(@RequestBody Map<String, String> requestMap) {
         try {
-            return ResponseEntity.ok(service.changePassword(requestMap));
+            return service.changePassword(requestMap);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-        return null;
+        
+        return ResponseEntity.status(500).build();
     }
 
     @PostMapping("/forgot-password")
