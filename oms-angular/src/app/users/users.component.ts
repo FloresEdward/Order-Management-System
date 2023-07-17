@@ -40,6 +40,9 @@ export class UsersComponent implements OnInit {
       .subscribe((resultData: any) => {
         this.userArray = resultData;
         this.tableData();
+      }, 
+      (error) => {
+        console.log("Account's role no access to GET USERS DATA");
       });
   }
 
