@@ -51,14 +51,9 @@ export class CreateOrderComponent implements OnInit {
       });
 
     this.customerOrderForm = this.formBuilder.group({
-      // name: ['', Validators.required],
-      // email: ['', Validators.required, Validators.email],
-      // contactNumber: ['', Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}')],
-      // address: ['', Validators.required],
-      // paymentMethod: ['', Validators.required],
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email]],
-      contactNumber: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
+      contactNumber: ['', [Validators.required, Validators.pattern('09[0-9]{9}')]],
       address: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       paymentMethod: ['', Validators.required],
     });
@@ -86,15 +81,13 @@ export class CreateOrderComponent implements OnInit {
   calculateTotal() {
     const price = this.productOrderForm.get('price').value;
     let quantity = this.productOrderForm.get('quantity').value;
-    console.log(`price: ${price} quantity: ${quantity}`);
     if(quantity < 1) {
       quantity = 1;
     }
     const total = price * quantity;
     this.productOrderForm.get('total').setValue(total);
 
-    //Code for stocks
-    let stocks = this.currentStocks; // Still need replace with actual stocks from service
+    let stocks = this.currentStocks;
     this.isQuantityValid = quantity <= stocks;
     if (!this.isQuantityValid) {
       this.productOrderForm.get('quantity').setErrors({ max: stocks });
@@ -103,9 +96,6 @@ export class CreateOrderComponent implements OnInit {
     }
   }
 
-  // isFormValid(): boolean {
-  //   return this.customerOrderForm.valid && this.productOrderForm.valid;
-  // }
   isFormValid(): boolean {
     return (
       this.customerOrderForm.valid &&
@@ -117,11 +107,9 @@ export class CreateOrderComponent implements OnInit {
 
   getProductsByCategory(category: any) {
     const baseUrl = 'http://localhost:8080/api/v1/management/menu/category';
-    console.log(category)
     this.http.get<any[]>(`${baseUrl}/${category.id}`).subscribe(
       (response) => {
         this.products = response;
-        console.log(response)
       },
       (error) => {
         console.log('Error:', error);
@@ -139,7 +127,7 @@ export class CreateOrderComponent implements OnInit {
   add() {
 
     if (!this.isQuantityValid) {
-      return; // Don't proceed if quantity is invalid
+      return;
     }
     
     const category = this.productOrderForm.get('category').value;
@@ -156,9 +144,6 @@ export class CreateOrderComponent implements OnInit {
       total: total
     };
 
-    //subtract quantity
-    this.currentStocks -= quantity;
-    console.log('current stocks: ', this.currentStocks);
     this.dataSource.data.push(element);
     this.dataSource._updateChangeSubscription();
     this.updateTableDataStatus();
@@ -180,7 +165,7 @@ export class CreateOrderComponent implements OnInit {
   
         this.dataSource = new MatTableDataSource<any>(this.dataSource.data);
         this.snackbarService.openSnackBar(GlobalConstants.delete, 'success');
-        console.log(`Row Deleted`);
+
       }
     });
   }

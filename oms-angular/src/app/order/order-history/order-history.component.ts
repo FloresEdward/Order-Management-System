@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { OrderHistoryListComponent } from './order-history-list/order-history-list.component';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { OrderService } from 'src/app/services/order.service';
-import { SnackbarService } from 'src/app/services/snackbar.service';
 import { PageEvent } from '@angular/material/paginator';
 
 @Component({
@@ -33,10 +30,7 @@ export class OrderHistoryComponent implements OnInit{
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private orderService: OrderService,
-    private snackbarService: SnackbarService, 
-    private http: HttpClient, 
-    private route: ActivatedRoute){
+    private http: HttpClient){
   }
 
   ngOnInit(): void {
@@ -62,7 +56,6 @@ export class OrderHistoryComponent implements OnInit{
 
     this.http.get<any[]>(this.baseUrl + '/paginated', { params }).subscribe(
       (response) => {
-        console.log(response);
         this.setOrdersArray(response);
       },
       (error) => {

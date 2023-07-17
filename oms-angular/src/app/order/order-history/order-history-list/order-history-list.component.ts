@@ -30,7 +30,5 @@ export class OrderHistoryListComponent implements OnInit{
     } else {
       this.dataSource = [];
     } 
-    console.log('this.data = ',this.data);
-    console.log('this.dataSource =', this.dataSource);
   }
 }

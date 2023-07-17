@@ -1,10 +1,8 @@
-import { AfterViewInit, OnInit, Component, Output, EventEmitter } from '@angular/core';
+import { OnInit, Component } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ManageOrderProductsComponent } from './manage-order-products/manage-order-products.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { HttpClient } from '@angular/common/http';
 import { GlobalConstants } from 'src/app/shared/global-constants';
@@ -33,8 +31,7 @@ export class ManageOrderComponent implements OnInit {
     private router: Router,
     private orderService: OrderService,
     private snackbarService: SnackbarService, 
-    private http: HttpClient, 
-    private route: ActivatedRoute){
+    private http: HttpClient){
   }
 
   ngOnInit(): void {
@@ -48,7 +45,7 @@ export class ManageOrderComponent implements OnInit {
       this.listOfRiders = resultData;
       this.listOfRiders = this.listOfRiders
         .filter((rider: any) => rider.role === "RIDER")
-        .map((rider: any) => rider.lastname + ' ' + rider.firstname);
+        .map((rider: any) => rider.firstname + ' ' + rider.lastname);
     });
   }
   
@@ -57,7 +54,6 @@ export class ManageOrderComponent implements OnInit {
       (response) => {
         this.orders = response;
         this.filteredOrders = response;
-        console.log(this.orders)
       },
       (error) => {
         console.log('Error:', error);
@@ -101,20 +97,17 @@ export class ManageOrderComponent implements OnInit {
           const orderId = order.id;
           const courierName = this.selectedRiders.get(orderId);
           order.courierName = courierName;
-          console.log(order);
           this.orderService.setOrderStatusCancelled(order).subscribe(
             (response) => {
-              console.log('Order Cancel');
               this.snackbarService.openSnackBar(GlobalConstants.cancel, 'success');
               this.getOrders();
             },
             (error) => {
-              this.snackbarService.openSnackBar('You can not VOID orders, contact your manager', 'error');
+              this.snackbarService.openSnackBar(GlobalConstants.voidOrderError, 'error');
               console.log('Error:', error);
             }
           );
         } else {
-          console.log('Order ID is undefined');
           this.snackbarService.openSnackBar(GlobalConstants.errorCancel, 'error');
         }
       }
@@ -124,15 +117,11 @@ export class ManageOrderComponent implements OnInit {
   handleProcessAction(order: any) {
     const orderId = order.id;
     const courierName = this.selectedRiders.get(orderId);
-
     order.courierName = courierName;
-
-    console.log(order);
     
     if (courierName) {
       this.orderService.setOrderStatusFulfilled(order).subscribe(
         (response) => {
-          console.log('Order Fulfilled');
           this.snackbarService.openSnackBar(GlobalConstants.processed, 'success');
           this.updateCourierNameInOrders(orderId, courierName); 
           this.getOrders();
