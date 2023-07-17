@@ -54,6 +54,9 @@ export class DashboardComponent implements OnInit {
       .subscribe((resultData: any[]) => {
         this.orderItems = resultData;
         this.onDateSelected();
+      },
+      (error) => {
+        console.log("Account no access to GET ORDER DATA");
       });
   }
 
