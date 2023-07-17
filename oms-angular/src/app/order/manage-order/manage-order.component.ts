@@ -104,7 +104,6 @@ export class ManageOrderComponent implements OnInit {
             },
             (error) => {
               this.snackbarService.openSnackBar(GlobalConstants.voidOrderError, 'error');
-              console.log('Error:', error);
             }
           );
         } else {

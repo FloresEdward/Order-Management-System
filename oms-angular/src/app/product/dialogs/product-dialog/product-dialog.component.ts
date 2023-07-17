@@ -114,12 +114,11 @@ export class ProductDialogComponent implements OnInit {
 
       this.productService.addProduct(productDetails).subscribe(
         (response) => {
-          console.log(response)
           this.snackbarService.openSnackBar(GlobalConstants.productAdded, 'success');
           this.dialogRef.close({ success: true });
         },
         (error) => {
-          console.log(error)
+          this.snackbarService.openSnackBar(GlobalConstants.unAuthorized, 'error');
         }
       );
 
@@ -140,13 +139,11 @@ export class ProductDialogComponent implements OnInit {
 
       this.productService.editProduct(productDetails).subscribe(
         (response) => {
-          console.log(response)
           this.snackbarService.openSnackBar(GlobalConstants.updateProduct, 'success');
           this.dialogRef.close({ success: true });
         },
         (error) => {
-          console.log(error)
-          this.snackbarService.openSnackBar("Failed to edit menu item", "error")
+          this.snackbarService.openSnackBar(GlobalConstants.unAuthorized, 'error');
         }
       );
 
@@ -162,13 +159,11 @@ export class ProductDialogComponent implements OnInit {
 
       this.productService.deleteProduct(productDetails).subscribe(
         (response) => {
-          console.log(response)
           this.snackbarService.openSnackBar(GlobalConstants.delete, 'success');
           this.dialogRef.close({ success: true });
         },
         (error) => {
-          console.log(error)
-          this.snackbarService.openSnackBar("Failed to delete menu item", "error")
+          this.snackbarService.openSnackBar(GlobalConstants.unAuthorized, 'error');
         }
       );
 

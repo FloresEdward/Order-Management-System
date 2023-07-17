@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CategoryService } from 'src/app/services/category.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { GlobalConstants } from 'src/app/shared/global-constants';
 
 @Component({
   selector: 'app-category-dialog',
@@ -74,13 +75,11 @@ export class CategoryDialogComponent implements OnInit {
 
       this.categoryService.addCategory(categoryDetails).subscribe(
         (response) => {
-          console.log(response)
           this.dialogRef.close({ success: true });
           this.snackbar.openSnackBar("Category successfully added", "success")
         },
         (error) => {
-          console.log(error)
-          this.snackbar.openSnackBar("Failed to add category", "error")
+          this.snackbar.openSnackBar(GlobalConstants.unAuthorized, 'error')
         }
       );
 
@@ -97,13 +96,11 @@ export class CategoryDialogComponent implements OnInit {
 
       this.categoryService.editCategory(categoryDetails).subscribe(
         (response) => {
-          console.log(response)
           this.dialogRef.close({ success: true });
           this.snackbar.openSnackBar("Category successfully edited", "success")
         },
         (error) => {
-          console.log(error)
-          this.snackbar.openSnackBar("Failed to edit category", "error")
+          this.snackbar.openSnackBar(GlobalConstants.unAuthorized, 'error')
         }
       );
 
@@ -120,13 +117,11 @@ export class CategoryDialogComponent implements OnInit {
 
       this.categoryService.deleteCategory(categoryDetails).subscribe(
         (response) => {
-          console.log(response)
           this.dialogRef.close({ success: true });
           this.snackbar.openSnackBar("Category successfully deleted", "success")
         },
         (error) => {
-          console.log(error)
-          this.snackbar.openSnackBar("Failed to delete category", "error")
+          this.snackbar.openSnackBar(GlobalConstants.unAuthorized, 'error')
         }
       );
 
