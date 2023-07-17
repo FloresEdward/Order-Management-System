@@ -112,13 +112,13 @@
                 <mat-form-field fxFlex>
                     <mat-label>Quantity</mat-label>
                     <input matInput formControlName="quantity" (input)="calculateTotal()">
-                    <mat-error *ngIf="productOrderForm.controls.quantity.touched && productOrderForm.controls.quantity.invalid">
-                        <span *ngIf="productOrderForm.controls.quantity.errors.required">This field is required.</span>
-                        <span *ngIf="productOrderForm.controls.quantity.errors.max">
-                            Insufficient stocks. Remaining: {{ productOrderForm.controls.quantity.errors.max }}</span>
-                      </mat-error>
-                </mat-form-field>
-                
+                    <mat-error *ngIf="productOrderForm.controls.quantity.touched && productOrderForm.controls.quantity.errors">
+                      <span *ngIf="productOrderForm.controls.quantity.errors.required">This field is required.</span>
+                      <span *ngIf="productOrderForm.controls.quantity.errors.max">
+                        Insufficient stocks. Remaining: {{ productOrderForm.controls.quantity.errors.max }}</span>
+                      <span *ngIf="productOrderForm.controls.quantity.errors.noStocks">No stocks available.</span>
+                    </mat-error>
+                  </mat-form-field>             
 
                 <mat-form-field fxFlex>
                     <mat-label>Total</mat-label>

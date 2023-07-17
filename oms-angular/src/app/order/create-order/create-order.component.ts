@@ -23,10 +23,8 @@ export class CreateOrderComponent implements OnInit {
   categories: any[] = [];
   products: any[] = [];
   dataSource: MatTableDataSource<any>;
-
   productOrderForm: any = FormGroup;
   customerOrderForm: any = FormGroup;
-  
   price: any;
   totalAmount: number = 0;
   responseMessage: any;
@@ -79,22 +77,22 @@ export class CreateOrderComponent implements OnInit {
   }
 
   calculateTotal() {
-    const price = this.productOrderForm.get('price').value;
     let quantity = this.productOrderForm.get('quantity').value;
-    if(quantity < 1) {
+    if (quantity < 1) {
       quantity = 1;
     }
-    const total = price * quantity;
+    const total = this.productOrderForm.get('price').value * quantity;
     this.productOrderForm.get('total').setValue(total);
 
-    let stocks = this.currentStocks;
-    this.isQuantityValid = quantity <= stocks;
+    this.isQuantityValid = quantity <= this.currentStocks;
     if (!this.isQuantityValid) {
-      this.productOrderForm.get('quantity').setErrors({ max: stocks });
+      const errorKey = this.currentStocks === 0 ? 'noStocks' : 'max';
+      this.productOrderForm.get('quantity').setErrors({ [errorKey]: true });
     } else {
       this.productOrderForm.get('quantity').setErrors(null);
     }
   }
+  
 
   isFormValid(): boolean {
     return (
@@ -125,32 +123,34 @@ export class CreateOrderComponent implements OnInit {
   }
 
   add() {
-
     if (!this.isQuantityValid) {
       return;
     }
-    
-    const category = this.productOrderForm.get('category').value;
-    const product = this.productOrderForm.get('product').value;
-    const price = this.productOrderForm.get('price').value;
-    const quantity = this.productOrderForm.get('quantity').value;
-    const total = this.productOrderForm.get('total').value;
 
-    const element = {
-      category: category,
-      product: product,
-      price: price,
-      quantity: quantity,
-      total: total
-    };
+    const { category, product, price } = this.productOrderForm.value;
+    const quantity = Number(this.productOrderForm.get('quantity').value);
+    const total = Number(this.productOrderForm.get('total').value);
 
-    this.dataSource.data.push(element);
+    const existingProductIndex = this.dataSource.data.findIndex((item: any) => (
+      item.category.name === category.name &&
+      item.product.name === product.name
+    ));
+
+    if (existingProductIndex !== -1) {
+      const existingProduct = this.dataSource.data[existingProductIndex];
+      existingProduct.quantity += quantity;
+      existingProduct.total += total;
+    } else {
+      const element = { category, product, price, quantity, total };
+      this.dataSource.data.push(element);
+    }
+
     this.dataSource._updateChangeSubscription();
     this.updateTableDataStatus();
     this.productOrderForm.reset();
     this.snackbarService.openSnackBar(GlobalConstants.productAdded, 'success');
   }
-
+  
   handleDeleteAction(index: number) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
@@ -169,9 +169,8 @@ export class CreateOrderComponent implements OnInit {
       }
     });
   }
-  
+
   submitAction() {
-    
     const orderedItems = this.dataSource.data.map((item: any) => ({
       category: item.category.name,
       product: item.product.name,
@@ -180,27 +179,35 @@ export class CreateOrderComponent implements OnInit {
       total: item.total
     }));
 
-    const customerDetails = {
-      name: this.customerOrderForm.get('name').value,
-      email: this.customerOrderForm.get('email').value,
-      contactNumber: this.customerOrderForm.get('contactNumber').value,
-      address: this.customerOrderForm.get('address').value,
-      paymentMethod: this.customerOrderForm.get('paymentMethod').value,
-    }
+    const customerDetails = this.customerOrderForm.value;
 
     const orderDetails = {
-      orderedItems: orderedItems, 
-      customer: customerDetails, 
+      orderedItems,
+      customer: customerDetails,
       courierName: 'not set',
       status: 'pending',
       addressId: customerDetails.address,
       createdAt: new Date(),
       totalQuantity: orderedItems.reduce((totalQuantity, item) => totalQuantity + item.quantity, 0),
       grandTotal: orderedItems.reduce((total, item) => total + item.total, 0)
+    };
+
+    const outOfStockProducts: string[] = [];
+    const isValidQuantity = orderedItems.every(item => {
+      const product = this.products.find(p => p.name === item.product);
+      if (product && item.quantity > product.stock) {
+        outOfStockProducts.push(product.name);
+        return false;
+      }
+      return true;
+    });
+
+    if (!isValidQuantity) {
+      const errorMessage = `Insufficient stocks for product(s): ${outOfStockProducts.join(', ')}`;
+      this.snackbarService.openSnackBar(errorMessage, 'error');
+      return;
     }
 
-    console.log('orderDetails: ', orderDetails);
-  
     const addOrderRequest = this.orderService.addOrder(orderDetails);
     const addCustomerRequest = this.customerService.addCustomer(customerDetails);
 
@@ -215,7 +222,7 @@ export class CreateOrderComponent implements OnInit {
         this.snackbarService.openSnackBar(GlobalConstants.genericError, 'error');
         console.log('Error', error);
       }
-    )
+    );
   }
 
   updateTableDataStatus() {
