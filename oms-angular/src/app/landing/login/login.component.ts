@@ -4,6 +4,8 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TokenService } from 'src/app/services/token.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { GlobalConstants } from 'src/app/shared/global-constants';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +22,8 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackbarService: SnackbarService
   ) {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/app/dashboard';
 
@@ -49,6 +52,7 @@ export class LoginComponent implements OnInit {
       (response) => {
         this.router.navigateByUrl(this.returnUrl);
         console.log('Token from service:', this.authenticationService.getTokenFromService());
+        this.snackbarService.openSnackBar(GlobalConstants.loginSuccessful, 'success');
       },
       (error) => {
         console.log(error);

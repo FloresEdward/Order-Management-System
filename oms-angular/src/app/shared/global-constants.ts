@@ -1,5 +1,6 @@
 export class GlobalConstants {
 
+    public static loginSuccessful: string = "Login Successful!";
     public static genericError: string = "Something went wrong. Please try again later";
     public static unAuthorized: string = "You are not authorized person";
     public static productExistError: string = "Product already exist";
