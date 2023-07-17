@@ -32,7 +32,7 @@ export class CreateOrderComponent implements OnInit {
   responseMessage: any;
   hasTableData: boolean = false; 
   isQuantityValid: boolean = false;
-  currentStocks: number = 100;
+  currentStocks: number = 0;
 
   constructor(private formBuilder: FormBuilder,
     private dialog: MatDialog,
@@ -132,6 +132,7 @@ export class CreateOrderComponent implements OnInit {
   getProductDetails(value: any) {
     if (value && value.price) {
       this.productOrderForm.get('price').setValue(value.price);
+      this.currentStocks = value.stock;
     }
   }
 
