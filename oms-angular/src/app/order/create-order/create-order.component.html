@@ -115,7 +115,7 @@
                     <mat-error *ngIf="productOrderForm.controls.quantity.touched && productOrderForm.controls.quantity.errors">
                       <span *ngIf="productOrderForm.controls.quantity.errors.required">This field is required.</span>
                       <span *ngIf="productOrderForm.controls.quantity.errors.max">
-                        Insufficient stocks. Remaining: {{ productOrderForm.controls.quantity.errors.max }}</span>
+                        Insufficient stocks. Remaining: {{ currentStocks - productOrderForm.controls.quantity.errors.max }}</span>
                       <span *ngIf="productOrderForm.controls.quantity.errors.noStocks">No stocks available.</span>
                     </mat-error>
                   </mat-form-field>             
