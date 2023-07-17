@@ -1,6 +1,5 @@
 package com.champ.oms.demo;
 
-import com.champ.oms.bean.CategoryBean;
 import com.champ.oms.bean.MenuBean;
 import com.champ.oms.document.Menu;
 import com.champ.oms.service.MenuService;

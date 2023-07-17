@@ -1,6 +1,5 @@
 package com.champ.oms.service;
 
-import com.champ.oms.bean.CategoryBean;
 import com.champ.oms.bean.MenuBean;
 import com.champ.oms.bean.OrderItemBean;
 import com.champ.oms.document.Category;
@@ -10,9 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +33,7 @@ public class MenuService {
         return menuRepository.findByCategory_IdAndStatus(categoryId, "active");
     }
 
-    public void saveProduct (MenuBean menuBean) {
+    public void saveProduct(MenuBean menuBean) {
 
         Menu menu = Menu.builder()
                 .id(new ObjectId().toString())
@@ -51,7 +48,7 @@ public class MenuService {
         menuRepository.save(menu);
     }
 
-    public void updateMenuItemStatus(String menuId){
+    public void updateMenuItemStatus(String menuId) {
         Menu menu = menuRepository.findById(menuId)
                 .orElseThrow(() -> new MenuNotFoundException("Menu not found with ID: " + menuId));
 

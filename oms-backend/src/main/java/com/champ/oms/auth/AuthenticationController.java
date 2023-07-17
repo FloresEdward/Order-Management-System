@@ -46,7 +46,7 @@ public class AuthenticationController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
         return ResponseEntity.status(500).build();
     }
 

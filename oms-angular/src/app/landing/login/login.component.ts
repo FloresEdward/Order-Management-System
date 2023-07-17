@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   private returnUrl: string;
   public authenticationError: boolean = false;
-  
+
   constructor(
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
       (response) => {
         this.router.navigateByUrl(this.returnUrl);
         console.log('Token from service:', this.authenticationService.getTokenFromService());
-        this.snackbarService.openSnackBar(GlobalConstants.loginSuccessful, 'success');
+
       },
       (error) => {
         console.log(error);

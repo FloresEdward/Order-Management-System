@@ -1,6 +1,5 @@
 package com.champ.oms.document;
 
-import com.champ.oms.bean.CategoryBean;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

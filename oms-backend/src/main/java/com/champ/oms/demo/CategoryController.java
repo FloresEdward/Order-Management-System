@@ -2,7 +2,6 @@ package com.champ.oms.demo;
 
 import com.champ.oms.bean.CategoryBean;
 import com.champ.oms.document.Category;
-import com.champ.oms.document.Menu;
 import com.champ.oms.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/management/category")
@@ -29,7 +27,7 @@ public class CategoryController {
 
     @GetMapping("/")
     @PreAuthorize("hasAuthority('category:read')")
-    public List<Category> getCategories(){
+    public List<Category> getCategories() {
         return service.getAllActiveCategories();
     }
 
