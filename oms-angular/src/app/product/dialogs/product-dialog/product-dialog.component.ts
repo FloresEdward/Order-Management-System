@@ -5,6 +5,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { GlobalConstants } from 'src/app/shared/global-constants';
 
 @Component({
   selector: 'app-product-dialog',
@@ -34,7 +36,8 @@ export class ProductDialogComponent implements OnInit {
     private router: Router,
     private http: HttpClient,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private snackbarService: SnackbarService
   ) {
     this.action = data.action;
     this.productId = data.product ? data.product.id : '';
@@ -110,6 +113,7 @@ export class ProductDialogComponent implements OnInit {
       this.productService.addProduct(productDetails).subscribe(
         (response) => {
           console.log(response)
+          this.snackbarService.openSnackBar(GlobalConstants.productAdded, 'success');
           this.dialogRef.close({ success: true });
         },
         (error) => {
@@ -135,6 +139,7 @@ export class ProductDialogComponent implements OnInit {
       this.productService.editProduct(productDetails).subscribe(
         (response) => {
           console.log(response)
+          this.snackbarService.openSnackBar(GlobalConstants.updateProduct, 'success');
           this.dialogRef.close({ success: true });
         },
         (error) => {
@@ -155,6 +160,7 @@ export class ProductDialogComponent implements OnInit {
       this.productService.deleteProduct(productDetails).subscribe(
         (response) => {
           console.log(response)
+          this.snackbarService.openSnackBar(GlobalConstants.delete, 'success');
           this.dialogRef.close({ success: true });
         },
         (error) => {

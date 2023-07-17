@@ -10,7 +10,8 @@ export class GlobalConstants {
     public static cancel: string = "Order Cancelled";
     public static processed: string = "Order Processed";
     public static errorCancel: string = "Error Cancelling Order!";
-    public static voidOrderError: string = "You can not VOID orders, contact your manager";
+    public static updateProduct: string = "Product Successfully Updated"
 
+    public static voidOrderError: string = "You can not VOID orders, contact your manager";
     public static error: string = "error";
 }
