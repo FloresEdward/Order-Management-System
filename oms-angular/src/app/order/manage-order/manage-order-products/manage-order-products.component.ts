@@ -19,7 +19,6 @@ export class ManageOrderProductsComponent implements OnInit {
   ngOnInit() {
     this.data = this.dialogData?.data;
 
-    console.log('this.data: ' ,this.data)
     if (this.data && this.data.orderedItems) {
       this.dataSource = this.data.orderedItems.map((item: any) => {
         return {

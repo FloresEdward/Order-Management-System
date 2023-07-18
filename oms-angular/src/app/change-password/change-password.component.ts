@@ -41,7 +41,7 @@ export class ChangePasswordComponent {
       newPassword
     }
 
-    console.log(request);
+
 
     this.authenticationService.changePassword(request).subscribe(
       (response) => {

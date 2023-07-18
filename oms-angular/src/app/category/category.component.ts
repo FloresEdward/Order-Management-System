@@ -56,7 +56,6 @@ export class CategoryComponent implements OnInit {
     
     this.http.get<any[]>(this.baseUrl + '/paginated', { params }).subscribe(
       (response) => {
-        console.log(response);
         this.setCategoriesArray(response);
       },
       (error) => {
@@ -71,11 +70,10 @@ export class CategoryComponent implements OnInit {
       category: category
     }
 
-    console.log(dialogData);
 
     this.dialogRef = this.dialog.open(CategoryDialogComponent, { data: dialogData });
     this.dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+
       this.getCategoriesPaginated();
     });
   }

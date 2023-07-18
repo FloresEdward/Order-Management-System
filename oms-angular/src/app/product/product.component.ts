@@ -42,16 +42,6 @@ export class ProductComponent implements OnInit{
     return (description.length > length) ? description.substr(0, length) + '...' : description;
   }
 
-  // getProducts(): void {
-  //   this.http.get<any[]>(this.baseUrl + '/').subscribe(
-  //     (response) => {
-  //       this.getProductsArray(response);
-  //     },
-  //     (error) => {
-  //       console.log('Error:', error);
-  //     }
-  //   );
-  // }
 
   setProductsArray(response: any) {
     this.products = response.content;
@@ -65,7 +55,6 @@ export class ProductComponent implements OnInit{
 
     this.http.get<any[]>(this.baseUrl + '/paginated', { params }).subscribe(
       (response) => {
-        console.log(response);
         this.setProductsArray(response);
         this.dataSource = new MatTableDataSource<any>(this.products);
       },
@@ -83,7 +72,6 @@ export class ProductComponent implements OnInit{
 
     this.dialogRef = this.dialog.open(ProductDialogComponent, { data: dialogData });
     this.dialogRef?.afterClosed().subscribe(result => {
-      console.log(result);
       this.getProductsPaginated();
     });
   }

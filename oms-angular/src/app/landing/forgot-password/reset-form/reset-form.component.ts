@@ -38,9 +38,9 @@ export class ResetFormComponent implements OnInit {
 
     this.authenticationService.forgotPassword(request).subscribe(
       (response) => {
-        console.log('Sent temporary password');
+
         this.router.navigateByUrl("/forgot-password/success");
-        console.log(response)
+
       },
       (error) => {
         console.log(error);

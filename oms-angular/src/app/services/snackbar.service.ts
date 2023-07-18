@@ -19,7 +19,6 @@ export class SnackbarService {
       panelClass = 'green-snackbar';
     }
 
-    console.log(panelClass);
 
     this.snackBar.open(message, '',{
       horizontalPosition: 'center',
